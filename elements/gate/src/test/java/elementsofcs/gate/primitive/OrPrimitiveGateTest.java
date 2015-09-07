@@ -1,9 +1,9 @@
 package elementsofcs.gate.primitive;
 
+import elementsofcs.gate.AbstractBinaryPredicateGateTest;
 import elementsofcs.gate.Gate;
-import elementsofcs.gate.primitive.OrPrimitiveGate;
 
-public class OrPrimitiveGateTest extends AbstractPrimitiveGateTest {
+public class OrPrimitiveGateTest extends AbstractBinaryPredicateGateTest {
 
   @Override
   protected Gate createGate() {

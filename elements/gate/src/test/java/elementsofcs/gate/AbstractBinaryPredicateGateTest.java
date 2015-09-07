@@ -1,4 +1,4 @@
-package elementsofcs.gate.primitive;
+package elementsofcs.gate;
 
 import static org.junit.Assert.assertTrue;
 
@@ -8,7 +8,7 @@ import org.junit.Test;
 import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
 
-public abstract class AbstractPrimitiveGateTest {
+public abstract class AbstractBinaryPredicateGateTest {
   protected final Pin inputA = new Pin("A");
   protected final Pin inputB = new Pin("B");
   protected final Pin output = new Pin("Output");

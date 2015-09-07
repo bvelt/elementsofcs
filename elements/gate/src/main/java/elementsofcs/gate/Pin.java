@@ -3,6 +3,7 @@ package elementsofcs.gate;
 import java.util.Objects;
 
 public final class Pin {
+
   private final String name;
   private boolean value;
 

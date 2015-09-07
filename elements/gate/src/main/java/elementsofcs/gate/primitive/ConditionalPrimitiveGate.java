@@ -1,8 +1,10 @@
 package elementsofcs.gate.primitive;
 
+import elementsofcs.gate.AbstractBinaryPredicateGate;
 import elementsofcs.gate.Pin;
+import elementsofcs.gate.PrimitiveGate;
 
-public class ConditionalPrimitiveGate extends AbstractPrimitiveGate {
+public class ConditionalPrimitiveGate extends AbstractBinaryPredicateGate implements PrimitiveGate {
 
   public ConditionalPrimitiveGate(Pin inputA, Pin inputB, Pin output) {
     super(inputA, inputB, output);
@@ -15,7 +17,7 @@ public class ConditionalPrimitiveGate extends AbstractPrimitiveGate {
 
   @Override
   public String toString() {
-    return "ConditionalPrimitiveGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
+    return "ConditionalPrimitiveGate [input=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
   }
 
 }

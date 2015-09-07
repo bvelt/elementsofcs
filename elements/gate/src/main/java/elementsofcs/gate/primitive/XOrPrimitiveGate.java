@@ -1,8 +1,10 @@
 package elementsofcs.gate.primitive;
 
+import elementsofcs.gate.AbstractBinaryPredicateGate;
 import elementsofcs.gate.Pin;
+import elementsofcs.gate.PrimitiveGate;
 
-public class XOrPrimitiveGate extends AbstractPrimitiveGate {
+public class XOrPrimitiveGate extends AbstractBinaryPredicateGate implements PrimitiveGate {
 
   public XOrPrimitiveGate(Pin inputA, Pin inputB, Pin output) {
     super(inputA, inputB, output);
@@ -15,7 +17,7 @@ public class XOrPrimitiveGate extends AbstractPrimitiveGate {
 
   @Override
   public String toString() {
-    return "XOrPrimitiveGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
+    return "XOrPrimitiveGate [input=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
   }
 
 }

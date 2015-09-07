@@ -1,19 +1,16 @@
-package elementsofcs.gate.primitive;
+package elementsofcs.gate;
 
 import java.util.Objects;
 
-import elementsofcs.gate.Gate;
-import elementsofcs.gate.Pin;
-
-public abstract class AbstractPrimitiveGate implements Gate {
+public abstract class AbstractBinaryPredicateGate implements BinaryPredicateGate {
 
   protected final Pin inputA;
   protected final Pin inputB;
   protected final Pin output;
 
-  public AbstractPrimitiveGate(Pin inputA, Pin inputB, Pin output) {
+  public AbstractBinaryPredicateGate(Pin inputA, Pin inputB, Pin output) {
     super();
-    Objects.requireNonNull(inputA, "inputA");
+    Objects.requireNonNull(inputA, "input");
     Objects.requireNonNull(inputB, "inputB");
     Objects.requireNonNull(output, "output");
     this.inputA = inputA;
@@ -21,14 +18,17 @@ public abstract class AbstractPrimitiveGate implements Gate {
     this.output = output;
   }
 
+  @Override
   public Pin getInputA() {
     return inputA;
   }
 
+  @Override
   public Pin getInputB() {
     return inputB;
   }
 
+  @Override
   public Pin getOutput() {
     return output;
   }
