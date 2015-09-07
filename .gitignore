@@ -1,0 +1,22 @@
+#IDE files
+.settings
+.classpath
+.project
+
+#Gradle files
+.gradle/
+
+#Build targets and binaries
+bin/
+target/
+build/
+*/build/
+out/
+lib/
+*.class
+
+tmp/
+
+build.out
+gradlew
+gradlew.bat
