@@ -45,8 +45,7 @@ public class OrCompositeGate extends AbstractBinaryPredicateGate implements Comp
 
   @Override
   public String toString() {
-    return "OrCompositeGate [nandA=" + nandA + ", nandB=" + nandB + ", nandC=" + nandC + ", intermediateA=" + intermediateA + ", intermediateB="
-        + intermediateB + "]";
+    return "OrCompositeGate [nandA=" + nandA + ", nandB=" + nandB + ", nandC=" + nandC + "]";
   }
 
 }
