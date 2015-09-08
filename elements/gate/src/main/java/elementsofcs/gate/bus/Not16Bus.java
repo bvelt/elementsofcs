@@ -1,56 +1,33 @@
 package elementsofcs.gate.bus;
 
-import java.util.Arrays;
+import static elementsofcs.gate.Pin.SIZE_16;
+
+import java.util.List;
 
 import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.primitive.NotPrimitiveGate;
 
-public class Not16Bus implements Gate {
+/**
+ * Bus that computes boolean NOT function on each pin of a 16-pin input array
+ * 
+ * @author brentvelthoen
+ *
+ */
+public class Not16Bus extends AbstractUnaryPredicateBus {
 
-  protected static final int SIZE_16 = 16;
-
-  protected final Pin[] input = new Pin[SIZE_16];
-  protected final Pin[] output = new Pin[SIZE_16];
-  protected final NotPrimitiveGate[] gates = new NotPrimitiveGate[SIZE_16];
-
-  public Not16Bus() {
-    initializeArrays();
-  }
-
-  protected void initializeArrays() {
-    for (int i = 0; i < SIZE_16; i++) {
-      input[i] = new Pin("input[" + i + "]");
-      output[i] = new Pin("output[" + i + "]");
-      gates[i] = new NotPrimitiveGate(input[i], output[i]);
-    }
-  }
-
-  public Pin[] getInput() {
-    return input;
-  }
-
-  public Pin[] getOutput() {
-    return output;
+  public Not16Bus(List<Pin> input, List<Pin> output) {
+    super(SIZE_16, input, output);
   }
 
   @Override
-  public void eval() {
-    for (Gate gate : gates) {
-      gate.eval();
-    }
-  }
-
-  @Override
-  public void reset() {
-    for (Gate gate : gates) {
-      gate.reset();
-    }
+  protected Gate createGate(Pin in, Pin out) {
+    return new NotPrimitiveGate(in, out);
   }
 
   @Override
   public String toString() {
-    return "Not16Bus [gates=" + Arrays.toString(gates) + "]";
+    return "Not16Bus [gates=" + gates + "]";
   }
 
 }

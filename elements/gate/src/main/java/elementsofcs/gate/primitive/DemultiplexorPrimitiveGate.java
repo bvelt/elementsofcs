@@ -6,8 +6,7 @@ import elementsofcs.gate.Pin;
 import elementsofcs.gate.PrimitiveGate;
 
 /**
- * Two-input demultiplexor gate that sets either output A or B to input based on
- * selector pin.
+ * Demultiplexor gate that sets either output A or B to inputA based on selector
  * 
  * @author brentvelthoen
  *

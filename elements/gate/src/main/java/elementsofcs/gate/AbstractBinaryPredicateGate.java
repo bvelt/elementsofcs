@@ -10,7 +10,7 @@ public abstract class AbstractBinaryPredicateGate implements BinaryPredicateGate
 
   public AbstractBinaryPredicateGate(Pin inputA, Pin inputB, Pin output) {
     super();
-    Objects.requireNonNull(inputA, "input");
+    Objects.requireNonNull(inputA, "inputA");
     Objects.requireNonNull(inputB, "inputB");
     Objects.requireNonNull(output, "output");
     this.inputA = inputA;

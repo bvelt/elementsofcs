@@ -6,8 +6,7 @@ import elementsofcs.gate.Pin;
 import elementsofcs.gate.PrimitiveGate;
 
 /**
- * Three-input multiplexor gate that outputs value of either input A or B based
- * on selector pin.
+ * Multiplexor gate that output value of either inputA A or B based on selector
  * 
  * @author brentvelthoen
  *
@@ -21,7 +20,7 @@ public class MultiplexorPrimitiveGate implements PrimitiveGate {
 
   public MultiplexorPrimitiveGate(Pin inputA, Pin inputB, Pin selector, Pin output) {
     super();
-    Objects.requireNonNull(inputA, "input");
+    Objects.requireNonNull(inputA, "inputA");
     Objects.requireNonNull(inputB, "inputB");
     Objects.requireNonNull(selector, "selector");
     Objects.requireNonNull(output, "output");

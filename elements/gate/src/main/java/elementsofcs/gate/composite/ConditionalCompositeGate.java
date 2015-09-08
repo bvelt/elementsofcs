@@ -4,6 +4,14 @@ import elementsofcs.gate.AbstractBinaryPredicateGate;
 import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
 
+/**
+ * IF/THEN conditional gate composed of NOT and OR intermediate gates.
+ * 
+ * X->Y = OR(NOT(X),Y)
+ * 
+ * @author brentvelthoen
+ *
+ */
 public class ConditionalCompositeGate extends AbstractBinaryPredicateGate implements CompositeGate {
 
   private final OrCompositeGate or;
