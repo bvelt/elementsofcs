@@ -7,18 +7,18 @@ import org.junit.Test;
 
 import elementsofcs.gate.Pin;
 
-public class SelectorPrimitiveGateTest {
+public class MultiplexorPrimitiveGateTest {
   protected final Pin inputA = new Pin("A");
   protected final Pin inputB = new Pin("B");
   protected final Pin selector = new Pin("Selector");
   protected final Pin output = new Pin("Output");
 
-  protected SelectorPrimitiveGate gate;
+  protected MultiplexorPrimitiveGate gate;
   protected boolean[][] truthTable;
 
   @Before
   public void setUp() {
-    gate = new SelectorPrimitiveGate(inputA, inputB, selector, output);
+    gate = new MultiplexorPrimitiveGate(inputA, inputB, selector, output);
     truthTable = createTruthTable();
   }
 

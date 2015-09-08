@@ -12,14 +12,14 @@ import elementsofcs.gate.PrimitiveGate;
  * @author brentvelthoen
  *
  */
-public class SelectorPrimitiveGate implements PrimitiveGate {
+public class MultiplexorPrimitiveGate implements PrimitiveGate {
 
   private final Pin inputA;
   private final Pin inputB;
   private final Pin selector;
   private final Pin output;
 
-  public SelectorPrimitiveGate(Pin inputA, Pin inputB, Pin selector, Pin output) {
+  public MultiplexorPrimitiveGate(Pin inputA, Pin inputB, Pin selector, Pin output) {
     super();
     Objects.requireNonNull(inputA, "input");
     Objects.requireNonNull(inputB, "inputB");
@@ -62,7 +62,7 @@ public class SelectorPrimitiveGate implements PrimitiveGate {
 
   @Override
   public String toString() {
-    return "SelectorPrimitiveGate [inputA=" + inputA + ", inputB=" + inputB + ", selector=" + selector + ", output=" + output + "]";
+    return "MultiplexorPrimitiveGate [inputA=" + inputA + ", inputB=" + inputB + ", selector=" + selector + ", output=" + output + "]";
   }
 
 }
