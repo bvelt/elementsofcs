@@ -17,7 +17,7 @@ public class XOrPrimitiveGate extends AbstractBinaryPredicateGate implements Pri
 
   @Override
   public String toString() {
-    return "XOrPrimitiveGate [input=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
+    return "XOrPrimitiveGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
   }
 
 }

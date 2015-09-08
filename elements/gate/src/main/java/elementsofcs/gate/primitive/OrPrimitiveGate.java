@@ -17,7 +17,7 @@ public class OrPrimitiveGate extends AbstractBinaryPredicateGate implements Prim
 
   @Override
   public String toString() {
-    return "OrPrimitiveGate [input=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
+    return "OrPrimitiveGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
   }
 
 }

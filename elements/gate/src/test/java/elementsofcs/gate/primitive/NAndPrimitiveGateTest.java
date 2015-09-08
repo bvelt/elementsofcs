@@ -4,6 +4,7 @@ import elementsofcs.gate.AbstractBinaryPredicateGateTest;
 import elementsofcs.gate.Gate;
 
 public class NAndPrimitiveGateTest extends AbstractBinaryPredicateGateTest {
+
   @Override
   protected Gate createGate() {
     return new NAndPrimitiveGate(inputA, inputB, output);

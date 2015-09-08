@@ -17,7 +17,7 @@ public class ConditionalPrimitiveGate extends AbstractBinaryPredicateGate implem
 
   @Override
   public String toString() {
-    return "ConditionalPrimitiveGate [input=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
+    return "ConditionalPrimitiveGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
   }
 
 }

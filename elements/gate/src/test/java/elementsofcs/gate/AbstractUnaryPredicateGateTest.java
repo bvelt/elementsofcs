@@ -34,7 +34,7 @@ public abstract class AbstractUnaryPredicateGateTest {
 
       gate.eval();
 
-      String msg = String.format("When Input is %s, expected output is %s",
+      String msg = String.format("When input is %s, expected output is %s",
           inputAValue, expectedOutputValue);
       assertTrue(msg, expectedOutputValue == output.getValue());
     }

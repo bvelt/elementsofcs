@@ -17,7 +17,7 @@ public class NAndPrimitiveGate extends AbstractBinaryPredicateGate implements Pr
 
   @Override
   public String toString() {
-    return "NAndPrimitiveGate [input=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
+    return "NAndPrimitiveGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
   }
 
 }
