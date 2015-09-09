@@ -8,7 +8,9 @@ import elementsofcs.gate.primitive.NAndPrimitiveGate;
 /**
  * NOT composite gate composed of NAND gate.
  * 
- * NOT(X) = NAND(X,X)
+ * <pre>
+ * NOT(X) = NAND(X, X)
+ * </pre>
  * 
  * @author brentvelthoen
  *

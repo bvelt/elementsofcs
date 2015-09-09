@@ -28,8 +28,8 @@ public abstract class AbstractUnaryPredicateBus implements Bus {
   public AbstractUnaryPredicateBus(int size, List<Pin> input, List<Pin> output) {
     super();
     this.size = size;
-    Objects.requireNonNull(input, "inputA");
-    checkListSize(input, size, "inputA");
+    Objects.requireNonNull(input, "input");
+    checkListSize(input, size, "input");
     Objects.requireNonNull(output, "output");
     checkListSize(output, size, "output");
     this.input = Collections.unmodifiableList(input);

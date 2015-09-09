@@ -61,10 +61,10 @@ public class Mux16Bus implements Bus {
 
   @Override
   public void reset() {
-    inputA.forEach(i -> i.setValue(false));
-    inputB.forEach(i -> i.setValue(false));
+    inputA.forEach(in -> in.setValue(false));
+    inputB.forEach(in -> in.setValue(false));
     selector.setValue(false);
-    output.forEach(o -> o.setValue(false));
+    output.forEach(out -> out.setValue(false));
   }
 
   @Override

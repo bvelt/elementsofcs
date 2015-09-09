@@ -12,7 +12,15 @@ import elementsofcs.gate.primitive.XOrPrimitiveGate;
  * significant bit of result to sum pin and most significant bit of result to
  * carry pin
  * 
- * IN: a, b; OUT: carry, sum; PARTS: AND(in=a,b,out=carry), XOR(in=a,b,out=sum);
+ * <pre>
+ * IN: 
+ *   a,b
+ * OUT: 
+ *   carry,sum
+ * PARTS:
+ *   AND(in=a,b; out=carry)
+ *   XOR(in=a,b; out=sum)
+ * </pre>
  * 
  * @author brentvelthoen
  *

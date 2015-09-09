@@ -5,7 +5,7 @@ import elementsofcs.gate.Pin;
 import elementsofcs.gate.PrimitiveGate;
 
 /**
- * Single-inputA gate that implements boolean NOT function (i.e. negation)
+ * Single-input gate that implements boolean NOT function (i.e. negation)
  * 
  * @author brentvelthoen
  *

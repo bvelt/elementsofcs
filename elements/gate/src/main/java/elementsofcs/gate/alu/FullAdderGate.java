@@ -12,9 +12,16 @@ import elementsofcs.gate.primitive.XOrPrimitiveGate;
  * significant bit of result to sum pin and most significant bit of result to
  * carry pin
  * 
- * IN: a,b,c; OUT: carry,sum; PARTS: HADD(in=a,b; carry=carryAB; sum=sumAB),
- * HADD(in=sumAB,c; carry=carryABC; sum=sum); XOR(in=carryAB,carryABC;
- * out=carry);
+ * <pre>
+ * IN: 
+ *   a,b,c
+ * OUT:
+ *   carry,sum
+ * PARTS: 
+ *   HalfAdder(in=a,b; carry=carryAB; sum=sumAB)
+ *   HalfAdder(in=sumAB,c; carry=carryABC; sum=sum)
+ *   XOR(in=carryAB,carryABC; out=carry);
+ * </pre>
  * 
  * @author brentvelthoen
  *
@@ -27,8 +34,8 @@ public class FullAdderGate implements CompositeGate {
   private final Pin carry;
   private final Pin sum;
 
-  private final Gate adderAB;
-  private final Gate adderABC;
+  private final Gate haddAB;
+  private final Gate haddABC;
   private final Gate xorCarry;
 
   public FullAdderGate(Pin inputA, Pin inputB, Pin inputC, Pin carry, Pin sum) {
@@ -46,10 +53,10 @@ public class FullAdderGate implements CompositeGate {
 
     Pin sumAB = new Pin("sumOfA+B");
     Pin carryAB = new Pin("carryOfA+B");
-    adderAB = new HalfAdderGate(inputA, inputB, carryAB, sumAB);
+    haddAB = new HalfAdderGate(inputA, inputB, carryAB, sumAB);
 
     Pin carryABC = new Pin("carryOfA+B+C");
-    adderABC = new HalfAdderGate(sumAB, inputC, carryABC, sum);
+    haddABC = new HalfAdderGate(sumAB, inputC, carryABC, sum);
 
     xorCarry = new XOrPrimitiveGate(carryAB, carryABC, carry);
   }
@@ -76,21 +83,21 @@ public class FullAdderGate implements CompositeGate {
 
   @Override
   public void eval() {
-    adderAB.eval();
-    adderABC.eval();
+    haddAB.eval();
+    haddABC.eval();
     xorCarry.eval();
   }
 
   @Override
   public void reset() {
-    adderAB.reset();
-    adderABC.reset();
+    haddAB.reset();
+    haddABC.reset();
     xorCarry.reset();
   }
 
   @Override
   public String toString() {
-    return "FullAdderGate [adderAB=" + adderAB + ", adderABC=" + adderABC + ", xorCarry=" + xorCarry + "]";
+    return "FullAdderGate [haddAB=" + haddAB + ", haddABC=" + haddABC + ", xorCarry=" + xorCarry + "]";
   }
 
 }

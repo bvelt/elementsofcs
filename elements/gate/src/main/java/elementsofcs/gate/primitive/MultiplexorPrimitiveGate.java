@@ -6,7 +6,7 @@ import elementsofcs.gate.Pin;
 import elementsofcs.gate.PrimitiveGate;
 
 /**
- * Multiplexor gate that output value of either inputA A or B based on selector
+ * Multiplexor gate that outputs value of either input A or B based on selector
  * 
  * @author brentvelthoen
  *

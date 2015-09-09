@@ -38,7 +38,7 @@ public class Or8WayBus implements Bus {
     for (int i = 0; i < Pin.SIZE_8;) {
       Pin inA = i == 0 ? input.get(i++) : out;
       Pin inB = input.get(i++);
-      out = i < Pin.SIZE_8 ? new Pin("intermediate") : output;
+      out = i < Pin.SIZE_8 ? new Pin("internal") : output;
       gates.add(new OrPrimitiveGate(inA, inB, out));
     }
   }

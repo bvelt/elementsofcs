@@ -5,9 +5,11 @@ import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
 
 /**
- * IF/THEN conditional gate composed of NOT and OR intermediate gates.
+ * IF/THEN conditional gate composed of NOT and OR internal gates.
  * 
- * X->Y = OR(NOT(X),Y)
+ * <pre>
+ * X -> Y = OR(NOT(X), Y)
+ * </pre>
  * 
  * @author brentvelthoen
  *
@@ -17,12 +19,12 @@ public class ConditionalCompositeGate extends AbstractBinaryPredicateGate implem
   private final OrCompositeGate or;
   private final NotCompositeGate not;
 
-  private final Pin intermediate = new Pin("intermediate");
+  private final Pin internal = new Pin("internal");
 
   public ConditionalCompositeGate(Pin inputA, Pin inputB, Pin output) {
     super(inputA, inputB, output);
-    not = new NotCompositeGate(inputA, intermediate);
-    or = new OrCompositeGate(intermediate, inputB, output);
+    not = new NotCompositeGate(inputA, internal);
+    or = new OrCompositeGate(internal, inputB, output);
   }
 
   @Override

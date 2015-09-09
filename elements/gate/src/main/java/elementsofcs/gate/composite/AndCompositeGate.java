@@ -6,7 +6,7 @@ import elementsofcs.gate.Pin;
 import elementsofcs.gate.primitive.NAndPrimitiveGate;
 
 /**
- * AND composite gate composed of three intermediate NAND gates.
+ * AND composite gate composed of three internal NAND gates.
  * 
  * AND(X,Y) = NAND(NAND(X,Y),NAND(X,Y))
  * 
@@ -19,14 +19,14 @@ public class AndCompositeGate extends AbstractBinaryPredicateGate implements Com
   private final NAndPrimitiveGate nandB;
   private final NAndPrimitiveGate nandC;
 
-  private final Pin intermediateA = new Pin("intermediateA");
-  private final Pin intermediateB = new Pin("intermediateB");
+  private final Pin internalA = new Pin("internalA");
+  private final Pin internalB = new Pin("internalB");
 
   public AndCompositeGate(Pin inputA, Pin inputB, Pin output) {
     super(inputA, inputB, output);
-    nandA = new NAndPrimitiveGate(inputA, inputB, intermediateA);
-    nandB = new NAndPrimitiveGate(inputA, inputB, intermediateB);
-    nandC = new NAndPrimitiveGate(intermediateA, intermediateB, output);
+    nandA = new NAndPrimitiveGate(inputA, inputB, internalA);
+    nandB = new NAndPrimitiveGate(inputA, inputB, internalB);
+    nandC = new NAndPrimitiveGate(internalA, internalB, output);
   }
 
   @Override
