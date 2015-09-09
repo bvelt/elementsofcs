@@ -1,24 +1,26 @@
-package elementsofcs.gate.primitive;
+package elementsofcs.gate.bus;
 
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import elementsofcs.gate.Pin;
 
-public class MultiplexorPrimitiveGateTest {
-  protected final Pin inputA = new Pin("A");
-  protected final Pin inputB = new Pin("B");
+public class Mux16BusTest {
+  protected final List<Pin> inputA = Pin.create16("inputA");
+  protected final List<Pin> inputB = Pin.create16("inputB");
   protected final Pin selector = new Pin("Selector");
-  protected final Pin output = new Pin("Output");
+  protected final List<Pin> output = Pin.create16("output");
 
-  protected MultiplexorPrimitiveGate gate;
+  protected Mux16Bus gate;
   protected boolean[][] truthTable;
 
   @Before
   public void setUp() {
-    gate = new MultiplexorPrimitiveGate(inputA, inputB, selector, output);
+    gate = new Mux16Bus(inputA, inputB, selector, output);
     truthTable = createTruthTable();
   }
 
@@ -39,15 +41,15 @@ public class MultiplexorPrimitiveGateTest {
 
       gate.reset();
 
-      inputA.setValue(inputAValue);
-      inputB.setValue(inputBValue);
+      inputA.forEach(p -> p.setValue(inputAValue));
+      inputB.forEach(p -> p.setValue(inputBValue));
       selector.setValue(selectorValue);
 
       gate.eval();
 
       String msg = String.format("When A is %s, B is %s, and selector is %s, expected output is %s",
           inputAValue, inputBValue, selectorValue, expectedOutputValue);
-      assertTrue(msg, expectedOutputValue == output.getValue());
+      assertTrue(msg, output.stream().allMatch(p -> p.getValue() == expectedOutputValue));
     }
   }
 
