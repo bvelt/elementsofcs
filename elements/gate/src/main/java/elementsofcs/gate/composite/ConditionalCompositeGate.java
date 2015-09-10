@@ -8,7 +8,7 @@ import elementsofcs.gate.Pin;
  * IF/THEN conditional gate composed of NOT and OR internal gates.
  * 
  * <pre>
- * X -> Y = OR(NOT(X), Y)
+ * IF X, THEN Y = OR(NOT(X), Y)
  * </pre>
  * 
  * @author brentvelthoen

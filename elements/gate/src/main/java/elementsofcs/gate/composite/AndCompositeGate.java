@@ -8,7 +8,9 @@ import elementsofcs.gate.primitive.NAndPrimitiveGate;
 /**
  * AND composite gate composed of three internal NAND gates.
  * 
- * AND(X,Y) = NAND(NAND(X,Y),NAND(X,Y))
+ * <pre>
+ * AND(X, Y) = NAND(NAND(X, Y), NAND(X, Y))
+ * </pre>
  * 
  * @author brentvelthoen
  *
