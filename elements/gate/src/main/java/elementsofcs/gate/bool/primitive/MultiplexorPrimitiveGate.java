@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.PrimitiveGate;
+import elementsofcs.gate.bool.BooleanGate;
 
 /**
  * Multiplexor gate that outputs value of either input A or B based on selector
@@ -11,7 +12,7 @@ import elementsofcs.gate.PrimitiveGate;
  * @author brentvelthoen
  *
  */
-public class MultiplexorPrimitiveGate implements PrimitiveGate {
+public class MultiplexorPrimitiveGate implements PrimitiveGate, BooleanGate {
 
   private final Pin inputA;
   private final Pin inputB;

@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
+import elementsofcs.gate.bool.BooleanGate;
 import elementsofcs.gate.bool.primitive.AndPrimitiveGate;
 import elementsofcs.gate.bool.primitive.XOrPrimitiveGate;
 
@@ -25,7 +26,7 @@ import elementsofcs.gate.bool.primitive.XOrPrimitiveGate;
  * @author brentvelthoen
  *
  */
-public class HalfAdderGate implements CompositeGate {
+public class HalfAdderGate implements BooleanGate, CompositeGate {
 
   private final Pin inputA;
   private final Pin inputB;

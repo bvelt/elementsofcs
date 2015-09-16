@@ -4,32 +4,21 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.bus.Mux16Bus;
 
 public class Mux16BusTest {
-  protected final List<Pin> inputA = Pin.create16("inputA");
-  protected final List<Pin> inputB = Pin.create16("inputB");
-  protected final Pin selector = new Pin("Selector");
-  protected final List<Pin> output = Pin.create16("output");
+  private final List<Pin> inputA = Pin.create16("inputA");
+  private final List<Pin> inputB = Pin.create16("inputB");
+  private final Pin selector = new Pin("Selector");
+  private final List<Pin> output = Pin.create16("output");
 
-  protected Mux16Bus gate;
-  protected boolean[][] truthTable;
+  private Mux16Bus gate = new Mux16Bus(inputA, inputB, selector, output);
 
-  @Before
-  public void setUp() {
-    gate = new Mux16Bus(inputA, inputB, selector, output);
-    truthTable = createTruthTable();
-  }
-
-  protected boolean[][] createTruthTable() {
-    return new boolean[][] {
-        { true, false, true, true },
-        { false, true, false, true } };
-  };
+  private boolean[][] truthTable = new boolean[][] {
+      { true, false, true, true },
+      { false, true, false, true } };;
 
   @Test
   public void outputsShouldMatchExpectedOutputsInTruthTable() {

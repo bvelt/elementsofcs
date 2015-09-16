@@ -2,32 +2,20 @@ package elementsofcs.gate.bool.primitive;
 
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.primitive.DemultiplexorPrimitiveGate;
 
 public class DemultiplexorPrimitiveGateTest {
-  protected final Pin input = new Pin("Input");
-  protected final Pin selector = new Pin("Selector");
-  protected final Pin outputA = new Pin("OutputA");
-  protected final Pin outputB = new Pin("OutputB");
+  private final Pin input = new Pin("Input");
+  private final Pin selector = new Pin("Selector");
+  private final Pin outputA = new Pin("OutputA");
+  private final Pin outputB = new Pin("OutputB");
 
-  protected DemultiplexorPrimitiveGate gate;
-  protected boolean[][] truthTable;
-
-  @Before
-  public void setUp() {
-    gate = new DemultiplexorPrimitiveGate(input, selector, outputA, outputB);
-    truthTable = createTruthTable();
-  }
-
-  protected boolean[][] createTruthTable() {
-    return new boolean[][] {
-        { true, true, true, false },
-        { true, false, false, true } };
-  };
+  private DemultiplexorPrimitiveGate gate = new DemultiplexorPrimitiveGate(input, selector, outputA, outputB);;
+  private boolean[][] truthTable = new boolean[][] {
+      { true, true, true, false },
+      { true, false, false, true } };;
 
   @Test
   public void outputsShouldMatchExpectedOutputsInTruthTable() {
