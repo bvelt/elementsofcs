@@ -2,25 +2,24 @@ package elementsofcs.gate.sequential;
 
 import java.util.Objects;
 
-import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.primitive.NAndPrimitiveGate;
 
 /**
- * Set/Reset latch composed of two cross-connected NAND gates. Set and Reset
+ * Set/Reset latch composed of two cross-coupled NAND gates. Set and Reset
  * inputs are active low signals (i.e. set to false to assert).
  * 
  * @author brentvelthoen
  *
  */
-public class SRNAndLatch implements CompositeGate {
+public class SRNAndLatch implements SetResetLatch {
 
   private final Pin inputS;
   private final Pin inputR;
   private final Pin outputQ;
 
-  private NAndPrimitiveGate nandX;
-  private NAndPrimitiveGate nandY;
+  private final NAndPrimitiveGate nandX;
+  private final NAndPrimitiveGate nandY;
 
   private final Pin outputNotQ = new Pin("!Q");
   private final Pin outputQNext = new Pin("Q'");
@@ -39,14 +38,17 @@ public class SRNAndLatch implements CompositeGate {
     nandY = new NAndPrimitiveGate(inputR, outputQ, outputNotQNext);
   }
 
+  @Override
   public Pin getInputS() {
     return inputS;
   }
 
+  @Override
   public Pin getInputR() {
     return inputR;
   }
 
+  @Override
   public Pin getOutputQ() {
     return outputQ;
   }

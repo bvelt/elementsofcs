@@ -2,25 +2,24 @@ package elementsofcs.gate.sequential;
 
 import java.util.Objects;
 
-import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.primitive.NOrPrimitiveGate;
 
 /**
- * Set/Reset latch composed of two cross-connected NOR gates. Set and Reset
- * inputs are active high signals (i.e. set to true to assert).
+ * Set/Reset latch composed of two cross-coupled NOR gates. Set and Reset inputs
+ * are active high signals (i.e. set to true to assert).
  * 
  * @author brentvelthoen
  *
  */
-public class SRNOrLatch implements CompositeGate {
+public class SRNOrLatch implements SetResetLatch {
 
   private final Pin inputS;
   private final Pin inputR;
   private final Pin outputQ;
 
-  private NOrPrimitiveGate norX;
-  private NOrPrimitiveGate norY;
+  private final NOrPrimitiveGate norX;
+  private final NOrPrimitiveGate norY;
 
   private final Pin outputNotQ = new Pin("!Q");
   private final Pin outputQNext = new Pin("Q'");
@@ -39,14 +38,17 @@ public class SRNOrLatch implements CompositeGate {
     norY = new NOrPrimitiveGate(inputS, outputQ, outputNotQNext);
   }
 
+  @Override
   public Pin getInputS() {
     return inputS;
   }
 
+  @Override
   public Pin getInputR() {
     return inputR;
   }
 
+  @Override
   public Pin getOutputQ() {
     return outputQ;
   }
