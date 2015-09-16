@@ -3,7 +3,7 @@ package elementsofcs.gate.sequential;
 import java.util.Objects;
 
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.primitive.NAndPrimitiveGate;
+import elementsofcs.gate.bool.primitive.NAndPrimitiveGate;
 
 /**
  * Set/Reset latch composed of two cross-coupled NAND gates. Set and Reset

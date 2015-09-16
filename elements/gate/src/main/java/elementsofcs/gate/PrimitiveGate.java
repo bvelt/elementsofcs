@@ -1,7 +1,7 @@
 package elementsofcs.gate;
 
 /**
- * Gate that computes an elementary boolean function
+ * Gate that represents an elementary digital circuit
  * 
  * @author brentvelthoen
  *

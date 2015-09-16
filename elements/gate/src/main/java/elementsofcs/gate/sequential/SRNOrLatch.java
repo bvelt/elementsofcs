@@ -3,7 +3,7 @@ package elementsofcs.gate.sequential;
 import java.util.Objects;
 
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.primitive.NOrPrimitiveGate;
+import elementsofcs.gate.bool.primitive.NOrPrimitiveGate;
 
 /**
  * Set/Reset latch composed of two cross-coupled NOR gates. Set and Reset inputs
