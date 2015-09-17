@@ -1,6 +1,6 @@
 package elementsofcs.gate.sequential;
 
-import elementsofcs.gate.CompositeGate;
+import elementsofcs.gate.Gate;
 
 /**
  * Gate whose output is a function of present inputs as well as the sequence of
@@ -9,6 +9,6 @@ import elementsofcs.gate.CompositeGate;
  * @author brentvelthoen
  *
  */
-public interface SequentialGate extends CompositeGate {
+public interface SequentialGate extends Gate {
 
 }

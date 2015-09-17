@@ -2,6 +2,7 @@ package elementsofcs.gate.sequential;
 
 import java.util.Objects;
 
+import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.primitive.NOrPrimitiveGate;
 
@@ -12,7 +13,7 @@ import elementsofcs.gate.bool.primitive.NOrPrimitiveGate;
  * @author brentvelthoen
  *
  */
-public class SRNOrLatch implements SetResetLatch {
+public class SRNOrLatch implements SetResetLatch, CompositeGate {
 
   private final Pin inputS;
   private final Pin inputR;

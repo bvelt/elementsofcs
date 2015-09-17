@@ -2,11 +2,14 @@ package elementsofcs.gate.sequential;
 
 import java.util.Objects;
 
+import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.primitive.MultiplexorPrimitiveGate;
 
 /**
  * Single-bit register
+ * 
+ * Specification:
  * 
  * <pre>
  * if load(t - 1) then
@@ -18,7 +21,7 @@ import elementsofcs.gate.bool.primitive.MultiplexorPrimitiveGate;
  * @author brentvelthoen
  *
  */
-public class Bit implements SequentialGate {
+public class Bit implements SequentialGate, CompositeGate {
 
   private final Pin input;
   private final Pin load;
@@ -27,7 +30,7 @@ public class Bit implements SequentialGate {
   private final Pin outputMux = new Pin("outputMux");
 
   private final MultiplexorPrimitiveGate mux;
-  private final PrimitiveDFF dff;
+  private final DataFlipFlop dff;
 
   public Bit(Pin input, Pin load, Pin output) {
     super();
@@ -39,7 +42,7 @@ public class Bit implements SequentialGate {
     this.output = output;
 
     mux = new MultiplexorPrimitiveGate(input, output, load, outputMux);
-    dff = new PrimitiveDFF(outputMux, output);
+    dff = new DataFlipFlop(outputMux, output);
   }
 
   public Pin getInput() {

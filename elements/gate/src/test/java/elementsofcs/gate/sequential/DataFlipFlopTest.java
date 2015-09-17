@@ -6,12 +6,12 @@ import org.junit.Test;
 
 import elementsofcs.gate.Pin;
 
-public class PrimitiveDFFTest {
+public class DataFlipFlopTest {
 
   private final Pin input = new Pin("In");
   private final Pin output = new Pin("Out");
 
-  private final PrimitiveDFF gate = new PrimitiveDFF(input, output);
+  private final DataFlipFlop gate = new DataFlipFlop(input, output);
 
   // | In | Out |
   private final boolean[][] truthTable = new boolean[][] {
