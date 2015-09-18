@@ -7,12 +7,14 @@ import org.junit.Test;
 import elementsofcs.gate.Pin;
 
 public class DMuxPrimitiveGateTest {
+
   private final Pin input = new Pin("Input");
   private final Pin selector = new Pin("Selector");
   private final Pin outputA = new Pin("OutputA");
   private final Pin outputB = new Pin("OutputB");
 
-  private DMuxPrimitiveGate gate = new DMuxPrimitiveGate(input, selector, outputA, outputB);;
+  private DMuxPrimitiveGate gate = new DMuxPrimitiveGate(input, selector, outputA, outputB);
+
   private boolean[][] truthTable = new boolean[][] {
       { true, true, true, false },
       { true, false, false, true },

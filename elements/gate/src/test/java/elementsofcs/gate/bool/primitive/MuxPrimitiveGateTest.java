@@ -7,12 +7,14 @@ import org.junit.Test;
 import elementsofcs.gate.Pin;
 
 public class MuxPrimitiveGateTest {
+
   private final Pin inputA = new Pin("A");
   private final Pin inputB = new Pin("B");
   private final Pin selector = new Pin("Selector");
   private final Pin output = new Pin("Output");
 
-  private MuxPrimitiveGate gate = new MuxPrimitiveGate(inputA, inputB, selector, output);;
+  private MuxPrimitiveGate gate = new MuxPrimitiveGate(inputA, inputB, selector, output);
+
   private boolean[][] truthTable = new boolean[][] {
       { true, true, true, true },
       { true, true, false, true },
