@@ -2,52 +2,65 @@ package elementsofcs.gate.bool.composite;
 
 import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.AbstractBinaryPredicateGate;
+import elementsofcs.gate.bool.BinaryPredicateGate;
 import elementsofcs.gate.bool.primitive.NAndPrimitiveGate;
 
 /**
- * OR composite gate composed of three internal NAND gates.
+ * OR composite gate composed of internal NAND gates
  * 
  * <pre>
- * OR(X, Y) = NAND(NAND(X, X), NAND(Y, Y))
+ * OR(A, B) = NAND(NAND(A, A), NAND(B, B))
  * </pre>
  * 
  * @author brentvelthoen
  *
  */
-public class OrCompositeGate extends AbstractBinaryPredicateGate implements CompositeGate {
+public class OrCompositeGate implements BinaryPredicateGate, CompositeGate {
 
-  private final NAndPrimitiveGate nandA;
-  private final NAndPrimitiveGate nandB;
-  private final NAndPrimitiveGate nandC;
-
-  private final Pin internalA = new Pin("internalA");
-  private final Pin internalB = new Pin("internalB");
+  private final NAndPrimitiveGate nandX;
+  private final NAndPrimitiveGate nandY;
+  private final NAndPrimitiveGate nandZ;
 
   public OrCompositeGate(Pin inputA, Pin inputB, Pin output) {
-    super(inputA, inputB, output);
-    nandA = new NAndPrimitiveGate(inputA, inputA, internalA);
-    nandB = new NAndPrimitiveGate(inputB, inputB, internalB);
-    nandC = new NAndPrimitiveGate(internalA, internalB, output);
+    Pin outAnandA = new Pin("outAnandA");
+    Pin outBnandB = new Pin("outBnandB");
+    nandX = new NAndPrimitiveGate(inputA, inputA, outAnandA);
+    nandY = new NAndPrimitiveGate(inputB, inputB, outBnandB);
+    nandZ = new NAndPrimitiveGate(outAnandA, outBnandB, output);
+  }
+
+  @Override
+  public Pin getInputA() {
+    return nandX.getInputA();
+  }
+
+  @Override
+  public Pin getInputB() {
+    return nandY.getInputA();
+  }
+
+  @Override
+  public Pin getOutput() {
+    return nandZ.getOutput();
   }
 
   @Override
   public void eval() {
-    nandA.eval();
-    nandB.eval();
-    nandC.eval();
+    nandX.eval();
+    nandY.eval();
+    nandZ.eval();
   }
 
   @Override
   public void reset() {
-    nandA.reset();
-    nandB.reset();
-    nandC.reset();
+    nandX.reset();
+    nandY.reset();
+    nandZ.reset();
   }
 
   @Override
   public String toString() {
-    return "OrCompositeGate [nandA=" + nandA + ", nandB=" + nandB + ", nandC=" + nandC + "]";
+    return "OrCompositeGate [nandX=" + nandX + ", nandY=" + nandY + ", nandZ=" + nandZ + "]";
   }
 
 }

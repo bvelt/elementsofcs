@@ -5,7 +5,7 @@ import elementsofcs.gate.PrimitiveGate;
 import elementsofcs.gate.bool.AbstractUnaryPredicateGate;
 
 /**
- * Single-input gate that implements boolean NOT function (i.e. negation)
+ * Gate that implements boolean NOT function (i.e. negation)
  * 
  * @author brentvelthoen
  *
