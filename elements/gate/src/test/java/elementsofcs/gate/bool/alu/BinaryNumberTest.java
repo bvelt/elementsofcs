@@ -1,7 +1,7 @@
 package elementsofcs.gate.bool.alu;
 
 import static elementsofcs.gate.bool.alu.BinaryNumber.increment;
-import static elementsofcs.gate.bool.alu.BinaryNumber.maximumUnsignedValue;
+import static elementsofcs.gate.bool.alu.BinaryNumber.maximumUnsignedLong;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class BinaryNumberTest {
 
   @Test
   public void computeUnsignedLongUpToMaxValueOfInputArray() {
-    for (long expect = 0L, max = maximumUnsignedValue(input); expect < max; expect++, increment(input)) {
+    for (long expect = 0L, max = maximumUnsignedLong(input); expect < max; expect++, increment(input)) {
       long actual = BinaryNumber.unsignedToLong(input);
       assertTrue("Expected " + expect + " but was " + actual, expect == actual);
     }

@@ -9,7 +9,7 @@ public class BinaryNumber {
   private BinaryNumber() {
   }
 
-  public static long powerOf2(int exponent) {
+  public static long powerOf2AsLong(int exponent) {
     long acc = 1L;
     for (int i = 0; i < exponent; i++) {
       acc *= 2L;
@@ -17,16 +17,20 @@ public class BinaryNumber {
     return acc;
   }
 
-  public static long maximumUnsignedValue(List<Pin> binaryNumber) {
-    return powerOf2(binaryNumber.size());
+  public static int maximumUnsignedInt(List<Pin> binaryNumber) {
+    return (int) maximumUnsignedLong(binaryNumber);
   }
 
-  public static long maximumSignedValue(List<Pin> binaryNumber) {
-    return powerOf2(binaryNumber.size() - 1) - 1;
+  public static long maximumUnsignedLong(List<Pin> binaryNumber) {
+    return powerOf2AsLong(binaryNumber.size());
   }
 
-  public static long minimumSignedValue(List<Pin> binaryNumber) {
-    return powerOf2(binaryNumber.size() - 1) * -1;
+  public static long maximumSignedLong(List<Pin> binaryNumber) {
+    return powerOf2AsLong(binaryNumber.size() - 1) - 1;
+  }
+
+  public static long minimumSignedLong(List<Pin> binaryNumber) {
+    return powerOf2AsLong(binaryNumber.size() - 1) * -1;
   }
 
   public static long unsignedToLong(List<Pin> binaryNumber) {
@@ -38,6 +42,10 @@ public class BinaryNumber {
       }
     }
     return result;
+  }
+
+  public static int unsignedToInt(List<Pin> binaryNumber) {
+    return (int) unsignedToLong(binaryNumber);
   }
 
   public static void increment(List<Pin> binaryNumber) {

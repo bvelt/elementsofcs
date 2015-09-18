@@ -8,13 +8,13 @@ import org.junit.Test;
 
 import elementsofcs.gate.Pin;
 
-public class Register16Test {
+public class RegisterTest {
 
   private final List<Pin> input = Pin.create16("in");
   private final List<Pin> output = Pin.create16("out");
   private final Pin load = new Pin("load");
 
-  private final Register16 register = new Register16(input, load, output);
+  private final Register register = new Register(Pin.SIZE_16, input, load, output);
 
   // | In(t - 1) | Out(t - 1) | Load(t - 1) | Out(t) (when Load(t)=0) |
   private final boolean[][] truthTable = new boolean[][] {
