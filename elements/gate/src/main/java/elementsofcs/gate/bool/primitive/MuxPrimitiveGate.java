@@ -12,14 +12,14 @@ import elementsofcs.gate.bool.BooleanGate;
  * @author brentvelthoen
  *
  */
-public class MultiplexorPrimitiveGate implements PrimitiveGate, BooleanGate {
+public class MuxPrimitiveGate implements PrimitiveGate, BooleanGate {
 
   private final Pin inputA;
   private final Pin inputB;
   private final Pin selector;
   private final Pin output;
 
-  public MultiplexorPrimitiveGate(Pin inputA, Pin inputB, Pin selector, Pin output) {
+  public MuxPrimitiveGate(Pin inputA, Pin inputB, Pin selector, Pin output) {
     super();
     Objects.requireNonNull(inputA, "inputA");
     Objects.requireNonNull(inputB, "inputB");
@@ -62,7 +62,7 @@ public class MultiplexorPrimitiveGate implements PrimitiveGate, BooleanGate {
 
   @Override
   public String toString() {
-    return "MultiplexorPrimitiveGate [inputA=" + inputA + ", inputB=" + inputB + ", selector=" + selector + ", output=" + output + "]";
+    return "MuxPrimitiveGate [inputA=" + inputA + ", inputB=" + inputB + ", selector=" + selector + ", output=" + output + "]";
   }
 
 }

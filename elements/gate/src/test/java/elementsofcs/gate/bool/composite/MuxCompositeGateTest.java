@@ -1,4 +1,4 @@
-package elementsofcs.gate.bool.primitive;
+package elementsofcs.gate.bool.composite;
 
 import static org.junit.Assert.assertTrue;
 
@@ -6,16 +6,23 @@ import org.junit.Test;
 
 import elementsofcs.gate.Pin;
 
-public class MultiplexorPrimitiveGateTest {
+public class MuxCompositeGateTest {
   private final Pin inputA = new Pin("A");
   private final Pin inputB = new Pin("B");
   private final Pin selector = new Pin("Selector");
   private final Pin output = new Pin("Output");
 
-  private MultiplexorPrimitiveGate gate = new MultiplexorPrimitiveGate(inputA, inputB, selector, output);;
+  private MuxCompositeGate gate = new MuxCompositeGate(inputA, inputB, selector, output);;
+
   private boolean[][] truthTable = new boolean[][] {
+      { true, true, true, true },
+      { true, true, false, true },
       { true, false, true, true },
-      { false, true, false, true } };;
+      { true, false, false, false },
+      { false, true, true, false },
+      { false, true, false, true },
+      { false, false, true, false },
+      { false, false, false, false } };;
 
   @Test
   public void outputsShouldMatchExpectedOutputsInTruthTable() {

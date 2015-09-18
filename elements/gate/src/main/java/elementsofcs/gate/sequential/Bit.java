@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.primitive.MultiplexorPrimitiveGate;
+import elementsofcs.gate.bool.primitive.MuxPrimitiveGate;
 
 /**
  * Single-bit register
@@ -29,7 +29,7 @@ public class Bit implements SequentialGate, CompositeGate {
 
   private final Pin outputMux = new Pin("outputMux");
 
-  private final MultiplexorPrimitiveGate mux;
+  private final MuxPrimitiveGate mux;
   private final DataFlipFlop dff;
 
   public Bit(Pin input, Pin load, Pin output) {
@@ -41,7 +41,7 @@ public class Bit implements SequentialGate, CompositeGate {
     this.load = load;
     this.output = output;
 
-    mux = new MultiplexorPrimitiveGate(input, output, load, outputMux);
+    mux = new MuxPrimitiveGate(input, output, load, outputMux);
     dff = new DataFlipFlop(outputMux, output);
   }
 
