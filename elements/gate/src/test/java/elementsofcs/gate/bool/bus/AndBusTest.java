@@ -7,24 +7,23 @@ import java.util.List;
 import org.junit.Test;
 
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.bus.Or16Bus;
 
-public class Or16BusTest {
+public class AndBusTest {
 
-  private final List<Pin> inputA = Pin.createList("inputA", 16);
-  private final List<Pin> inputB = Pin.createList("inputB", 16);
-  private final List<Pin> output = Pin.createList("output", 16);
+  private final List<Pin> inputA = Pin.create16("inputA");
+  private final List<Pin> inputB = Pin.create16("inputB");
+  private final List<Pin> output = Pin.create16("output");
 
-  private final Or16Bus bus = new Or16Bus(inputA, inputB, output);
+  private final AndBus bus = AndBus.create16(inputA, inputB, output);
 
   private final boolean[][] truthTable = new boolean[][] {
       { true, true, true },
-      { true, false, true },
-      { false, true, true },
+      { true, false, false },
+      { false, true, false },
       { false, false, false } };
 
   @Test
-  public void verifyOr16Bus() {
+  public void verifyAnd16Bus() {
     for (int i = 0; i < truthTable.length; i++) {
       bus.reset();
 

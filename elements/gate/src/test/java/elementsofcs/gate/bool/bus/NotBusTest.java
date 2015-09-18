@@ -2,15 +2,22 @@ package elementsofcs.gate.bool.bus;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.junit.Test;
 
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.bus.Not16Bus;
 
-public class Not16BusTest {
+public class NotBusTest {
 
-  private final Not16Bus bus = new Not16Bus(Pin.createList("inputA", 16), Pin.createList("output", 16));
-  private final boolean[][] truthTable = new boolean[][] { { true, false }, { false, true } };
+  private final List<Pin> input = Pin.create16("input");
+  private final List<Pin> output = Pin.create16("output");
+
+  private final NotBus bus = NotBus.create16(input, output);
+
+  private final boolean[][] truthTable = new boolean[][] {
+      { true, false },
+      { false, true } };
 
   @Test
   public void verifyNot16Bus() {

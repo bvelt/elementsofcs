@@ -8,13 +8,14 @@ import org.junit.Test;
 
 import elementsofcs.gate.Pin;
 
-public class Mux16BusTest {
+public class MuxBusTest {
+
   private final List<Pin> inputA = Pin.create16("inputA");
   private final List<Pin> inputB = Pin.create16("inputB");
   private final Pin selector = new Pin("Selector");
   private final List<Pin> output = Pin.create16("output");
 
-  private Mux16Bus gate = new Mux16Bus(inputA, inputB, selector, output);
+  private MuxBus gate = MuxBus.create16(inputA, inputB, selector, output);
 
   private boolean[][] truthTable = new boolean[][] {
       { true, false, true, true },

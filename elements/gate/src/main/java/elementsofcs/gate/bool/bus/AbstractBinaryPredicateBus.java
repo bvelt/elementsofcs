@@ -3,12 +3,12 @@ package elementsofcs.gate.bool.bus;
 import static elementsofcs.gate.Pin.checkListSize;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
+import elementsofcs.gate.bool.BinaryPredicateGate;
 
 /**
  * Bus that computes a two-argument boolean predicate on each pair of pins at
@@ -20,36 +20,39 @@ import elementsofcs.gate.Pin;
  */
 public abstract class AbstractBinaryPredicateBus implements Bus {
 
+  protected final int size;
+
   protected final List<Pin> inputA;
   protected final List<Pin> inputB;
   protected final List<Pin> output;
-  protected final List<Gate> gates;
-  protected final int size;
+
+  protected final List<BinaryPredicateGate> gates = new ArrayList<BinaryPredicateGate>();
 
   public AbstractBinaryPredicateBus(int size, List<Pin> inputA, List<Pin> inputB, List<Pin> output) {
     super();
     this.size = size;
+
     Objects.requireNonNull(inputA, "inputA");
     checkListSize(inputA, size, "inputA");
+    this.inputA = inputA;
+
     Objects.requireNonNull(inputB, "inputB");
     checkListSize(inputB, size, "inputB");
+    this.inputB = inputB;
+
     Objects.requireNonNull(output, "output");
     checkListSize(output, size, "output");
-    this.inputA = Collections.unmodifiableList(inputA);
-    this.inputB = Collections.unmodifiableList(inputB);
-    this.output = Collections.unmodifiableList(output);
-    this.gates = Collections.unmodifiableList(createGates());
+    this.output = output;
+
+    initializeGates();
   }
 
-  protected abstract Gate createGate(Pin inA, Pin inB, Pin out);
+  protected abstract BinaryPredicateGate createGate(Pin inA, Pin inB, Pin out);
 
-  private List<Gate> createGates() {
-    List<Gate> gs = new ArrayList<Gate>(size);
+  protected void initializeGates() {
     for (int i = 0; i < size; i++) {
-      Gate g = createGate(inputA.get(i), inputB.get(i), output.get(i));
-      gs.add(g);
+      gates.add(createGate(inputA.get(i), inputB.get(i), output.get(i)));
     }
-    return gs;
   }
 
   @Override

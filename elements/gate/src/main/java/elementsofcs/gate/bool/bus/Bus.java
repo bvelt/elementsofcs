@@ -11,4 +11,5 @@ import elementsofcs.gate.bool.BooleanGate;
  *
  */
 public interface Bus extends BooleanGate, CompositeGate {
+
 }

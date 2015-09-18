@@ -7,14 +7,13 @@ import java.util.List;
 import org.junit.Test;
 
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.bus.Or8WayBus;
 
-public class Or8WayBusTest {
+public class OrNWayBusTest {
 
   private final List<Pin> input = Pin.create8("input");
   private final Pin output = new Pin("output");
 
-  private final Or8WayBus bus = new Or8WayBus(input, output);
+  private final OrNWayBus bus = OrNWayBus.create8(input, output);
 
   private final boolean[][] truthTable = new boolean[][] {
       { true, false, false, false, false, false, false, false, true },

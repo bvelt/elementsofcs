@@ -3,12 +3,12 @@ package elementsofcs.gate.bool.bus;
 import static elementsofcs.gate.Pin.checkListSize;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
+import elementsofcs.gate.bool.UnaryPredicateGate;
 
 /**
  * Bus that computes a one-argument boolean function on each pin of an input
@@ -20,32 +20,34 @@ import elementsofcs.gate.Pin;
  */
 public abstract class AbstractUnaryPredicateBus implements Bus {
 
+  protected final int size;
+
   protected final List<Pin> input;
   protected final List<Pin> output;
-  protected final List<Gate> gates;
-  protected final int size;
+
+  protected final List<UnaryPredicateGate> gates = new ArrayList<UnaryPredicateGate>();
 
   public AbstractUnaryPredicateBus(int size, List<Pin> input, List<Pin> output) {
     super();
     this.size = size;
+
     Objects.requireNonNull(input, "input");
     checkListSize(input, size, "input");
+    this.input = input;
+
     Objects.requireNonNull(output, "output");
     checkListSize(output, size, "output");
-    this.input = Collections.unmodifiableList(input);
-    this.output = Collections.unmodifiableList(output);
-    this.gates = Collections.unmodifiableList(createGates());
+    this.output = output;
+
+    initializeGates();
   }
 
-  protected abstract Gate createGate(Pin in, Pin out);
+  protected abstract UnaryPredicateGate createGate(Pin in, Pin out);
 
-  private List<Gate> createGates() {
-    List<Gate> gs = new ArrayList<Gate>(size);
+  protected void initializeGates() {
     for (int i = 0; i < size; i++) {
-      Gate g = createGate(input.get(i), output.get(i));
-      gs.add(g);
+      gates.add(createGate(input.get(i), output.get(i)));
     }
-    return gs;
   }
 
   @Override
