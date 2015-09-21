@@ -35,35 +35,25 @@ public class Mux4Way16 implements Bus {
 
   public Mux4Way16(List<Pin> inputA, List<Pin> inputB, List<Pin> inputC, List<Pin> inputD, List<Pin> select, List<Pin> output) {
     super();
-    Objects.requireNonNull(inputA, "inputA");
-    Pin.checkListSize(inputA, Pin.SIZE_16, "inputA");
     this.inputA = inputA;
-    Objects.requireNonNull(inputB, "inputB");
-    Pin.checkListSize(inputB, Pin.SIZE_16, "inputB");
     this.inputB = inputB;
-    Objects.requireNonNull(inputC, "inputC");
-    Pin.checkListSize(inputC, Pin.SIZE_16, "inputC");
     this.inputC = inputC;
-    Objects.requireNonNull(inputD, "inputD");
-    Pin.checkListSize(inputD, Pin.SIZE_16, "inputD");
     this.inputD = inputD;
     Objects.requireNonNull(select, "select");
     Pin.checkListSize(select, Pin.SIZE_2, "select");
     this.select = select;
-    Objects.requireNonNull(output, "output");
-    Pin.checkListSize(output, Pin.SIZE_16, "output");
     this.output = output;
 
-    // if sel=X[0] then outAB=a else outAB=b
-    List<Pin> outMuxAB = Pin.create16("outMuxAB");
-    muxX = new MuxBus(Pin.SIZE_16, inputB, inputA, select.get(1), outMuxAB);
+    // if sel=X[1] then outAB=b else outAB=a
+    List<Pin> outAB = Pin.create16("outAB");
+    muxX = new MuxBus(Pin.SIZE_16, inputB, inputA, select.get(1), outAB);
 
-    // if sel=X[0] then outCD=c else outCD=d
-    List<Pin> outMuxCD = Pin.create16("outMuxCD");
-    muxY = new MuxBus(Pin.SIZE_16, inputD, inputC, select.get(1), outMuxCD);
+    // if sel=X[1] then outCD=d else outCD=c
+    List<Pin> outCD = Pin.create16("outCD");
+    muxY = new MuxBus(Pin.SIZE_16, inputD, inputC, select.get(1), outCD);
 
-    // if sel=[0]X then out=outAB else out=outCD
-    muxZ = new MuxBus(Pin.SIZE_16, outMuxCD, outMuxAB, select.get(0), output);
+    // if sel=[1]X then out=outCD else out=outAB
+    muxZ = new MuxBus(Pin.SIZE_16, outCD, outAB, select.get(0), output);
   }
 
   public List<Pin> getInputA() {
