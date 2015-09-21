@@ -22,7 +22,7 @@ public class BinaryNumber {
   }
 
   public static long maximumUnsignedLong(List<Pin> binaryNumber) {
-    return powerOf2AsLong(binaryNumber.size());
+    return powerOf2AsLong(binaryNumber.size()) - 1L;
   }
 
   public static long maximumSignedLong(List<Pin> binaryNumber) {
