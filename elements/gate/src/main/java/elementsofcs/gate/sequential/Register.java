@@ -3,7 +3,6 @@ package elementsofcs.gate.sequential;
 import static elementsofcs.gate.Pin.checkListSize;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,11 +26,11 @@ public class Register implements SequentialGate, CompositeGate {
 
     Objects.requireNonNull(input, "input");
     checkListSize(input, size, "input");
-    this.input = Collections.unmodifiableList(input);
+    this.input = input;
 
     Objects.requireNonNull(output, "output");
     checkListSize(output, size, "output");
-    this.output = Collections.unmodifiableList(output);
+    this.output = output;
 
     Objects.requireNonNull(load, "load");
     this.load = load;

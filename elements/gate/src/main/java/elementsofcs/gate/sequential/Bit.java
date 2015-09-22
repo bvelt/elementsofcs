@@ -30,7 +30,7 @@ public class Bit implements SequentialGate, CompositeGate {
   private final Pin outputMux = new Pin("outputMux");
 
   private final MuxPrimitiveGate mux;
-  private final DataFlipFlop dff;
+  private final DFF dff;
 
   public Bit(Pin input, Pin load, Pin output) {
     super();
@@ -42,7 +42,7 @@ public class Bit implements SequentialGate, CompositeGate {
     this.output = output;
 
     mux = new MuxPrimitiveGate(input, output, load, outputMux);
-    dff = new DataFlipFlop(outputMux, output);
+    dff = new DFF(outputMux, output);
   }
 
   public Pin getInput() {

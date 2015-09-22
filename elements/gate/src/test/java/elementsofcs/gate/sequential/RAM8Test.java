@@ -9,20 +9,18 @@ import org.junit.Test;
 
 import elementsofcs.gate.Pin;
 
-public class RAMTest {
+public class RAM8Test {
 
-  // 8 X 8 RAM bank
   private final int size = 8;
-  private final int width = 8;
+  private final int width = 16;
 
-  // 3 = log(8, 2)
   private final List<Pin> address = Pin.createList("address", 3);
 
-  private final List<Pin> input = Pin.create8("in");
+  private final List<Pin> input = Pin.create16("in");
   private final Pin load = new Pin("load");
-  private final List<Pin> output = Pin.create8("out");
+  private final List<Pin> output = Pin.create16("out");
 
-  private final RAM ram = new RAM(size, width, address, input, load, output);
+  private final RAM8 ram = new RAM8(input, address, load, output);
 
   private final boolean[][] registerValues = new boolean[][] {
       { false, false, false, false, false, false, false, false },
@@ -41,7 +39,7 @@ public class RAMTest {
       // load register at current address
       load.setValue(true);
       for (int j = 0; j < width; j++) {
-        input.get(j).setValue(registerValues[i][j]);
+        input.get(j % 8).setValue(registerValues[i][j % 8]);
       }
       ram.eval();
 
@@ -51,8 +49,8 @@ public class RAMTest {
 
       // verify outputs against original register values
       for (int j = 0; j < width; j++) {
-        boolean expectedOutputValue = registerValues[i][j];
-        boolean actualOutputValue = output.get(j).getValue();
+        boolean expectedOutputValue = registerValues[i][j % 8];
+        boolean actualOutputValue = output.get(j % 8).getValue();
         assertTrue("At row=" + i + ", col=" + j + ", expecting " + expectedOutputValue,
             expectedOutputValue == actualOutputValue);
       }
