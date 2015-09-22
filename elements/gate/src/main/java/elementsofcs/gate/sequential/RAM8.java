@@ -8,8 +8,19 @@ import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.bus.DMux8Way;
 import elementsofcs.gate.bool.bus.Mux8Way16;
-import elementsofcs.gate.bool.bus.MuxBus;
 
+/**
+ * Memory bank composed of 8 rows of 16-bit registers
+ * 
+ * <pre>
+ * out(t) = RAM[address(t)](t)
+ * if load(t - 1) then
+ *   RAM[address(t - 1)](t) = in(t - 1)
+ * </pre>
+ * 
+ * @author brentvelthoen
+ *
+ */
 public class RAM8 implements SequentialGate, CompositeGate {
 
   private final List<Pin> input;
@@ -17,20 +28,9 @@ public class RAM8 implements SequentialGate, CompositeGate {
   private final Pin load;
   private final List<Pin> output;
 
-  private final List<Pin> registerA = Pin.create16("registerA");
-  private final List<Pin> registerB = Pin.create16("registerB");
-  private final List<Pin> registerC = Pin.create16("registerC");
-  private final List<Pin> registerD = Pin.create16("registerD");
-  private final List<Pin> registerE = Pin.create16("registerE");
-  private final List<Pin> registerF = Pin.create16("registerF");
-  private final List<Pin> registerG = Pin.create16("registerF");
-  private final List<Pin> registerH = Pin.create16("registerH");
-  private final Mux8Way16 muxRegistersToOutput;
-
-  private final List<Pin> inputNext = Pin.create16("inputNext");
-  private final MuxBus muxInAndOutToInNext;
-
-  private final List<DMux8Way> dmuxInputNextToRegister = new ArrayList<DMux8Way>();
+  private final DMux8Way dmuxLoad;
+  private final List<Register> registers = new ArrayList<Register>(Pin.SIZE_8);
+  private final Mux8Way16 muxOutput;
 
   public RAM8(List<Pin> input, List<Pin> address, Pin load, List<Pin> output) {
     super();
@@ -39,17 +39,25 @@ public class RAM8 implements SequentialGate, CompositeGate {
     this.load = load;
     this.output = output;
 
-    muxRegistersToOutput = new Mux8Way16(registerA, registerB, registerC, registerD,
-        registerE, registerF, registerG, registerH, address, output);
+    // dmux load to register loads
+    List<Pin> rload = Pin.create8("rload");
+    dmuxLoad = new DMux8Way(load, address,
+        rload.get(0), rload.get(1), rload.get(2), rload.get(3),
+        rload.get(4), rload.get(5), rload.get(6), rload.get(7));
 
-    muxInAndOutToInNext = MuxBus.create16(input, output, load, inputNext);
-
-    for (int i = 0; i < Pin.SIZE_16; i++) {
-      dmuxInputNextToRegister.add(new DMux8Way(inputNext.get(i), address,
-          registerA.get(i), registerB.get(i), registerC.get(i), registerD.get(i),
-          registerE.get(i), registerF.get(i), registerG.get(i), registerH.get(i)));
+    // init registers
+    for (int i = 0; i < Pin.SIZE_8; i++) {
+      List<Pin> rout = Pin.create16("rout[" + i + "]");
+      registers.add(Register.create16(input, rload.get(i), rout));
     }
 
+    // mux register outputs to output
+    muxOutput = new Mux8Way16(
+        registers.get(0).getOutput(), registers.get(1).getOutput(),
+        registers.get(2).getOutput(), registers.get(3).getOutput(),
+        registers.get(4).getOutput(), registers.get(5).getOutput(),
+        registers.get(6).getOutput(), registers.get(7).getOutput(),
+        address, output);
   }
 
   public List<Pin> getInput() {
@@ -70,16 +78,16 @@ public class RAM8 implements SequentialGate, CompositeGate {
 
   @Override
   public void eval() {
-    muxRegistersToOutput.eval();
-    muxInAndOutToInNext.eval();
-    dmuxInputNextToRegister.forEach(Gate::eval);
+    dmuxLoad.eval();
+    registers.forEach(Gate::eval);
+    muxOutput.eval();
   }
 
   @Override
   public void reset() {
-    muxRegistersToOutput.reset();
-    muxInAndOutToInNext.reset();
-    dmuxInputNextToRegister.forEach(Gate::reset);
+    dmuxLoad.reset();
+    registers.forEach(Gate::reset);
+    muxOutput.reset();
   }
 
   @Override

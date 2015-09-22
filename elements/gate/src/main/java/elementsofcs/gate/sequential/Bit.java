@@ -7,9 +7,7 @@ import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.primitive.MuxPrimitiveGate;
 
 /**
- * Single-bit register
- * 
- * Specification:
+ * Single-bit memory cell
  * 
  * <pre>
  * if load(t - 1) then
@@ -27,9 +25,9 @@ public class Bit implements SequentialGate, CompositeGate {
   private final Pin load;
   private final Pin output;
 
-  private final Pin outputMux = new Pin("outputMux");
+  private final Pin inputNext = new Pin("inputNext");
+  private final MuxPrimitiveGate muxInAndOutToInNext;
 
-  private final MuxPrimitiveGate mux;
   private final DFF dff;
 
   public Bit(Pin input, Pin load, Pin output) {
@@ -41,8 +39,9 @@ public class Bit implements SequentialGate, CompositeGate {
     this.load = load;
     this.output = output;
 
-    mux = new MuxPrimitiveGate(input, output, load, outputMux);
-    dff = new DFF(outputMux, output);
+    muxInAndOutToInNext = new MuxPrimitiveGate(input, output, load, inputNext);
+
+    dff = new DFF(inputNext, output);
   }
 
   public Pin getInput() {
@@ -59,19 +58,19 @@ public class Bit implements SequentialGate, CompositeGate {
 
   @Override
   public void eval() {
-    mux.eval();
+    muxInAndOutToInNext.eval();
     dff.eval();
   }
 
   @Override
   public void reset() {
-    mux.reset();
+    muxInAndOutToInNext.reset();
     dff.reset();
   }
 
   @Override
   public String toString() {
-    return "Bit [mux=" + mux + ", dff=" + dff + "]";
+    return "Bit [muxInAndOutToInNext=" + muxInAndOutToInNext + ", dff=" + dff + "]";
   }
 
 }
