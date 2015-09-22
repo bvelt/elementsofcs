@@ -24,6 +24,7 @@ public class Mux4Way16Test {
 
   private final Mux4Way16 gate = new Mux4Way16(inputA, inputB, inputC, inputD, select, output);
 
+  // | Sel[0] | Sel[1] |
   private final boolean[][] perms = new boolean[][] {
       { false, false },
       { false, true },

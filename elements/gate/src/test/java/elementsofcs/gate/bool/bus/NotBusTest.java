@@ -15,6 +15,7 @@ public class NotBusTest {
 
   private final NotBus bus = NotBus.create16(input, output);
 
+  // | In | Out |
   private final boolean[][] truthTable = new boolean[][] {
       { true, false },
       { false, true } };

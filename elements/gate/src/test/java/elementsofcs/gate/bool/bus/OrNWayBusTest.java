@@ -15,6 +15,7 @@ public class OrNWayBusTest {
 
   private final OrNWayBus bus = OrNWayBus.create8(input, output);
 
+  // | In[0]..In[7] | Out |
   private final boolean[][] truthTable = new boolean[][] {
       { true, false, false, false, false, false, false, false, true },
       { false, true, false, false, false, false, false, false, true },
@@ -35,6 +36,7 @@ public class OrNWayBusTest {
       for (int j = 0; j < (truthTable[i].length - 1); j++) {
         bus.getInput().get(j).setValue(truthTable[i][j]);
       }
+
       boolean expectedOutputValue = truthTable[i][8];
 
       bus.eval();

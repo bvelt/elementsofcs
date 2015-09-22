@@ -37,25 +37,50 @@ public class DMux4Way implements Bus {
   public DMux4Way(Pin input, List<Pin> select, Pin outputA, Pin outputB, Pin outputC, Pin outputD) {
     super();
     this.input = input;
+
     Objects.requireNonNull(select, "select");
     Pin.checkListSize(select, 2, "select");
     this.select = select;
+
     this.outputA = outputA;
     this.outputB = outputB;
     this.outputC = outputC;
     this.outputD = outputD;
 
-    // if sel=X[1] then outCD=in, outAB=0 else outCD=0, outAB=in
+    // if sel=[1]X then outCD=in, outAB=0 else outCD=0, outAB=in
     Pin outAB = new Pin("outAB");
     Pin outCD = new Pin("outCD");
     dmuxX = new DMuxCompositeGate(input, select.get(0), outCD, outAB);
 
-    // if sel=[1]X then outB=outAB, outA=0 else outB=0, outA=outAB
+    // if sel=X[1] then outB=outAB, outA=0 else outB=0, outA=outAB
     dmuxY = new DMuxCompositeGate(outAB, select.get(1), outputB, outputA);
 
-    // if sel=[1]X then outD=outCD, outC=0 else outD=0, outC=outCD
+    // if sel=X[1] then outD=outCD, outC=0 else outD=0, outC=outCD
     dmuxZ = new DMuxCompositeGate(outCD, select.get(1), outputD, outputC);
+  }
 
+  public Pin getInput() {
+    return input;
+  }
+
+  public List<Pin> getSelect() {
+    return select;
+  }
+
+  public Pin getOutputA() {
+    return outputA;
+  }
+
+  public Pin getOutputB() {
+    return outputB;
+  }
+
+  public Pin getOutputC() {
+    return outputC;
+  }
+
+  public Pin getOutputD() {
+    return outputD;
   }
 
   @Override

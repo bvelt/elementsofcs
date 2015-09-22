@@ -12,21 +12,30 @@ public class MuxBusTest {
 
   private final List<Pin> inputA = Pin.create16("inputA");
   private final List<Pin> inputB = Pin.create16("inputB");
-  private final Pin selector = new Pin("Selector");
+  private final Pin select = new Pin("select");
   private final List<Pin> output = Pin.create16("output");
 
-  private MuxBus gate = MuxBus.create16(inputA, inputB, selector, output);
+  private MuxBus gate = MuxBus.create16(inputA, inputB, select, output);
 
+  // | A | B | Sel | Out |
   private boolean[][] truthTable = new boolean[][] {
+      { true, true, true, true },
+      { true, true, false, true },
       { true, false, true, true },
-      { false, true, false, true } };;
+      { true, false, false, false },
+      { false, true, true, false },
+      { false, true, false, true },
+      { false, true, true, false },
+      { false, true, false, true }
+  };
 
   @Test
   public void outputsShouldMatchExpectedOutputsInTruthTable() {
     for (int i = 0; i < truthTable.length; i++) {
       boolean inputAValue = truthTable[i][0];
       boolean inputBValue = truthTable[i][1];
-      boolean selectorValue = truthTable[i][2];
+
+      boolean selectBit = truthTable[i][2];
 
       boolean expectedOutputValue = truthTable[i][3];
 
@@ -34,12 +43,13 @@ public class MuxBusTest {
 
       inputA.forEach(p -> p.setValue(inputAValue));
       inputB.forEach(p -> p.setValue(inputBValue));
-      selector.setValue(selectorValue);
+
+      select.setValue(selectBit);
 
       gate.eval();
 
-      String msg = String.format("When A is %s, B is %s, and selector is %s, expected output is %s",
-          inputAValue, inputBValue, selectorValue, expectedOutputValue);
+      String msg = String.format("When A is %s, B is %s, and select is %s, expected output is %s",
+          inputAValue, inputBValue, selectBit, expectedOutputValue);
       assertTrue(msg, output.stream().allMatch(p -> p.getValue() == expectedOutputValue));
     }
   }

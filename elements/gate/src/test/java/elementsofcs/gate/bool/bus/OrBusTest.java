@@ -16,6 +16,7 @@ public class OrBusTest {
 
   private final OrBus bus = OrBus.create16(inputA, inputB, output);
 
+  // | A | B | Out |
   private final boolean[][] truthTable = new boolean[][] {
       { true, true, true },
       { true, false, true },

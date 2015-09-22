@@ -39,8 +39,10 @@ public class DMux4WayTest {
   public void outputsShouldMatchExpectedOutputsInTruthTable() {
     for (int i = 0; i < truthTable.length; i++) {
       boolean inputValue = truthTable[i][0];
-      boolean selectorAValue = truthTable[i][1];
-      boolean selectorBValue = truthTable[i][2];
+
+      boolean select1stBit = truthTable[i][1];
+      boolean select2ndBit = truthTable[i][2];
+
       boolean outputAValue = truthTable[i][3];
       boolean outputBValue = truthTable[i][4];
       boolean outputCValue = truthTable[i][5];
@@ -49,17 +51,18 @@ public class DMux4WayTest {
       gate.reset();
 
       input.setValue(inputValue);
-      select.get(0).setValue(selectorAValue);
-      select.get(1).setValue(selectorBValue);
+
+      select.get(0).setValue(select1stBit);
+      select.get(1).setValue(select2ndBit);
 
       gate.eval();
 
-      String msg = String.format("When input=%s selector=[%s,%s], expecting outputA=%s outputB=%s outputC=%s outputD=%s",
-          inputValue, selectorAValue, selectorBValue, outputAValue, outputBValue, outputCValue, outputDValue);
-      assertTrue(msg, outputAValue == outputA.getValue());
-      assertTrue(msg, outputBValue == outputB.getValue());
-      assertTrue(msg, outputCValue == outputC.getValue());
-      assertTrue(msg, outputDValue == outputD.getValue());
+      String msg = String.format("When input=%s selector=[%s,%s], expecting output",
+          inputValue, select1stBit, select2ndBit);
+      assertTrue(msg + "A=" + outputAValue, outputAValue == outputA.getValue());
+      assertTrue(msg + "B=" + outputBValue, outputBValue == outputB.getValue());
+      assertTrue(msg + "C=" + outputCValue, outputCValue == outputC.getValue());
+      assertTrue(msg + "D=" + outputDValue, outputDValue == outputD.getValue());
     }
   }
 

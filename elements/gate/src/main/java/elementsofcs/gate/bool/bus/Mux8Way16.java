@@ -45,6 +45,7 @@ public class Mux8Way16 implements Bus {
       List<Pin> inputE, List<Pin> inputF, List<Pin> inputG, List<Pin> inputH,
       List<Pin> select, List<Pin> output) {
     super();
+
     this.inputA = inputA;
     this.inputB = inputB;
     this.inputC = inputC;
@@ -53,18 +54,18 @@ public class Mux8Way16 implements Bus {
     this.inputF = inputF;
     this.inputG = inputG;
     this.inputH = inputH;
+
     Objects.requireNonNull(select, "select");
     Pin.checkListSize(select, 3, "select");
     this.select = select;
+
     this.output = output;
 
     List<Pin> selXY = select.subList(1, 3);
 
-    // [0]XX = muxX
     List<Pin> outABCD = Pin.create16("outABCD");
     muxX = new Mux4Way16(inputA, inputB, inputC, inputD, selXY, outABCD);
 
-    // [1]XX = muxY
     List<Pin> outEFGH = Pin.create16("outEFGH");
     muxY = new Mux4Way16(inputE, inputF, inputG, inputH, selXY, outEFGH);
 
@@ -128,7 +129,8 @@ public class Mux8Way16 implements Bus {
 
   @Override
   public String toString() {
-    return "Mux8Way16 [muxX=" + muxX + ", muxY=" + muxY + ", muxZ=" + muxZ + "]";
+    return "Mux8Way16 [inputA=" + inputA + ", inputB=" + inputB + ", inputC=" + inputC + ", inputD=" + inputD + ", inputE=" + inputE + ", inputF=" + inputF
+        + ", inputG=" + inputG + ", inputH=" + inputH + ", select=" + select + ", output=" + output + "]";
   }
 
 }

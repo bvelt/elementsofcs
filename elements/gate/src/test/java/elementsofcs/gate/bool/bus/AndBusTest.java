@@ -16,6 +16,7 @@ public class AndBusTest {
 
   private final AndBus bus = AndBus.create16(inputA, inputB, output);
 
+  // | A | B | Out |
   private final boolean[][] truthTable = new boolean[][] {
       { true, true, true },
       { true, false, false },

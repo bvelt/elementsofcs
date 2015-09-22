@@ -35,13 +35,16 @@ public class Mux4Way16 implements Bus {
 
   public Mux4Way16(List<Pin> inputA, List<Pin> inputB, List<Pin> inputC, List<Pin> inputD, List<Pin> select, List<Pin> output) {
     super();
+
     this.inputA = inputA;
     this.inputB = inputB;
     this.inputC = inputC;
     this.inputD = inputD;
+
     Objects.requireNonNull(select, "select");
     Pin.checkListSize(select, Pin.SIZE_2, "select");
     this.select = select;
+
     this.output = output;
 
     // if sel=X[1] then outAB=b else outAB=a
@@ -96,7 +99,8 @@ public class Mux4Way16 implements Bus {
 
   @Override
   public String toString() {
-    return "Mux4Way16 [muxX=" + muxX + ", muxY=" + muxY + ", muxZ=" + muxZ + "]";
+    return "Mux4Way16 [inputA=" + inputA + ", inputB=" + inputB + ", inputC=" + inputC + ", inputD=" + inputD + ", select=" + select + ", output=" + output
+        + "]";
   }
 
 }

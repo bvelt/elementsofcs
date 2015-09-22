@@ -29,6 +29,7 @@ public class Mux8Way16Test {
   private final Mux8Way16 gate = new Mux8Way16(inputA, inputB, inputC, inputD,
       inputE, inputF, inputG, inputH, select, output);
 
+  // | Sel[0] | Sel[1] | Sel[2] |
   private final boolean[][] perms = new boolean[][] {
       { false, false, false },
       { false, false, true },
