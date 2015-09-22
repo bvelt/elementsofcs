@@ -11,42 +11,44 @@ import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.bus.Bus;
 
 /**
- * Multibit adder bus composed of array of FullAdder circuits
+ * Multi-bit adder bus composed of list of FullAdderGate circuits
  * 
  * @author brentvelthoen
  *
  */
 public class AdderBus implements Bus {
 
-  public static AdderBus createAdder2(List<Pin> inputA, List<Pin> inputB, List<Pin> output) {
+  public static AdderBus create2(List<Pin> inputA, List<Pin> inputB, List<Pin> output) {
     return new AdderBus(Pin.SIZE_2, inputA, inputB, output);
   }
 
-  public static AdderBus createAdder4(List<Pin> inputA, List<Pin> inputB, List<Pin> output) {
+  public static AdderBus create4(List<Pin> inputA, List<Pin> inputB, List<Pin> output) {
     return new AdderBus(Pin.SIZE_4, inputA, inputB, output);
   }
 
-  public static AdderBus createAdder8(List<Pin> inputA, List<Pin> inputB, List<Pin> output) {
+  public static AdderBus create8(List<Pin> inputA, List<Pin> inputB, List<Pin> output) {
     return new AdderBus(Pin.SIZE_8, inputA, inputB, output);
   }
 
-  public static AdderBus createAdder16(List<Pin> inputA, List<Pin> inputB, List<Pin> output) {
+  public static AdderBus create16(List<Pin> inputA, List<Pin> inputB, List<Pin> output) {
     return new AdderBus(Pin.SIZE_16, inputA, inputB, output);
   }
 
-  public static AdderBus createAdder32(List<Pin> inputA, List<Pin> inputB, List<Pin> output) {
+  public static AdderBus create32(List<Pin> inputA, List<Pin> inputB, List<Pin> output) {
     return new AdderBus(Pin.SIZE_32, inputA, inputB, output);
   }
 
-  public static AdderBus createAdder64(List<Pin> inputA, List<Pin> inputB, List<Pin> output) {
+  public static AdderBus create64(List<Pin> inputA, List<Pin> inputB, List<Pin> output) {
     return new AdderBus(Pin.SIZE_64, inputA, inputB, output);
   }
 
-  protected final int size;
-  protected final List<Pin> inputA;
-  protected final List<Pin> inputB;
-  protected final List<Pin> output;
-  protected final List<Gate> gates;
+  private final int size;
+
+  private final List<Pin> inputA;
+  private final List<Pin> inputB;
+  private final List<Pin> output;
+
+  private final List<FullAdderGate> adders;
 
   public AdderBus(int size, List<Pin> inputA, List<Pin> inputB, List<Pin> output) {
     super();
@@ -60,11 +62,12 @@ public class AdderBus implements Bus {
     this.inputA = inputA;
     this.inputB = inputB;
     this.output = output;
-    this.gates = createGates();
+
+    adders = new ArrayList<FullAdderGate>(size);
+    initializeAdders();
   }
 
-  private List<Gate> createGates() {
-    List<Gate> gs = new ArrayList<Gate>(size);
+  private void initializeAdders() {
     Pin outCarry = null;
     for (int i = size - 1; i >= 0; i--) {
       Pin inCarry = outCarry == null ? new Pin("internal") : outCarry;
@@ -72,15 +75,8 @@ public class AdderBus implements Bus {
       Pin inB = inputB.get(i);
       Pin outSum = output.get(i);
       outCarry = new Pin("internal");
-      Gate g = new FullAdderGate(inCarry, inA, inB, outCarry, outSum);
-      gs.add(g);
+      adders.add(new FullAdderGate(inCarry, inA, inB, outCarry, outSum));
     }
-    return gs;
-  }
-
-  @Override
-  public void eval() {
-    gates.forEach(Gate::eval);
   }
 
   public List<Pin> getInputA() {
@@ -100,13 +96,18 @@ public class AdderBus implements Bus {
   }
 
   @Override
+  public void eval() {
+    adders.forEach(Gate::eval);
+  }
+
+  @Override
   public void reset() {
-    gates.forEach(Gate::reset);
+    adders.forEach(Gate::reset);
   }
 
   @Override
   public String toString() {
-    return "AdderBus [size=" + size + ", gates=" + gates + "]";
+    return "AdderBus [size=" + size + ", inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
   }
 
 }

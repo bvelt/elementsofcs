@@ -33,8 +33,8 @@ public class HalfAdderGate implements BooleanGate, CompositeGate {
   private final Pin carry;
   private final Pin sum;
 
-  private final AndPrimitiveGate carryGate;
-  private final XOrPrimitiveGate sumGate;
+  private final AndPrimitiveGate andCarry;
+  private final XOrPrimitiveGate xorSum;
 
   public HalfAdderGate(Pin inputA, Pin inputB, Pin carry, Pin sum) {
     super();
@@ -46,8 +46,9 @@ public class HalfAdderGate implements BooleanGate, CompositeGate {
     this.inputB = inputB;
     this.carry = carry;
     this.sum = sum;
-    carryGate = new AndPrimitiveGate(inputA, inputB, carry);
-    sumGate = new XOrPrimitiveGate(inputA, inputB, sum);
+
+    andCarry = new AndPrimitiveGate(inputA, inputB, carry);
+    xorSum = new XOrPrimitiveGate(inputA, inputB, sum);
   }
 
   public Pin getInputA() {
@@ -68,19 +69,19 @@ public class HalfAdderGate implements BooleanGate, CompositeGate {
 
   @Override
   public void eval() {
-    carryGate.eval();
-    sumGate.eval();
+    andCarry.eval();
+    xorSum.eval();
   }
 
   @Override
   public void reset() {
-    carryGate.reset();
-    sumGate.reset();
+    andCarry.reset();
+    xorSum.reset();
   }
 
   @Override
   public String toString() {
-    return "HalfAdderGate [carryGate=" + carryGate + ", sumGate=" + sumGate + "]";
+    return "HalfAdderGate [inputA=" + inputA + ", inputB=" + inputB + ", carry=" + carry + ", sum=" + sum + "]";
   }
 
 }

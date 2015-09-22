@@ -98,7 +98,7 @@ public class FullAdderGate implements BooleanGate, CompositeGate {
 
   @Override
   public String toString() {
-    return "FullAdderGate [haddAB=" + haddAB + ", haddABC=" + haddABC + ", xorCarry=" + xorCarry + "]";
+    return "FullAdderGate [inputA=" + inputA + ", inputB=" + inputB + ", inputC=" + inputC + ", carry=" + carry + ", sum=" + sum + "]";
   }
 
 }

@@ -9,6 +9,12 @@ public class BinaryNumber {
   private BinaryNumber() {
   }
 
+  public static List<Pin> createOne(int size) {
+    List<Pin> one = Pin.createList("one", size);
+    one.get(one.size() - 1).setValue(true);
+    return one;
+  }
+
   public static long powerOf2AsLong(int exponent) {
     long acc = 1L;
     for (int i = 0; i < exponent; i++) {
