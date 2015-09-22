@@ -47,15 +47,15 @@ public class Mux4Way16 implements Bus {
 
     this.output = output;
 
-    // if sel=X[1] then outAB=b else outAB=a
+    // if sel=X1 then outAB=b else outAB=a
     List<Pin> outAB = Pin.create16("outAB");
     muxX = new MuxBus(Pin.SIZE_16, inputB, inputA, select.get(1), outAB);
 
-    // if sel=X[1] then outCD=d else outCD=c
+    // if sel=X1 then outCD=d else outCD=c
     List<Pin> outCD = Pin.create16("outCD");
     muxY = new MuxBus(Pin.SIZE_16, inputD, inputC, select.get(1), outCD);
 
-    // if sel=[1]X then out=outCD else out=outAB
+    // if sel=1X then out=outCD else out=outAB
     muxZ = new MuxBus(Pin.SIZE_16, outCD, outAB, select.get(0), output);
   }
 

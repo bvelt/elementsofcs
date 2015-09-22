@@ -16,22 +16,49 @@ import elementsofcs.gate.bool.BooleanGate;
  */
 public class MuxCompositeGate implements CompositeGate, BooleanGate {
 
+  private final Pin inputA;
+  private final Pin inputB;
+  private final Pin select;
+  private final Pin output;
+
   private final NotCompositeGate notS;
   private final AndCompositeGate andX;
   private final AndCompositeGate andY;
   private final OrCompositeGate or;
 
-  public MuxCompositeGate(Pin inputA, Pin inputB, Pin selector, Pin output) {
+  public MuxCompositeGate(Pin inputA, Pin inputB, Pin select, Pin output) {
+    super();
+    this.inputA = inputA;
+    this.inputB = inputB;
+    this.select = select;
+    this.output = output;
+
     Pin outNotS = new Pin("outNotS");
-    notS = new NotCompositeGate(selector, outNotS);
+    notS = new NotCompositeGate(select, outNotS);
 
     Pin outX = new Pin("outX");
-    andX = new AndCompositeGate(selector, inputA, outX);
+    andX = new AndCompositeGate(select, inputA, outX);
 
     Pin outY = new Pin("outY");
     andY = new AndCompositeGate(outNotS, inputB, outY);
 
     or = new OrCompositeGate(outX, outY, output);
+  }
+
+  public Pin getInputA() {
+    return inputA;
+  }
+
+  public Pin getInputB() {
+    return inputB;
+  }
+
+  public Pin getSelect() {
+    return select;
+  }
+
+  public Pin getOutput() {
+    return output;
   }
 
   @Override

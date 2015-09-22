@@ -10,7 +10,7 @@ import elementsofcs.gate.bool.composite.MuxCompositeGate;
 
 /**
  * Multi-bit multiplexor that sets output array to either of two input arrays
- * depending on selector
+ * depending on select
  * 
  * @author brentvelthoen
  *
@@ -37,12 +37,12 @@ public class MuxBus implements Bus {
 
   private final List<Pin> inputA;
   private final List<Pin> inputB;
-  private final Pin selector;
+  private final Pin select;
   private final List<Pin> output;
 
   private final List<MuxCompositeGate> gates = new ArrayList<MuxCompositeGate>();
 
-  public MuxBus(int size, List<Pin> inputA, List<Pin> inputB, Pin selector, List<Pin> output) {
+  public MuxBus(int size, List<Pin> inputA, List<Pin> inputB, Pin select, List<Pin> output) {
     super();
     this.size = size;
 
@@ -54,8 +54,8 @@ public class MuxBus implements Bus {
     Pin.checkListSize(inputB, size, "inputB");
     this.inputB = inputB;
 
-    Objects.requireNonNull(selector, "selector");
-    this.selector = selector;
+    Objects.requireNonNull(select, "select");
+    this.select = select;
 
     Objects.requireNonNull(output, "output");
     Pin.checkListSize(output, size, "output");
@@ -66,7 +66,7 @@ public class MuxBus implements Bus {
 
   private void initializeGates() {
     for (int i = 0; i < size; i++) {
-      gates.add(new MuxCompositeGate(inputA.get(i), inputB.get(i), selector, output.get(i)));
+      gates.add(new MuxCompositeGate(inputA.get(i), inputB.get(i), select, output.get(i)));
     }
   }
 
@@ -78,8 +78,8 @@ public class MuxBus implements Bus {
     return inputB;
   }
 
-  public Pin getSelector() {
-    return selector;
+  public Pin getSelect() {
+    return select;
   }
 
   public int getSize() {
@@ -102,7 +102,7 @@ public class MuxBus implements Bus {
 
   @Override
   public String toString() {
-    return "MuxBus [size=" + size + ", inputA=" + inputA + ", inputB=" + inputB + ", selector=" + selector + ", output=" + output + "]";
+    return "MuxBus [size=" + size + ", inputA=" + inputA + ", inputB=" + inputB + ", select=" + select + ", output=" + output + "]";
   }
 
 }

@@ -69,7 +69,7 @@ public class Mux8Way16 implements Bus {
     List<Pin> outEFGH = Pin.create16("outEFGH");
     muxY = new Mux4Way16(inputE, inputF, inputG, inputH, selXY, outEFGH);
 
-    // if sel=[1]XX then out=outEFGH else out=outABCD
+    // if sel=1XX then out=outEFGH else out=outABCD
     muxZ = new MuxBus(Pin.SIZE_16, outEFGH, outABCD, select.get(0), output);
   }
 

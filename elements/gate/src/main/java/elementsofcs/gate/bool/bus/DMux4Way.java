@@ -47,15 +47,15 @@ public class DMux4Way implements Bus {
     this.outputC = outputC;
     this.outputD = outputD;
 
-    // if sel=[1]X then outCD=in, outAB=0 else outCD=0, outAB=in
+    // if sel=1X then outCD=in, outAB=0 else outCD=0, outAB=in
     Pin outAB = new Pin("outAB");
     Pin outCD = new Pin("outCD");
     dmuxX = new DMuxCompositeGate(input, select.get(0), outCD, outAB);
 
-    // if sel=X[1] then outB=outAB, outA=0 else outB=0, outA=outAB
+    // if sel=X1 then outB=outAB, outA=0 else outB=0, outA=outAB
     dmuxY = new DMuxCompositeGate(outAB, select.get(1), outputB, outputA);
 
-    // if sel=X[1] then outD=outCD, outC=0 else outD=0, outC=outCD
+    // if sel=X1 then outD=outCD, outC=0 else outD=0, outC=outCD
     dmuxZ = new DMuxCompositeGate(outCD, select.get(1), outputD, outputC);
   }
 

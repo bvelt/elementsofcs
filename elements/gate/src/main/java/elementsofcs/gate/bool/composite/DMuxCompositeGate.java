@@ -16,18 +16,45 @@ import elementsofcs.gate.bool.BooleanGate;
  */
 public class DMuxCompositeGate implements BooleanGate, CompositeGate {
 
+  private final Pin input;
+  private final Pin select;
+  private final Pin outputA;
+  private final Pin outputB;
+
   private final NotCompositeGate notS;
 
   private final AndCompositeGate andX;
   private final AndCompositeGate andY;
 
-  public DMuxCompositeGate(Pin input, Pin selector, Pin outputA, Pin outputB) {
-    andX = new AndCompositeGate(selector, input, outputA);
+  public DMuxCompositeGate(Pin input, Pin select, Pin outputA, Pin outputB) {
+    super();
+    this.input = input;
+    this.select = select;
+    this.outputA = outputA;
+    this.outputB = outputB;
+
+    andX = new AndCompositeGate(select, input, outputA);
 
     Pin outNotS = new Pin("outNotS");
-    notS = new NotCompositeGate(selector, outNotS);
+    notS = new NotCompositeGate(select, outNotS);
 
     andY = new AndCompositeGate(outNotS, input, outputB);
+  }
+
+  public Pin getInput() {
+    return input;
+  }
+
+  public Pin getSelect() {
+    return select;
+  }
+
+  public Pin getOutputA() {
+    return outputA;
+  }
+
+  public Pin getOutputB() {
+    return outputB;
   }
 
   @Override

@@ -10,16 +10,16 @@ import elementsofcs.gate.Pin;
 
 public class DMux8WayTest {
 
-  private final Pin input = new Pin("Input");
-  private final List<Pin> select = Pin.createList("Select", 3);
-  private final Pin outputA = new Pin("OutputA");
-  private final Pin outputB = new Pin("OutputB");
-  private final Pin outputC = new Pin("OutputC");
-  private final Pin outputD = new Pin("OutputD");
-  private final Pin outputE = new Pin("OutputE");
-  private final Pin outputF = new Pin("OutputF");
-  private final Pin outputG = new Pin("OutputG");
-  private final Pin outputH = new Pin("OutputH");
+  private final Pin input = new Pin("input");
+  private final List<Pin> select = Pin.createList("select", 3);
+  private final Pin outputA = new Pin("outputA");
+  private final Pin outputB = new Pin("outputB");
+  private final Pin outputC = new Pin("outputC");
+  private final Pin outputD = new Pin("outputD");
+  private final Pin outputE = new Pin("outputE");
+  private final Pin outputF = new Pin("outputF");
+  private final Pin outputG = new Pin("outputG");
+  private final Pin outputH = new Pin("outputH");
 
   private DMux8Way gate = new DMux8Way(input, select, outputA, outputB, outputC, outputD, outputE, outputF, outputG, outputH);
 

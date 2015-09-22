@@ -3,7 +3,6 @@ package elementsofcs.gate.bool.alu;
 import static elementsofcs.gate.Pin.checkListSize;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -58,10 +57,10 @@ public class AdderBus implements Bus {
     checkListSize(inputB, size, "inputB");
     Objects.requireNonNull(output, "output");
     checkListSize(output, size, "output");
-    this.inputA = Collections.unmodifiableList(inputA);
-    this.inputB = Collections.unmodifiableList(inputB);
-    this.output = Collections.unmodifiableList(output);
-    this.gates = Collections.unmodifiableList(createGates());
+    this.inputA = inputA;
+    this.inputB = inputB;
+    this.output = output;
+    this.gates = createGates();
   }
 
   private List<Gate> createGates() {

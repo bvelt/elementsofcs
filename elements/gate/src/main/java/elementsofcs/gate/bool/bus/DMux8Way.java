@@ -59,7 +59,7 @@ public class DMux8Way implements Bus {
     this.outputG = outputG;
     this.outputH = outputH;
 
-    // if sel=[1]XX then outEFGH=in, outABCD=0 else outEFGH=0, outABCD=in
+    // if sel=1XX then outEFGH=in, outABCD=0 else outEFGH=0, outABCD=in
     Pin outABCD = new Pin("outABCD");
     Pin outEFGH = new Pin("outEFGH");
     dmuxX = new DMuxCompositeGate(input, select.get(0), outEFGH, outABCD);
