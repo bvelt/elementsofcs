@@ -39,6 +39,10 @@ public final class Pin {
     return createList(prefix, SIZE_16);
   }
 
+  public static List<Pin> fill16(Pin pin) {
+    return fillList(pin, SIZE_16);
+  }
+
   public static List<Pin> create32(String prefix) {
     return createList(prefix, SIZE_32);
   }
@@ -60,6 +64,23 @@ public final class Pin {
     List<Pin> pins = new ArrayList<Pin>(size);
     for (int i = 0; i < size; i++) {
       Pin pin = new Pin(prefix + "[" + i + "]");
+      pins.add(pin);
+    }
+    return pins;
+  }
+
+  /**
+   * Factory method for creating list of pins from a single pin
+   * 
+   * @param pin
+   *          pin to add to each position in list
+   * @param size
+   *          number of pins in list
+   * @return list of pins
+   */
+  public static List<Pin> fillList(Pin pin, int size) {
+    List<Pin> pins = new ArrayList<Pin>(size);
+    while (size-- > 0) {
       pins.add(pin);
     }
     return pins;
