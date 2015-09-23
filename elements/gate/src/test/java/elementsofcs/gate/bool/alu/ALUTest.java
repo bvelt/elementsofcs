@@ -28,9 +28,17 @@ public class ALUTest {
   private final ALU alu = new ALU(x, y, zx, nx, zy, ny, f, no, out, zr, ng);
 
   @Test
-  public void zx() {
+  public void zeroXInputIfZXIsTrue() {
+    zeroInputIfSelectIsTrue(x, zx);
+  }
 
-    // | zx | x | x' |
+  @Test
+  public void zeroYInputIfZYIsTrue() {
+    zeroInputIfSelectIsTrue(y, zy);
+  }
+
+  protected void zeroInputIfSelectIsTrue(List<Pin> in, Pin sel) {
+    // | sel | in | in' |
     final boolean tt[][] = new boolean[][] {
         { true, false, false },
         { true, true, false },
@@ -41,24 +49,32 @@ public class ALUTest {
     for (int i = 0; i < tt.length; i++) {
       alu.reset();
 
-      final boolean bzx = tt[i][0];
-      final boolean bx = tt[i][1];
-      final boolean bxout = tt[i][2];
+      final boolean bsel = tt[i][0];
+      final boolean bin = tt[i][1];
+      final boolean binnext = tt[i][2];
 
-      zx.setValue(bzx);
-      x.forEach(p -> p.setValue(bx));
+      sel.setValue(bsel);
+      in.forEach(p -> p.setValue(bin));
 
       alu.eval();
 
-      assertTrue(x.stream().allMatch(p -> p.getValue() == bxout));
-
+      assertTrue(in.stream().allMatch(p -> p.getValue() == binnext));
     }
   }
 
   @Test
-  public void nx() {
+  public void negateXInputIfNXIsTrue() {
+    negateInputIfSelectIsTrue(x, nx);
+  }
 
-    // | nx | x | x' |
+  @Test
+  public void negateYInputIfNYIsTrue() {
+    negateInputIfSelectIsTrue(y, ny);
+  }
+
+  protected void negateInputIfSelectIsTrue(List<Pin> in, Pin sel) {
+
+    // | sel | in | in' |
     final boolean tt[][] = new boolean[][] {
         { true, false, true },
         { true, true, false },
@@ -69,75 +85,21 @@ public class ALUTest {
     for (int i = 0; i < tt.length; i++) {
       alu.reset();
 
-      final boolean bnx = tt[i][0];
-      final boolean bx = tt[i][1];
-      final boolean bxout = tt[i][2];
+      final boolean bsel = tt[i][0];
+      final boolean bin = tt[i][1];
+      final boolean binnext = tt[i][2];
 
-      nx.setValue(bnx);
-      x.forEach(p -> p.setValue(bx));
+      sel.setValue(bsel);
+      in.forEach(p -> p.setValue(bin));
 
       alu.eval();
 
-      assertTrue(x.stream().allMatch(p -> p.getValue() == bxout));
+      assertTrue(in.stream().allMatch(p -> p.getValue() == binnext));
     }
   }
 
   @Test
-  public void zy() {
-
-    // | zy | y | y' |
-    final boolean tt[][] = new boolean[][] {
-        { true, false, false },
-        { true, true, false },
-        { false, false, false },
-        { false, true, true }
-    };
-
-    for (int i = 0; i < tt.length; i++) {
-      alu.reset();
-
-      final boolean bzy = tt[i][0];
-      final boolean by = tt[i][1];
-      final boolean byout = tt[i][2];
-
-      zy.setValue(bzy);
-      y.forEach(p -> p.setValue(by));
-
-      alu.eval();
-
-      assertTrue(y.stream().allMatch(p -> p.getValue() == byout));
-    }
-  }
-
-  @Test
-  public void ny() {
-
-    // | ny | y | y' |
-    final boolean tt[][] = new boolean[][] {
-        { true, false, true },
-        { true, true, false },
-        { false, false, false },
-        { false, true, true }
-    };
-
-    for (int i = 0; i < tt.length; i++) {
-      alu.reset();
-
-      final boolean bny = tt[i][0];
-      final boolean by = tt[i][1];
-      final boolean byout = tt[i][2];
-
-      ny.setValue(bny);
-      y.forEach(p -> p.setValue(by));
-
-      alu.eval();
-
-      assertTrue(y.stream().allMatch(p -> p.getValue() == byout));
-    }
-  }
-
-  @Test
-  public void f() {
+  public void addXYIfFBitIsTrueElseAndXY() {
 
     // | f | x | y | out |
     final boolean tt[][] = new boolean[][] {
@@ -172,7 +134,7 @@ public class ALUTest {
   }
 
   @Test
-  public void no() {
+  public void negateOutputIfNoBitIsTrue() {
 
     // | no | out | out' |
     final boolean tt[][] = new boolean[][] {
@@ -202,7 +164,7 @@ public class ALUTest {
   }
 
   @Test
-  public void zr() {
+  public void zrBitIsTrueIfOutputIsEqualToZero() {
 
     // | out | zr |
     final boolean tt[][] = new boolean[][] {
@@ -226,7 +188,7 @@ public class ALUTest {
   }
 
   @Test
-  public void ng() {
+  public void ngBitIsTrueIfOutputIsLessThanZero() {
 
     // | out | ng |
     final boolean tt[][] = new boolean[][] {

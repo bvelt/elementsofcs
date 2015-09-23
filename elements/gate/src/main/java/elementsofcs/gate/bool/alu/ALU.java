@@ -14,6 +14,23 @@ import elementsofcs.gate.bool.bus.XOrBus;
 import elementsofcs.gate.bool.composite.AndCompositeGate;
 import elementsofcs.gate.bool.composite.NotCompositeGate;
 
+/**
+ * Arithmetic Logic Unit
+ * 
+ * <pre>
+ * if zx=1 then x'=0 else x'=x
+ * if nx=1 then x'=!x else x'=x
+ * if zy=1 then y'=0 else y'=y
+ * if ny=1 then y'=!y else y'=y
+ * if f=1 then out=x + y ('+' = arithmetic addition) else out=x &amp; y
+ * if no=1 then out'=!out else out'=out
+ * zr=1 iff out=0
+ * ng=1 iff out&lt;0
+ * </pre>
+ * 
+ * @author brentvelthoen
+ *
+ */
 public class ALU implements Bus {
 
   // two 16-bit data inputs
@@ -63,51 +80,75 @@ public class ALU implements Bus {
     this.zr = zr;
     this.ng = ng;
 
-    // zx: if zx=1 then x'=0 else x'=x
+    // zx
+    initZeroGate(x, zx);
+    // nx
+    initNegationGate(x, nx);
+    // zy
+    initZeroGate(y, zy);
+    // ny
+    initNegationGate(y, ny);
+    // f
+    initFunctionCodeGate();
+    // no
+    initNegationGate(out, no);
+    // zr
+    initOutputEqualsZeroGate();
+    // ng
+    initOutputLessThanZeroGate();
+  }
 
-    // NOT(zx)
-    Pin notZXOut = new Pin("notZXOut");
-    NotCompositeGate notZXGate = new NotCompositeGate(zx, notZXOut);
-    gates.add(notZXGate);
+  /**
+   * Gate that implements ng=1 iff out&lt;0
+   * 
+   * <pre>
+   * AND(out[0], out[0])
+   * </pre>
+   * 
+   */
+  private void initOutputLessThanZeroGate() {
+    // AND(out[0],out[0])
+    AndCompositeGate andMSBGate = new AndCompositeGate(out.get(0), out.get(0), ng);
+    gates.add(andMSBGate);
+  }
 
-    // AND(NOT(zx), x)
-    AndBus zxGate = AndBus.create16(x, Pin.fill16(notZXOut), x);
-    gates.add(zxGate);
+  /**
+   * Gate that implements zr=1 iff out=0
+   * 
+   * <pre>
+   * NOT(OR(out[0],out[1]..out[15]))
+   * </pre>
+   * 
+   */
+  private void initOutputEqualsZeroGate() {
+    // OR(out[0],out[1]..out[15])
+    Pin orOut = new Pin("orOut");
+    OrNWayBus orGate = new OrNWayBus(Pin.SIZE_16, out, orOut);
+    gates.add(orGate);
 
-    // nx: if nx=1 then x'=!x else x'=x
+    // NOT(OR(out[0],out[1]..out[15]))
+    NotCompositeGate notGate = new NotCompositeGate(orOut, zr);
+    gates.add(notGate);
+  }
 
-    // XOR(nx, x)
-    XOrBus nxGate = XOrBus.create16(x, Pin.fill16(nx), x);
-    gates.add(nxGate);
-
-    // zy: if zy=1 then y'=0 else y'=y
-
-    // NOT(zy)
-    Pin notZYOut = new Pin("notZYOut");
-    NotCompositeGate notZYGate = new NotCompositeGate(zy, notZYOut);
-    gates.add(notZYGate);
-
-    // AND(NOT(zy), y)
-    AndBus zyGate = AndBus.create16(y, Pin.fill16(notZYOut), y);
-    gates.add(zyGate);
-
-    // zy: if zy=1 then y'=!y else y'=y
-
-    // XOR(ny, y)
-    XOrBus nyGate = XOrBus.create16(y, Pin.fill16(ny), y);
-    gates.add(nyGate);
-
-    // f: if f=1 then out=x + y ('+' = addition) else out=x & y
-
+  /**
+   * Function gate that does addition or logical and based on f bit
+   * 
+   * <pre>
+   * OR(AND(f, ADD(x, y)), AND(NOT(f), AND(x, y)))
+   * </pre>
+   * 
+   */
+  private void initFunctionCodeGate() {
     // ADD(x,y)
     List<Pin> addXYOut = Pin.create16("addXYOut");
     AdderBus addXYGate = AdderBus.create16(x, y, addXYOut);
     gates.add(addXYGate);
 
     // AND(f, ADD(x,y))
-    List<Pin> fLeftAndOut = Pin.create16("fLeftAndOut");
-    AndBus fLeftAndGate = AndBus.create16(Pin.fill16(f), addXYOut, fLeftAndOut);
-    gates.add(fLeftAndGate);
+    List<Pin> leftAndOut = Pin.create16("leftAndOut");
+    AndBus leftAndGate = AndBus.create16(Pin.fill16(f), addXYOut, leftAndOut);
+    gates.add(leftAndGate);
 
     // NOT(f)
     Pin notFOut = new Pin("notFOut");
@@ -120,37 +161,50 @@ public class ALU implements Bus {
     gates.add(andXYGate);
 
     // AND(NOT(f), AND(x,y))
-    List<Pin> fRightAndOut = Pin.create16("fRightAndOut");
-    AndBus fRightAndGate = AndBus.create16(Pin.fill16(notFOut), andXYOut, fRightAndOut);
-    gates.add(fRightAndGate);
+    List<Pin> rightAndOut = Pin.create16("rightAndOut");
+    AndBus rightAndGate = AndBus.create16(Pin.fill16(notFOut), andXYOut, rightAndOut);
+    gates.add(rightAndGate);
 
-    // OR(AND(f, ADD(x,y)), AND(NOT(F), AND(x,y)))
-    OrBus fOrGate = OrBus.create16(fLeftAndOut, fRightAndOut, out);
-    gates.add(fOrGate);
+    // OR(AND(f, ADD(x,y)), AND(NOT(f), AND(x,y)))
+    OrBus orGate = OrBus.create16(leftAndOut, rightAndOut, out);
+    gates.add(orGate);
+  }
 
-    // no: if no=1 then out'=!out else out'=out
+  /**
+   * Negate input if select=1
+   * 
+   * <pre>
+   * XOR(in, select)
+   * </pre>
+   * 
+   * @param in
+   * @param select
+   */
+  private void initNegationGate(List<Pin> in, Pin select) {
+    // XOR(in, select)
+    XOrBus negGate = XOrBus.create16(in, Pin.fill16(select), in);
+    gates.add(negGate);
+  }
 
-    // XOR(no, out)
-    XOrBus noGate = XOrBus.create16(Pin.fill16(no), out, out);
-    gates.add(noGate);
+  /**
+   * Zero input if select=1
+   * 
+   * <pre>
+   * AND(NOT(select), in)
+   * </pre>
+   * 
+   * @param in
+   * @param select
+   */
+  private void initZeroGate(List<Pin> in, Pin select) {
+    // NOT(select)
+    Pin notSelectOut = new Pin("notSelectOut");
+    NotCompositeGate notSelectGate = new NotCompositeGate(select, notSelectOut);
 
-    // zr: true iff out=0
-
-    // OR(out[0],out[1]..out[15])
-    Pin orOutsOut = new Pin("orOutsOut");
-    OrNWayBus orOutsGate = new OrNWayBus(Pin.SIZE_16, out, orOutsOut);
-    gates.add(orOutsGate);
-
-    // NOT(OR(out[0],out[1]..out[15]))
-    NotCompositeGate zrGate = new NotCompositeGate(orOutsOut, zr);
-    gates.add(zrGate);
-
-    // ng: true iff out<0
-
-    // AND(out[0],out[0])
-    AndCompositeGate andOutMSB = new AndCompositeGate(out.get(0), out.get(0), ng);
-    gates.add(andOutMSB);
-
+    gates.add(notSelectGate);
+    // AND(NOT(select), in)
+    AndBus zeroGate = AndBus.create16(in, Pin.fill16(notSelectOut), in);
+    gates.add(zeroGate);
   }
 
   public List<Pin> getX() {
