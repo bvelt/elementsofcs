@@ -69,6 +69,14 @@ public final class Pin {
     return pins;
   }
 
+  public static List<Pin> createList(Pin... pins) {
+    List<Pin> out = new ArrayList<Pin>(pins.length);
+    for (Pin p : pins) {
+      out.add(p);
+    }
+    return out;
+  }
+
   /**
    * Factory method for creating list of pins from a single pin
    * 

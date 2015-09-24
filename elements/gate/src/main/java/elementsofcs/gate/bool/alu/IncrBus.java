@@ -73,6 +73,11 @@ public class IncrBus implements Bus {
   @Override
   public void reset() {
     adder.reset();
+    restorInputBToOne();
+  }
+
+  private void restorInputBToOne() {
+    adder.getInputB().get(adder.getInputB().size() - 1).setValue(true);
   }
 
   @Override

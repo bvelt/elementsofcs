@@ -200,8 +200,8 @@ public class ALU implements Bus {
     // NOT(select)
     Pin notSelectOut = new Pin("notSelectOut");
     NotCompositeGate notSelectGate = new NotCompositeGate(select, notSelectOut);
-
     gates.add(notSelectGate);
+
     // AND(NOT(select), in)
     AndBus zeroGate = AndBus.create16(in, Pin.fill16(notSelectOut), in);
     gates.add(zeroGate);
