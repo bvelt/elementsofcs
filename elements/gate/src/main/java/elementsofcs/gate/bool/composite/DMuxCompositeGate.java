@@ -21,10 +21,10 @@ public class DMuxCompositeGate implements BooleanGate, CompositeGate {
   private final Pin outputA;
   private final Pin outputB;
 
-  private final NotCompositeGate notS;
+  private final NotCompositeGate notSelGate;
 
-  private final AndCompositeGate andX;
-  private final AndCompositeGate andY;
+  private final AndCompositeGate outputAGate;
+  private final AndCompositeGate outputBGate;
 
   public DMuxCompositeGate(Pin input, Pin select, Pin outputA, Pin outputB) {
     super();
@@ -33,20 +33,26 @@ public class DMuxCompositeGate implements BooleanGate, CompositeGate {
     this.outputA = outputA;
     this.outputB = outputB;
 
-    andX = new AndCompositeGate(select, input, outputA);
+    // AND(Sel, In)=OutputA
+    outputAGate = new AndCompositeGate(select, input, outputA);
 
-    Pin outNotS = new Pin("outNotS");
-    notS = new NotCompositeGate(select, outNotS);
+    // NOT(Sel)
+    Pin notSelOut = new Pin("notSelOut");
+    notSelGate = new NotCompositeGate(select, notSelOut);
 
-    andY = new AndCompositeGate(outNotS, input, outputB);
+    // AND(NOT(Sel), In)=OutputB
+    outputBGate = new AndCompositeGate(notSelOut, input, outputB);
+  }
+
+  @Override
+  public void eval() {
+    outputAGate.eval();
+    notSelGate.eval();
+    outputBGate.eval();
   }
 
   public Pin getInput() {
     return input;
-  }
-
-  public Pin getSelect() {
-    return select;
   }
 
   public Pin getOutputA() {
@@ -57,23 +63,21 @@ public class DMuxCompositeGate implements BooleanGate, CompositeGate {
     return outputB;
   }
 
-  @Override
-  public void eval() {
-    andX.eval();
-    notS.eval();
-    andY.eval();
+  public Pin getSelect() {
+    return select;
   }
 
   @Override
   public void reset() {
-    andX.reset();
-    notS.reset();
-    andY.reset();
+    outputAGate.reset();
+    notSelGate.reset();
+    outputBGate.reset();
   }
 
   @Override
   public String toString() {
-    return "DMuxCompositeGate [andX=" + andX + ", notS=" + notS + ", andY=" + andY + "]";
+    return "DMuxCompositeGate [getInput()=" + getInput() + ", getOutputA()=" + getOutputA() + ", getOutputB()=" + getOutputB() + ", getSelect()=" + getSelect()
+        + "]";
   }
 
 }

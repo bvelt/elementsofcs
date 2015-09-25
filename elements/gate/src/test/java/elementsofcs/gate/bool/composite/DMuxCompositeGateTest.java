@@ -15,7 +15,7 @@ public class DMuxCompositeGateTest {
 
   private DMuxCompositeGate gate = new DMuxCompositeGate(input, selector, outputA, outputB);
 
-  private boolean[][] truthTable = new boolean[][] {
+  private boolean[][] tt = new boolean[][] {
       { true, true, true, false },
       { true, false, false, true },
       { false, false, false, false },
@@ -23,11 +23,11 @@ public class DMuxCompositeGateTest {
 
   @Test
   public void outputsShouldMatchExpectedOutputsInTruthTable() {
-    for (int i = 0; i < truthTable.length; i++) {
-      boolean inputValue = truthTable[i][0];
-      boolean selectorValue = truthTable[i][1];
-      boolean outputAValue = truthTable[i][2];
-      boolean outputBValue = truthTable[i][3];
+    for (int i = 0; i < tt.length; i++) {
+      boolean inputValue = tt[i][0];
+      boolean selectorValue = tt[i][1];
+      boolean outputAValue = tt[i][2];
+      boolean outputBValue = tt[i][3];
 
       gate.reset();
 

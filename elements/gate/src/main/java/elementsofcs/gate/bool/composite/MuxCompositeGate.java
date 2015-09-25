@@ -21,10 +21,10 @@ public class MuxCompositeGate implements CompositeGate, BooleanGate {
   private final Pin select;
   private final Pin output;
 
-  private final NotCompositeGate notS;
-  private final AndCompositeGate andX;
-  private final AndCompositeGate andY;
-  private final OrCompositeGate or;
+  private final NotCompositeGate notSelGate;
+  private final AndCompositeGate leftSelAndAGate;
+  private final AndCompositeGate rightNotSelAndBGate;
+  private final OrCompositeGate orLeftAndRightGate;
 
   public MuxCompositeGate(Pin inputA, Pin inputB, Pin select, Pin output) {
     super();
@@ -33,16 +33,20 @@ public class MuxCompositeGate implements CompositeGate, BooleanGate {
     this.select = select;
     this.output = output;
 
-    Pin outNotS = new Pin("outNotS");
-    notS = new NotCompositeGate(select, outNotS);
+    // AND(Sel, A)
+    Pin leftSelAndAOut = new Pin("leftSelAndAOut");
+    leftSelAndAGate = new AndCompositeGate(select, inputA, leftSelAndAOut);
 
-    Pin outX = new Pin("outX");
-    andX = new AndCompositeGate(select, inputA, outX);
+    // NOT(Sel)
+    Pin notSelOut = new Pin("notSelOut");
+    notSelGate = new NotCompositeGate(select, notSelOut);
 
-    Pin outY = new Pin("outY");
-    andY = new AndCompositeGate(outNotS, inputB, outY);
+    // AND(NOT(Sel), B)
+    Pin rightNotSelAndBOut = new Pin("rightNotSelAndBOut");
+    rightNotSelAndBGate = new AndCompositeGate(notSelOut, inputB, rightNotSelAndBOut);
 
-    or = new OrCompositeGate(outX, outY, output);
+    // OR(AND(Sel, A), AND(NOT(Sel), B))
+    orLeftAndRightGate = new OrCompositeGate(leftSelAndAOut, rightNotSelAndBOut, output);
   }
 
   public Pin getInputA() {
@@ -63,23 +67,23 @@ public class MuxCompositeGate implements CompositeGate, BooleanGate {
 
   @Override
   public void eval() {
-    notS.eval();
-    andX.eval();
-    andY.eval();
-    or.eval();
+    notSelGate.eval();
+    leftSelAndAGate.eval();
+    rightNotSelAndBGate.eval();
+    orLeftAndRightGate.eval();
   }
 
   @Override
   public void reset() {
-    notS.reset();
-    andX.reset();
-    andY.reset();
-    or.reset();
+    notSelGate.reset();
+    leftSelAndAGate.reset();
+    rightNotSelAndBGate.reset();
+    orLeftAndRightGate.reset();
   }
 
   @Override
   public String toString() {
-    return "MuxCompositeGate [notS=" + notS + ", andX=" + andX + ", andY=" + andY + ", or=" + or + "]";
+    return "MuxCompositeGate [notS=" + notSelGate + ", andX=" + leftSelAndAGate + ", andY=" + rightNotSelAndBGate + ", or=" + orLeftAndRightGate + "]";
   }
 
 }

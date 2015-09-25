@@ -17,50 +17,56 @@ import elementsofcs.gate.bool.primitive.NAndPrimitiveGate;
  */
 public class OrCompositeGate implements BinaryPredicateGate, CompositeGate {
 
-  private final NAndPrimitiveGate nandX;
-  private final NAndPrimitiveGate nandY;
-  private final NAndPrimitiveGate nandZ;
+  private final NAndPrimitiveGate notAAndAGate;
+  private final NAndPrimitiveGate notBAndBGate;
+  private final NAndPrimitiveGate notLeftAndRightGate;
 
   public OrCompositeGate(Pin inputA, Pin inputB, Pin output) {
-    Pin outAnandA = new Pin("outAnandA");
-    Pin outBnandB = new Pin("outBnandB");
-    nandX = new NAndPrimitiveGate(inputA, inputA, outAnandA);
-    nandY = new NAndPrimitiveGate(inputB, inputB, outBnandB);
-    nandZ = new NAndPrimitiveGate(outAnandA, outBnandB, output);
+    super();
+    // NAND(A, A)
+    Pin notAAndAOut = new Pin("notAAndAOut");
+    notAAndAGate = new NAndPrimitiveGate(inputA, inputA, notAAndAOut);
+
+    // NAND(B, B)
+    Pin notBAndBOut = new Pin("notBAndBOut");
+    notBAndBGate = new NAndPrimitiveGate(inputB, inputB, notBAndBOut);
+
+    // NAND(NAND(A, A), NAND(B, B))
+    notLeftAndRightGate = new NAndPrimitiveGate(notAAndAOut, notBAndBOut, output);
   }
 
   @Override
   public Pin getInputA() {
-    return nandX.getInputA();
+    return notAAndAGate.getInputA();
   }
 
   @Override
   public Pin getInputB() {
-    return nandY.getInputA();
+    return notBAndBGate.getInputA();
   }
 
   @Override
   public Pin getOutput() {
-    return nandZ.getOutput();
+    return notLeftAndRightGate.getOutput();
   }
 
   @Override
   public void eval() {
-    nandX.eval();
-    nandY.eval();
-    nandZ.eval();
+    notAAndAGate.eval();
+    notBAndBGate.eval();
+    notLeftAndRightGate.eval();
   }
 
   @Override
   public void reset() {
-    nandX.reset();
-    nandY.reset();
-    nandZ.reset();
+    notAAndAGate.reset();
+    notBAndBGate.reset();
+    notLeftAndRightGate.reset();
   }
 
   @Override
   public String toString() {
-    return "OrCompositeGate [nandX=" + nandX + ", nandY=" + nandY + ", nandZ=" + nandZ + "]";
+    return "OrCompositeGate [getInputA()=" + getInputA() + ", getInputB()=" + getInputB() + ", getOutput()=" + getOutput() + "]";
   }
 
 }

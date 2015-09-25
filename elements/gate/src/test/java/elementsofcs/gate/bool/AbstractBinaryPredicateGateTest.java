@@ -9,17 +9,18 @@ import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
 
 public abstract class AbstractBinaryPredicateGateTest {
+
   protected final Pin inputA = new Pin("A");
   protected final Pin inputB = new Pin("B");
   protected final Pin output = new Pin("Output");
 
   protected Gate gate;
-  protected boolean[][] truthTable;
+  protected boolean[][] tt;
 
   @Before
   public void setUp() {
     gate = createGate();
-    truthTable = createTruthTable();
+    tt = createTruthTable();
   }
 
   protected abstract boolean[][] createTruthTable();
@@ -28,10 +29,10 @@ public abstract class AbstractBinaryPredicateGateTest {
 
   @Test
   public void outputsShouldMatchExpectedOutputsInTruthTable() {
-    for (int i = 0; i < truthTable.length; i++) {
-      boolean inputAValue = truthTable[i][0];
-      boolean inputBValue = truthTable[i][1];
-      boolean expectedOutputValue = truthTable[i][2];
+    for (int i = 0; i < tt.length; i++) {
+      boolean inputAValue = tt[i][0];
+      boolean inputBValue = tt[i][1];
+      boolean expectedOutputValue = tt[i][2];
 
       gate.reset();
 

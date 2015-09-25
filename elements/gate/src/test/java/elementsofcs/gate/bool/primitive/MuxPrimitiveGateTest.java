@@ -15,7 +15,7 @@ public class MuxPrimitiveGateTest {
 
   private MuxPrimitiveGate gate = new MuxPrimitiveGate(inputA, inputB, selector, output);
 
-  private boolean[][] truthTable = new boolean[][] {
+  private boolean[][] tt = new boolean[][] {
       { true, true, true, true },
       { true, true, false, true },
       { true, false, true, true },
@@ -27,12 +27,12 @@ public class MuxPrimitiveGateTest {
 
   @Test
   public void outputsShouldMatchExpectedOutputsInTruthTable() {
-    for (int i = 0; i < truthTable.length; i++) {
-      boolean inputAValue = truthTable[i][0];
-      boolean inputBValue = truthTable[i][1];
-      boolean selectorValue = truthTable[i][2];
+    for (int i = 0; i < tt.length; i++) {
+      boolean inputAValue = tt[i][0];
+      boolean inputBValue = tt[i][1];
+      boolean selectorValue = tt[i][2];
 
-      boolean expectedOutputValue = truthTable[i][3];
+      boolean expectedOutputValue = tt[i][3];
 
       gate.reset();
 

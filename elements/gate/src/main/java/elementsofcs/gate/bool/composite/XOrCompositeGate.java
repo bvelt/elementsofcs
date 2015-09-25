@@ -16,65 +16,69 @@ import elementsofcs.gate.bool.BinaryPredicateGate;
  */
 public class XOrCompositeGate implements BinaryPredicateGate, CompositeGate {
 
-  private final NotCompositeGate notA;
-  private final NotCompositeGate notB;
+  private final NotCompositeGate notAGate;
+  private final NotCompositeGate notBGate;
 
-  private final AndCompositeGate andX;
-  private final AndCompositeGate andY;
-  private final OrCompositeGate or;
+  private final AndCompositeGate aAndNotBGate;
+  private final AndCompositeGate notAAndBGate;
+  private final OrCompositeGate leftOrRightGate;
 
   public XOrCompositeGate(Pin inputA, Pin inputB, Pin output) {
-    Pin outNotA = new Pin("outNotA");
-    notA = new NotCompositeGate(inputA, outNotA);
+    super();
+    // NOT(A)
+    Pin notAOut = new Pin("notAOut");
+    notAGate = new NotCompositeGate(inputA, notAOut);
 
-    Pin outNotB = new Pin("outNotB");
-    notB = new NotCompositeGate(inputB, outNotB);
+    // NOT(B)
+    Pin notBOut = new Pin("notBOut");
+    notBGate = new NotCompositeGate(inputB, notBOut);
 
-    Pin outX = new Pin("outX");
-    andX = new AndCompositeGate(inputA, outNotB, outX);
+    // AND(A, NOT(B))
+    Pin aAndNotBOut = new Pin("aAndNotBOut");
+    aAndNotBGate = new AndCompositeGate(inputA, notBOut, aAndNotBOut);
 
-    Pin outY = new Pin("outY");
-    andY = new AndCompositeGate(outNotA, inputB, outY);
+    Pin notAAndBOut = new Pin("notAAndBOut");
+    notAAndBGate = new AndCompositeGate(notAOut, inputB, notAAndBOut);
 
-    or = new OrCompositeGate(outX, outY, output);
+    leftOrRightGate = new OrCompositeGate(aAndNotBOut, notAAndBOut, output);
   }
 
   @Override
   public void eval() {
-    notA.eval();
-    notB.eval();
-    andX.eval();
-    andY.eval();
-    or.eval();
+    notAGate.eval();
+    notBGate.eval();
+    aAndNotBGate.eval();
+    notAAndBGate.eval();
+    leftOrRightGate.eval();
   }
 
   @Override
   public void reset() {
-    notA.reset();
-    notB.reset();
-    andX.reset();
-    andY.reset();
-    or.reset();
+    notAGate.reset();
+    notBGate.reset();
+    aAndNotBGate.reset();
+    notAAndBGate.reset();
+    leftOrRightGate.reset();
   }
 
   @Override
   public Pin getInputA() {
-    return notA.getInput();
+    return notAGate.getInput();
   }
 
   @Override
   public Pin getInputB() {
-    return notB.getInput();
+    return notBGate.getInput();
   }
 
   @Override
   public Pin getOutput() {
-    return or.getOutput();
+    return leftOrRightGate.getOutput();
   }
 
   @Override
   public String toString() {
-    return "XOrCompositeGate [notA=" + notA + ", notB=" + notB + ", andX=" + andX + ", andY=" + andY + ", or=" + or + "]";
+    return "XOrCompositeGate [getInputA()=" + getInputA() + ", getInputB()=" + getInputB() + ", getOutput()=" + getOutput() + "]";
   }
 
 }

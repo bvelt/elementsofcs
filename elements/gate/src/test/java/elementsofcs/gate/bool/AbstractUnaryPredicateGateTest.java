@@ -9,16 +9,17 @@ import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
 
 public abstract class AbstractUnaryPredicateGateTest {
+
   protected final Pin input = new Pin("Input");
   protected final Pin output = new Pin("Output");
 
   protected Gate gate;
-  protected boolean[][] truthTable;
+  protected boolean[][] tt;
 
   @Before
   public void setUp() {
     gate = createGate();
-    truthTable = createTruthTable();
+    tt = createTruthTable();
   }
 
   protected abstract boolean[][] createTruthTable();
@@ -27,9 +28,9 @@ public abstract class AbstractUnaryPredicateGateTest {
 
   @Test
   public void outputsShouldMatchExpectedOutputsInTruthTable() {
-    for (int i = 0; i < truthTable.length; i++) {
-      boolean inputAValue = truthTable[i][0];
-      boolean expectedOutputValue = truthTable[i][1];
+    for (int i = 0; i < tt.length; i++) {
+      boolean inputAValue = tt[i][0];
+      boolean expectedOutputValue = tt[i][1];
 
       gate.reset();
 

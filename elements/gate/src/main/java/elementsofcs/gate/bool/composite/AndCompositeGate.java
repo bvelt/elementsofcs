@@ -17,45 +17,49 @@ import elementsofcs.gate.bool.primitive.NAndPrimitiveGate;
  */
 public class AndCompositeGate implements BinaryPredicateGate, CompositeGate {
 
-  private final NAndPrimitiveGate nandX;
-  private final NAndPrimitiveGate nandY;
+  private final NAndPrimitiveGate notAAndBGate;
+  private final NAndPrimitiveGate notLeftAndRightGate;
 
   public AndCompositeGate(Pin inputA, Pin inputB, Pin output) {
-    Pin outAnandB = new Pin("outAnandB");
-    nandX = new NAndPrimitiveGate(inputA, inputB, outAnandB);
-    nandY = new NAndPrimitiveGate(outAnandB, outAnandB, output);
+    super();
+    // NAND(A, B)
+    Pin notAAndBOut = new Pin("notAAndBOut");
+    notAAndBGate = new NAndPrimitiveGate(inputA, inputB, notAAndBOut);
+
+    // NAND(NAND(A, B), NAND(A, B))
+    notLeftAndRightGate = new NAndPrimitiveGate(notAAndBOut, notAAndBOut, output);
   }
 
   @Override
   public void eval() {
-    nandX.eval();
-    nandY.eval();
-  }
-
-  @Override
-  public void reset() {
-    nandX.reset();
-    nandY.reset();
+    notAAndBGate.eval();
+    notLeftAndRightGate.eval();
   }
 
   @Override
   public Pin getInputA() {
-    return nandX.getInputA();
+    return notAAndBGate.getInputA();
   }
 
   @Override
   public Pin getInputB() {
-    return nandX.getInputB();
+    return notAAndBGate.getInputB();
   }
 
   @Override
   public Pin getOutput() {
-    return nandY.getOutput();
+    return notLeftAndRightGate.getOutput();
+  }
+
+  @Override
+  public void reset() {
+    notAAndBGate.reset();
+    notLeftAndRightGate.reset();
   }
 
   @Override
   public String toString() {
-    return "AndCompositeGate [nandX=" + nandX + ", nandY=" + nandY + "]";
+    return "AndCompositeGate [getInputA()=" + getInputA() + ", getInputB()=" + getInputB() + ", getOutput()=" + getOutput() + "]";
   }
 
 }

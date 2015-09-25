@@ -21,7 +21,7 @@ public final class Pin {
   public static final int SIZE_64 = 64;
 
   /*
-   * Factory methods for creating pin lists of various lengths
+   * Factory methods to create lists of pins of various lengths
    */
   public static List<Pin> create2(String prefix) {
     return createList(prefix, SIZE_2);
@@ -52,7 +52,7 @@ public final class Pin {
   }
 
   /**
-   * Factory method for creating list of pins
+   * Factory method for creating list of pins initialized to false
    * 
    * @param prefix
    *          name prefix
@@ -69,6 +69,13 @@ public final class Pin {
     return pins;
   }
 
+  /**
+   * Factory method for creating a list to contain specified pins
+   * 
+   * @param pins
+   *          pins to include in list
+   * @return list of pins
+   */
   public static List<Pin> createList(Pin... pins) {
     List<Pin> out = new ArrayList<Pin>(pins.length);
     for (Pin p : pins) {
@@ -78,7 +85,8 @@ public final class Pin {
   }
 
   /**
-   * Factory method for creating list of pins from a single pin
+   * Factory method to create a list of pins of specified length where each
+   * member is specified pin
    * 
    * @param pin
    *          pin to add to each position in list
@@ -94,6 +102,17 @@ public final class Pin {
     return pins;
   }
 
+  /**
+   * Verify list of pins is of specified length or throw
+   * {@link IllegalArgumentException}
+   * 
+   * @param pins
+   *          list of pins to verify
+   * @param size
+   *          expected length of list of pins
+   * @param name
+   *          name of pin to include in exception message
+   */
   public static void checkListSize(List<Pin> pins, int size, String name) {
     if (pins.size() != size) {
       throw new IllegalArgumentException("List '" + name + "' must be of size " + size);

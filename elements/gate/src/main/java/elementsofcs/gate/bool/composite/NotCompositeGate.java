@@ -17,35 +17,37 @@ import elementsofcs.gate.bool.primitive.NAndPrimitiveGate;
  */
 public class NotCompositeGate implements UnaryPredicateGate, CompositeGate {
 
-  private final NAndPrimitiveGate nand;
+  private final NAndPrimitiveGate notInputAndInputGate;
 
   public NotCompositeGate(Pin input, Pin output) {
-    nand = new NAndPrimitiveGate(input, input, output);
+    super();
+    // NAND(In, In)
+    notInputAndInputGate = new NAndPrimitiveGate(input, input, output);
   }
 
   @Override
   public Pin getInput() {
-    return nand.getInputA();
+    return notInputAndInputGate.getInputA();
   }
 
   @Override
   public Pin getOutput() {
-    return nand.getOutput();
+    return notInputAndInputGate.getOutput();
   }
 
   @Override
   public void eval() {
-    nand.eval();
+    notInputAndInputGate.eval();
   }
 
   @Override
   public void reset() {
-    nand.reset();
+    notInputAndInputGate.reset();
   }
 
   @Override
   public String toString() {
-    return "NotCompositeGate [nand=" + nand + "]";
+    return "NotCompositeGate [getInput()=" + getInput() + ", getOutput()=" + getOutput() + "]";
   }
 
 }
