@@ -10,12 +10,12 @@ import elementsofcs.gate.bool.bus.DMux8Way;
 import elementsofcs.gate.bool.bus.Mux8Way16;
 
 /**
- * 128-bit memory composed of 8 rows of 16-bit registers with 3-bit address
+ * 1,024-bit memory composed of 8 rows of RAM8 (8 x 16) chips with 6-bit address
  * 
  * @author brentvelthoen
  *
  */
-public class RAM8 implements RAM {
+public class RAM64 implements RAM {
 
   private final List<Pin> input;
   private final List<Pin> address;
@@ -23,42 +23,46 @@ public class RAM8 implements RAM {
   private final List<Pin> output;
 
   private final DMux8Way dmuxLoad;
-  private final List<Register> registers = new ArrayList<Register>(Pin.SIZE_8);
+  private final List<RAM8> rams = new ArrayList<RAM8>(Pin.SIZE_8);
   private final Mux8Way16 muxOutput;
 
-  public RAM8(List<Pin> input, List<Pin> address, Pin load, List<Pin> output) {
+  public RAM64(List<Pin> input, List<Pin> address, Pin load, List<Pin> output) {
     super();
     this.input = input;
     Objects.requireNonNull(address, "address");
-    Pin.checkListSize(address, 3, "address");
     this.address = address;
     this.load = load;
     this.output = output;
 
-    // dmux load to register loads
+    // address = xxxyyy where xxx=ram and yyy=register inside ram
+    Pin.checkListSize(address, 6, "address");
+    List<Pin> ramAddress = address.subList(0, 3);
+    List<Pin> regAddress = address.subList(3, 6);
+
+    // dmux load to ram loads
     List<Pin> rload = Pin.create8("rload");
-    dmuxLoad = new DMux8Way(load, address,
+    dmuxLoad = new DMux8Way(load, ramAddress,
         rload.get(0), rload.get(1), rload.get(2), rload.get(3),
         rload.get(4), rload.get(5), rload.get(6), rload.get(7));
 
-    // init registers
+    // init rams
     for (int i = 0; i < Pin.SIZE_8; i++) {
       List<Pin> rout = Pin.create16("rout[" + i + "]");
-      registers.add(Register.create16(input, rload.get(i), rout));
+      rams.add(new RAM8(input, regAddress, rload.get(i), rout));
     }
 
-    // mux register outputs to output
+    // mux ram outputs to output
     muxOutput = new Mux8Way16(
-        registers.get(0).getOutput(), registers.get(1).getOutput(),
-        registers.get(2).getOutput(), registers.get(3).getOutput(),
-        registers.get(4).getOutput(), registers.get(5).getOutput(),
-        registers.get(6).getOutput(), registers.get(7).getOutput(),
-        address, output);
+        rams.get(0).getOutput(), rams.get(1).getOutput(),
+        rams.get(2).getOutput(), rams.get(3).getOutput(),
+        rams.get(4).getOutput(), rams.get(5).getOutput(),
+        rams.get(6).getOutput(), rams.get(7).getOutput(),
+        ramAddress, output);
   }
 
   @Override
   public int getSize() {
-    return Pin.SIZE_8;
+    return Pin.SIZE_64;
   }
 
   @Override
@@ -89,20 +93,20 @@ public class RAM8 implements RAM {
   @Override
   public void eval() {
     dmuxLoad.eval();
-    registers.forEach(Gate::eval);
+    rams.forEach(Gate::eval);
     muxOutput.eval();
   }
 
   @Override
   public void reset() {
     dmuxLoad.reset();
-    registers.forEach(Gate::reset);
+    rams.forEach(Gate::reset);
     muxOutput.reset();
   }
 
   @Override
   public String toString() {
-    return "RAM8 [input=" + input + ", address=" + address + ", load=" + load + ", output=" + output + "]";
+    return "RAM64 [input=" + input + ", address=" + address + ", load=" + load + ", output=" + output + "]";
   }
 
 }

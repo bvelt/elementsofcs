@@ -19,6 +19,8 @@ public final class Pin {
   public static final int SIZE_16 = 16;
   public static final int SIZE_32 = 32;
   public static final int SIZE_64 = 64;
+  public static final int SIZE_128 = 128;
+  public static final int SIZE_256 = 256;
 
   /*
    * Factory methods to create lists of pins of various lengths

@@ -11,7 +11,7 @@ import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
 
 /**
- * Mult-bit memory bank composed of bits
+ * Mult-bit memory composed of list of bits of specified size
  * 
  * <pre>
  * if load(t - 1) then
