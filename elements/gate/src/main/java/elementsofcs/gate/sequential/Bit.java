@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.primitive.MuxPrimitiveGate;
+import elementsofcs.gate.bool.composite.MuxCompositeGate;
 
 /**
  * Single-bit memory cell
@@ -26,7 +26,7 @@ public class Bit implements SequentialGate, CompositeGate {
   private final Pin output;
 
   private final Pin inputNext = new Pin("inputNext");
-  private final MuxPrimitiveGate muxInAndOutToInNext;
+  private final MuxCompositeGate muxInAndOutToInNext;
 
   private final DFF dff;
 
@@ -39,7 +39,7 @@ public class Bit implements SequentialGate, CompositeGate {
     this.load = load;
     this.output = output;
 
-    muxInAndOutToInNext = new MuxPrimitiveGate(input, output, load, inputNext);
+    muxInAndOutToInNext = new MuxCompositeGate(input, output, load, inputNext);
 
     dff = new DFF(inputNext, output);
   }
