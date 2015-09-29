@@ -8,7 +8,7 @@ import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.bus.AndBus;
 import elementsofcs.gate.bool.bus.Bus;
-import elementsofcs.gate.bool.bus.OrBus;
+import elementsofcs.gate.bool.bus.MuxBus;
 import elementsofcs.gate.bool.bus.OrNWayBus;
 import elementsofcs.gate.bool.bus.XOrBus;
 import elementsofcs.gate.bool.composite.AndCompositeGate;
@@ -90,7 +90,9 @@ public class ALU implements Bus {
     this.zr = zr;
     this.ng = ng;
 
+    // zx, nx
     initZeroOrNegateGate(x, zx, nx);
+    // zy, ny
     initZeroOrNegateGate(y, zy, ny);
 
     // f
@@ -191,7 +193,7 @@ public class ALU implements Bus {
    * Function gate that does addition or logical and based on f bit
    * 
    * <pre>
-   * OR(AND(f, ADD(x, y)), AND(NOT(f), AND(x, y)))
+   * MUX(ADD(X, Y), AND(X, Y), F, OUT)
    * </pre>
    * 
    */
@@ -201,29 +203,13 @@ public class ALU implements Bus {
     AdderBus addXYGate = AdderBus.create16(x, y, addXYOut);
     gates.add(addXYGate);
 
-    // AND(f, ADD(x,y))
-    List<Pin> leftAndOut = Pin.create16("leftAndOut");
-    AndBus leftAndGate = AndBus.create16(Pin.fill16(f), addXYOut, leftAndOut);
-    gates.add(leftAndGate);
-
-    // NOT(f)
-    Pin notFOut = new Pin("notFOut");
-    NotCompositeGate notFGate = new NotCompositeGate(f, notFOut);
-    gates.add(notFGate);
-
     // AND(x,y)
     List<Pin> andXYOut = Pin.create16("andXYOut");
     AndBus andXYGate = AndBus.create16(x, y, andXYOut);
     gates.add(andXYGate);
 
-    // AND(NOT(f), AND(x,y))
-    List<Pin> rightAndOut = Pin.create16("rightAndOut");
-    AndBus rightAndGate = AndBus.create16(Pin.fill16(notFOut), andXYOut, rightAndOut);
-    gates.add(rightAndGate);
-
-    // OR(AND(f, ADD(x,y)), AND(NOT(f), AND(x,y)))
-    OrBus orGate = OrBus.create16(leftAndOut, rightAndOut, out);
-    gates.add(orGate);
+    MuxBus muxF = new MuxBus(Pin.SIZE_16, addXYOut, andXYOut, f, out);
+    gates.add(muxF);
   }
 
   /**

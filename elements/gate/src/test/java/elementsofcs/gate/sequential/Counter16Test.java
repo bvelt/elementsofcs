@@ -22,37 +22,43 @@ public class Counter16Test {
 
   private final boolean[][] tt = new boolean[][] {
       // in[14]|in[15]|incr|load|reset|ou[14]|ou[15]|in[14]'|in[15]'|ou[14]'|ou[15]'
+      // inc=0, load=0, reset=0
       { false, false, false, false, false, false, false, false, false, false, false },
-      // inc=0, load=1, reset=0
-      { false, false, false, true, false, false, false, false, false, false, false },
-      { false, true, false, true, false, false, false, false, true, false, true },
-      { true, false, false, true, false, false, false, true, false, true, false },
-      { true, true, false, true, false, false, false, true, true, true, true },
-      // inc=0, load=1, reset=1: load should take precedence
-      { false, false, false, true, true, false, false, false, false, false, false },
-      { false, true, false, true, true, false, false, false, true, false, true },
-      { true, false, false, true, true, false, false, true, false, true, false },
-      { true, true, false, true, true, false, false, true, true, true, true },
-      // inc=1, load=1, reset=1: load should take precedence
-      { false, false, false, true, true, true, false, false, false, false, false },
-      { false, true, false, true, true, true, false, false, true, false, true },
-      { true, false, false, true, true, true, false, true, false, true, false },
-      { true, true, false, true, true, true, false, true, true, true, true },
       // inc=0, load=0, reset=1
       { false, false, false, false, true, false, false, false, false, false, false },
       { false, true, false, false, true, false, false, false, true, false, false },
       { true, false, false, false, true, false, false, true, false, false, false },
       { true, true, false, false, true, false, false, true, true, false, false },
+      // inc=0, load=1, reset=1: reset should take precedence
+      { false, false, false, true, true, false, false, false, false, false, false },
+      { false, true, false, true, true, false, false, false, true, false, false },
+      { true, false, false, true, true, false, false, true, false, false, false },
+      { true, true, false, true, true, false, false, true, true, false, false },
+      // inc=0, load=1, reset=0
+      { false, false, false, true, false, false, false, false, false, false, false },
+      { false, true, false, true, false, false, false, false, true, false, true },
+      { true, false, false, true, false, false, false, true, false, true, false },
+      { true, true, false, true, false, false, false, true, true, true, true },
+      // inc=1, load=1, reset=0: load should take precedence
+      { false, false, false, true, false, false, false, false, false, false, false },
+      { false, true, false, true, false, false, false, false, true, false, true },
+      { true, false, false, true, false, false, false, true, false, true, false },
+      { true, true, false, true, false, false, false, true, true, true, true },
+      // inc=1, load=0, reset=0
+      { true, true, true, false, false, false, false, true, true, false, true },
+      { true, true, true, false, false, false, true, true, true, true, false },
+      { true, true, true, false, false, true, false, true, true, true, true },
+      { true, true, true, false, false, true, true, true, true, false, false },
       // inc=1, load=0, reset=1: reset should take precedence
       { false, false, true, false, true, false, false, false, false, false, false },
       { false, true, true, false, true, false, false, false, true, false, false },
       { true, false, true, false, true, false, false, true, false, false, false },
       { true, true, true, false, true, false, false, true, true, false, false },
-      // inc=1, load=0, reset=0
-      { true, true, true, false, false, false, false, true, true, false, true },
-      { true, true, true, false, false, false, true, true, true, true, false },
-      { true, true, true, false, false, true, false, true, true, true, true },
-      { true, true, true, false, false, true, true, true, true, false, false }
+      // inc=1, load=1, reset=1: reset should take precedence
+      { false, false, false, true, true, true, false, false, false, false, false },
+      { false, true, false, true, true, true, false, false, true, false, false },
+      { true, false, false, true, true, true, false, true, false, false, false },
+      { true, true, false, true, true, true, false, true, true, false, false },
   };
 
   @Test

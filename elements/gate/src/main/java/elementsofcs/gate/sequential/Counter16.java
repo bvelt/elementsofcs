@@ -7,13 +7,8 @@ import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.alu.IncrBus;
-import elementsofcs.gate.bool.bus.AndBus;
-import elementsofcs.gate.bool.bus.OrBus;
+import elementsofcs.gate.bool.bus.MuxBus;
 import elementsofcs.gate.bool.bus.OrNWayBus;
-import elementsofcs.gate.bool.composite.AndCompositeGate;
-import elementsofcs.gate.bool.composite.NOrCompositeGate;
-import elementsofcs.gate.bool.composite.NotCompositeGate;
-import elementsofcs.gate.bool.primitive.NAndPrimitiveGate;
 
 /**
  * 16-bit counter
@@ -48,67 +43,35 @@ public class Counter16 implements SequentialGate, CompositeGate {
     this.reset = reset;
     this.output = output;
 
-    // input for register to support reset and increment
-    List<Pin> rinput = Pin.create16("rinput");
-
-    // rload: if increment=1 or load=1 or reset=1 then rload=1
-    Pin rload = new Pin("rload");
-    OrNWayBus rloadGate = new OrNWayBus(3, Pin.createList(increment, load, reset), rload);
-    gates.add(rloadGate);
-
-    // load: load input if load=1
-
-    // reset: rinput=(input & 0) if load=0 and reset=1 (ignore increment)
-
-    // NOT(load)
-    Pin notLoadOut = new Pin("notLoadOut");
-    NotCompositeGate notLoadGate = new NotCompositeGate(load, notLoadOut);
-    gates.add(notLoadGate);
-
-    // NAND(NOT(load), reset) (i.e. mask=0 if load=0 and reset=1)
-    Pin inputMaskForResetOut = new Pin("inputMaskForResetOut");
-    NAndPrimitiveGate inputMaskForResetGate = new NAndPrimitiveGate(notLoadOut, reset, inputMaskForResetOut);
-    gates.add(inputMaskForResetGate);
-
-    // AND(NAND(NOT(load), reset), input)
-    AndBus applyInputMaskForResetGate = AndBus.create16(Pin.fill16(inputMaskForResetOut), input, rinput);
-    gates.add(applyInputMaskForResetGate);
-
-    // increment: rinput=(output + 1) if (load=0 and reset=0 and inc=1)
-
-    // NOR(reset, load)
-    Pin notLoadOrResetOut = new Pin("notLoadOrResetOut");
-    NOrCompositeGate notLoadOrResetGate = new NOrCompositeGate(load, reset, notLoadOrResetOut);
-    gates.add(notLoadOrResetGate);
-
-    // AND(NOR(reset, load), increment)
-    Pin incrEnabledOut = new Pin("incrEnabledOut");
-    AndCompositeGate incrEnabledGate = new AndCompositeGate(notLoadOrResetOut, increment, incrEnabledOut);
-    gates.add(incrEnabledGate);
-
-    // INCR(out)
+    // INCR(output)=incrOut
     List<Pin> incrOut = Pin.create16("incrOut");
     IncrBus incrGate = IncrBus.create16(output, incrOut);
     gates.add(incrGate);
 
-    // AND(AND(NOR(reset, load), increment), INCR(out))
-    AndBus zeroIncrOutIfNotIncrEnabledGate = AndBus.create16(Pin.fill16(incrEnabledOut), incrOut, incrOut);
-    gates.add(zeroIncrOutIfNotIncrEnabledGate);
+    // MUX(incrOut, input, increment)=muxXOut
+    List<Pin> muxXOut = Pin.create16("muxXOut");
+    MuxBus muxXGate = MuxBus.create16(incrOut, input, increment, muxXOut);
+    gates.add(muxXGate);
 
-    // NOT(AND(NOR(reset, load), increment))
-    Pin notIncrEnabledOut = new Pin("notIncrEnabledOut");
-    NotCompositeGate notIncrEnabledGate = new NotCompositeGate(incrEnabledOut, notIncrEnabledOut);
-    gates.add(notIncrEnabledGate);
+    // MUX(input, muxXOut, load)=muxYOut
+    // load=1 takes precedence over increment=1
+    List<Pin> muxYOut = Pin.create16("muxYOut");
+    MuxBus muxYGate = MuxBus.create16(input, muxXOut, load, muxYOut);
+    gates.add(muxYGate);
 
-    // AND(NOT(AND(NOR(reset, load), increment)), rinput)
-    AndBus zeroInputIfIncrEnabledGate = AndBus.create16(Pin.fill16(notIncrEnabledOut), rinput, rinput);
-    gates.add(zeroInputIfIncrEnabledGate);
+    // MUX(false, muxYOut, reset)=muxResetOut
+    // reset=1 takes precedence over load=1 or increment=1
+    List<Pin> muxZOut = Pin.create16("muxZOut");
+    MuxBus muxZGate = MuxBus.create16(Pin.create16("alwaysFalse"), muxYOut, reset, muxZOut);
+    gates.add(muxZGate);
 
-    // OR(incrOut, rinput)
-    OrBus orInputsGate = OrBus.create16(incrOut, rinput, rinput);
-    gates.add(orInputsGate);
+    // OR(increment, load, reset)=rload
+    // load register if any increment, load, or reset is true
+    Pin rload = new Pin("rload");
+    OrNWayBus rloadGate = new OrNWayBus(3, Pin.createList(increment, load, reset), rload);
+    gates.add(rloadGate);
 
-    Register reg = new Register(Pin.SIZE_16, rinput, rload, output);
+    Register reg = new Register(Pin.SIZE_16, muxZOut, rload, output);
     gates.add(reg);
   }
 
