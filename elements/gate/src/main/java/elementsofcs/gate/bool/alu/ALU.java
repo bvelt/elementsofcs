@@ -90,15 +90,8 @@ public class ALU implements Bus {
     this.zr = zr;
     this.ng = ng;
 
-    // zx: enable if zx=1
-    initZeroGate(x, zx);
-    // nx
-    initNegateXGate();
-
-    // zy: enable if zy=1
-    initZeroGate(y, zy);
-    // ny
-    initNegateYGate();
+    initZeroOrNegateGate(x, zx, nx);
+    initZeroOrNegateGate(y, zy, ny);
 
     // f
     initFunctionCodeGate();
@@ -112,36 +105,53 @@ public class ALU implements Bus {
     initOutputLessThanZeroGate();
   }
 
-  private void initNegateYGate() {
-    // ny: enable only if zy=0 and ny=1
-
-    // NOT(zy)
-    Pin zyDisabledOut = new Pin("zyDisabledOut");
-    NotCompositeGate zyDisabledGate = new NotCompositeGate(zy, zyDisabledOut);
-    gates.add(zyDisabledGate);
-
-    // AND(NOT(zy), ny)
-    Pin nyEnabledOut = new Pin("nyEnabledOut");
-    AndCompositeGate nyEnabledGate = new AndCompositeGate(zyDisabledOut, ny, nyEnabledOut);
-    gates.add(nyEnabledGate);
-
-    initNegationGate(y, nyEnabledOut);
-  }
-
-  private void initNegateXGate() {
-    // nx: enable only if zx=0 and nx=1
-
+  /**
+   * Initialize gates to handle zero-ing or negation of input array
+   * 
+   * <pre>
+   * | zx | nx | x | x' |
+   *    0    0   0   0
+   *    0    0   1   1
+   *    0    1   0   1
+   *    0    1   1   0
+   *    1    0   0   0
+   *    1    0   1   0
+   *    1    1   0   0
+   *    1    1   1   0
+   *    
+   *    !zx*!nx*x+!zx*nx*!x
+   *    !zx*(!nx*x)+!zx*(nx*!x)
+   *    !zx*(!nx*x+nx*!x)
+   *    !zx*(nx^x)
+   *    
+   *    x' zx:nx
+   *    x\ 00 01 11 10
+   *    0   0  1  0  0
+   *    1   1  0  0  0
+   *    
+   *    !zx*nx*!x+!zx*!nx*x
+   * </pre>
+   * 
+   * @param in
+   *          input array
+   * @param zin
+   *          control bit for zero-ing (falsifying) input
+   * @param nin
+   *          control bit for negating input
+   * 
+   */
+  private void initZeroOrNegateGate(List<Pin> in, Pin zin, Pin nin) {
+    // XOR(nx,x)
+    List<Pin> nxXOrXOut = Pin.create16("nxXOrXOut");
+    XOrBus nxXOrXGate = XOrBus.create16(Pin.fill16(nin), in, nxXOrXOut);
+    gates.add(nxXOrXGate);
     // NOT(zx)
-    Pin zxDisabledOut = new Pin("zxDisabledOut");
-    NotCompositeGate zxDisabledGate = new NotCompositeGate(zx, zxDisabledOut);
-    gates.add(zxDisabledGate);
-
-    // AND(NOT(zx), nx)
-    Pin nxEnabledOut = new Pin("nxEnabledOut");
-    AndCompositeGate nxEnabledGate = new AndCompositeGate(zxDisabledOut, nx, nxEnabledOut);
-    gates.add(nxEnabledGate);
-
-    initNegationGate(x, nxEnabledOut);
+    Pin notZxOut = new Pin("notZxOut");
+    NotCompositeGate notZxGate = new NotCompositeGate(zin, notZxOut);
+    gates.add(notZxGate);
+    // AND(NOT(zx), XOR(nx,x))
+    AndBus zxAndGate = AndBus.create16(Pin.fill16(notZxOut), nxXOrXOut, in);
+    gates.add(zxAndGate);
   }
 
   /**
@@ -230,27 +240,6 @@ public class ALU implements Bus {
     // XOR(in, select)
     XOrBus negGate = XOrBus.create16(in, Pin.fill16(select), in);
     gates.add(negGate);
-  }
-
-  /**
-   * Zero input if select=1
-   * 
-   * <pre>
-   * AND(NOT(select), in)
-   * </pre>
-   * 
-   * @param in
-   * @param select
-   */
-  private void initZeroGate(List<Pin> in, Pin select) {
-    // NOT(select)
-    Pin notSelectOut = new Pin("notSelectOut");
-    NotCompositeGate notSelectGate = new NotCompositeGate(select, notSelectOut);
-    gates.add(notSelectGate);
-
-    // AND(NOT(select), in)
-    AndBus zeroGate = AndBus.create16(in, Pin.fill16(notSelectOut), in);
-    gates.add(zeroGate);
   }
 
   public List<Pin> getX() {
