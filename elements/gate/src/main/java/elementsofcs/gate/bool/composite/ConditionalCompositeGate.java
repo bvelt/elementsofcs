@@ -2,7 +2,7 @@ package elementsofcs.gate.bool.composite;
 
 import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.BinaryPredicateGate;
+import elementsofcs.gate.bool.AbstractBinaryPredicateGate;
 
 /**
  * IF/THEN conditional gate composed of internal NOT and OR gates
@@ -14,51 +14,30 @@ import elementsofcs.gate.bool.BinaryPredicateGate;
  * @author brentvelthoen
  *
  */
-public class ConditionalCompositeGate implements BinaryPredicateGate, CompositeGate {
+public class ConditionalCompositeGate extends AbstractBinaryPredicateGate implements CompositeGate {
 
-  private final OrCompositeGate notAOrBGate;
-  private final NotCompositeGate notAGate;
+  private final AOrNotBCompositeGate orGate;
 
   public ConditionalCompositeGate(Pin inputA, Pin inputB, Pin output) {
-    super();
-    // NOT(A)
-    Pin notAOut = new Pin("notAOut");
-    notAGate = new NotCompositeGate(inputA, notAOut);
+    super(inputA, inputB, output);
 
-    // OR(NOT(A), B)
-    notAOrBGate = new OrCompositeGate(notAOut, inputB, output);
+    // OR(B, NOT(A))
+    orGate = new AOrNotBCompositeGate(inputB, inputA, output);
   }
 
   @Override
   public void eval() {
-    notAGate.eval();
-    notAOrBGate.eval();
-  }
-
-  @Override
-  public Pin getInputA() {
-    return notAGate.getInput();
-  }
-
-  @Override
-  public Pin getInputB() {
-    return notAOrBGate.getInputB();
-  }
-
-  @Override
-  public Pin getOutput() {
-    return notAOrBGate.getOutput();
+    orGate.eval();
   }
 
   @Override
   public void reset() {
-    notAGate.reset();
-    notAOrBGate.reset();
+    orGate.reset();
   }
 
   @Override
   public String toString() {
-    return "ConditionalCompositeGate [getInputA()=" + getInputA() + ", getInputB()=" + getInputB() + ", getOutput()=" + getOutput() + "]";
+    return "ConditionalCompositeGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
   }
 
 }

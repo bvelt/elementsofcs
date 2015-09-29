@@ -8,7 +8,7 @@ import elementsofcs.gate.bool.BooleanGate;
  * De-multiplexor gate composed of internal NOT and AND gates
  * 
  * <pre>
- * DMUX(In,Sel,OutA,OutB) = AND(Sel,In,OutA), AND(NOT(Sel),In,OutB)
+ * DMUX(In,Sel,OutA,OutB) = AND(In,Sel,OutA), AND(In,NOT(Sel),OutB)
  * </pre>
  * 
  * @author brentvelthoen
@@ -21,10 +21,8 @@ public class DMuxCompositeGate implements BooleanGate, CompositeGate {
   private final Pin outputA;
   private final Pin outputB;
 
-  private final NotCompositeGate notSelGate;
-
   private final AndCompositeGate outputAGate;
-  private final AndCompositeGate outputBGate;
+  private final AAndNotBCompositeGate outputBGate;
 
   public DMuxCompositeGate(Pin input, Pin select, Pin outputA, Pin outputB) {
     super();
@@ -33,21 +31,16 @@ public class DMuxCompositeGate implements BooleanGate, CompositeGate {
     this.outputA = outputA;
     this.outputB = outputB;
 
-    // AND(Sel, In)=OutputA
-    outputAGate = new AndCompositeGate(select, input, outputA);
+    // AND(In, Sel)=OutputA
+    outputAGate = new AndCompositeGate(input, select, outputA);
 
-    // NOT(Sel)
-    Pin notSelOut = new Pin("notSelOut");
-    notSelGate = new NotCompositeGate(select, notSelOut);
-
-    // AND(NOT(Sel), In)=OutputB
-    outputBGate = new AndCompositeGate(notSelOut, input, outputB);
+    // AND(In, NOT(Sel))=OutputB
+    outputBGate = new AAndNotBCompositeGate(input, select, outputB);
   }
 
   @Override
   public void eval() {
     outputAGate.eval();
-    notSelGate.eval();
     outputBGate.eval();
   }
 
@@ -70,14 +63,12 @@ public class DMuxCompositeGate implements BooleanGate, CompositeGate {
   @Override
   public void reset() {
     outputAGate.reset();
-    notSelGate.reset();
     outputBGate.reset();
   }
 
   @Override
   public String toString() {
-    return "DMuxCompositeGate [getInput()=" + getInput() + ", getOutputA()=" + getOutputA() + ", getOutputB()=" + getOutputB() + ", getSelect()=" + getSelect()
-        + "]";
+    return "DMuxCompositeGate [input=" + input + ", select=" + select + ", outputA=" + outputA + ", outputB=" + outputB + "]";
   }
 
 }

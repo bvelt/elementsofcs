@@ -8,7 +8,7 @@ import elementsofcs.gate.bool.BooleanGate;
  * Multiplexor composite gate composed of internal gates
  * 
  * <pre>
- * MUX(A, B, Sel) = OR(AND(Sel, A), AND(NOT(Sel), B))
+ * MUX(A, B, Sel) = OR(AND(A, Sel), AND(B, NOT(Sel))
  * </pre>
  * 
  * @author brentvelthoen
@@ -21,10 +21,9 @@ public class MuxCompositeGate implements CompositeGate, BooleanGate {
   private final Pin select;
   private final Pin output;
 
-  private final NotCompositeGate notSelGate;
-  private final AndCompositeGate leftSelAndAGate;
-  private final AndCompositeGate rightNotSelAndBGate;
-  private final OrCompositeGate orLeftAndRightGate;
+  private final AndCompositeGate leftAndGate;
+  private final AAndNotBCompositeGate rightAndGate;
+  private final OrCompositeGate leftOrRightGate;
 
   public MuxCompositeGate(Pin inputA, Pin inputB, Pin select, Pin output) {
     super();
@@ -33,20 +32,16 @@ public class MuxCompositeGate implements CompositeGate, BooleanGate {
     this.select = select;
     this.output = output;
 
-    // AND(Sel, A)
-    Pin leftSelAndAOut = new Pin("leftSelAndAOut");
-    leftSelAndAGate = new AndCompositeGate(select, inputA, leftSelAndAOut);
+    // AND(A, Sel)
+    Pin leftAndOut = new Pin("leftAndOut");
+    leftAndGate = new AndCompositeGate(inputA, select, leftAndOut);
 
-    // NOT(Sel)
-    Pin notSelOut = new Pin("notSelOut");
-    notSelGate = new NotCompositeGate(select, notSelOut);
+    // AND(B, NOT(Sel))
+    Pin rightAndOut = new Pin("rightAndOut");
+    rightAndGate = new AAndNotBCompositeGate(inputB, select, rightAndOut);
 
-    // AND(NOT(Sel), B)
-    Pin rightNotSelAndBOut = new Pin("rightNotSelAndBOut");
-    rightNotSelAndBGate = new AndCompositeGate(notSelOut, inputB, rightNotSelAndBOut);
-
-    // OR(AND(Sel, A), AND(NOT(Sel), B))
-    orLeftAndRightGate = new OrCompositeGate(leftSelAndAOut, rightNotSelAndBOut, output);
+    // OR(AND(A, Sel), AND(B, NOT(Sel)))
+    leftOrRightGate = new OrCompositeGate(leftAndOut, rightAndOut, output);
   }
 
   public Pin getInputA() {
@@ -67,23 +62,21 @@ public class MuxCompositeGate implements CompositeGate, BooleanGate {
 
   @Override
   public void eval() {
-    notSelGate.eval();
-    leftSelAndAGate.eval();
-    rightNotSelAndBGate.eval();
-    orLeftAndRightGate.eval();
+    leftAndGate.eval();
+    rightAndGate.eval();
+    leftOrRightGate.eval();
   }
 
   @Override
   public void reset() {
-    notSelGate.reset();
-    leftSelAndAGate.reset();
-    rightNotSelAndBGate.reset();
-    orLeftAndRightGate.reset();
+    leftAndGate.reset();
+    rightAndGate.reset();
+    leftOrRightGate.reset();
   }
 
   @Override
   public String toString() {
-    return "MuxCompositeGate [notS=" + notSelGate + ", andX=" + leftSelAndAGate + ", andY=" + rightNotSelAndBGate + ", or=" + orLeftAndRightGate + "]";
+    return "MuxCompositeGate [inputA=" + inputA + ", inputB=" + inputB + ", select=" + select + ", output=" + output + "]";
   }
 
 }

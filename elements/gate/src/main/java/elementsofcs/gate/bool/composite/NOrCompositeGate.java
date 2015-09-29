@@ -2,7 +2,7 @@ package elementsofcs.gate.bool.composite;
 
 import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.BinaryPredicateGate;
+import elementsofcs.gate.bool.AbstractBinaryPredicateGate;
 
 /**
  * NOR composite gate composed of internal OR and NOT gates
@@ -14,34 +14,20 @@ import elementsofcs.gate.bool.BinaryPredicateGate;
  * @author brentvelthoen
  *
  */
-public class NOrCompositeGate implements BinaryPredicateGate, CompositeGate {
+public class NOrCompositeGate extends AbstractBinaryPredicateGate implements CompositeGate {
 
   private final OrCompositeGate aOrBGate;
   private final NotCompositeGate notAOrBGate;
 
   public NOrCompositeGate(Pin inputA, Pin inputB, Pin output) {
-    super();
+    super(inputA, inputB, output);
+
     // OR(A, B)
     Pin aOrBOut = new Pin("aOrBOut");
     aOrBGate = new OrCompositeGate(inputA, inputB, aOrBOut);
 
     // NOT(OR(A, B))
     notAOrBGate = new NotCompositeGate(aOrBOut, output);
-  }
-
-  @Override
-  public Pin getInputA() {
-    return aOrBGate.getInputA();
-  }
-
-  @Override
-  public Pin getInputB() {
-    return aOrBGate.getInputB();
-  }
-
-  @Override
-  public Pin getOutput() {
-    return notAOrBGate.getOutput();
   }
 
   @Override
@@ -58,7 +44,7 @@ public class NOrCompositeGate implements BinaryPredicateGate, CompositeGate {
 
   @Override
   public String toString() {
-    return "NOrCompositeGate [getInputA()=" + getInputA() + ", getInputB()=" + getInputB() + ", getOutput()=" + getOutput() + "]";
+    return "NOrCompositeGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
   }
 
 }
