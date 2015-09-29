@@ -2,10 +2,10 @@ package elementsofcs.gate.sequential;
 
 import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.composite.AndCompositeGate;
+import elementsofcs.gate.bool.composite.IdentityCompositeGate;
 
 /**
- * Data Flip-Flop composed of internal AND gates
+ * Data Flip-Flop composed of internal gates
  * 
  * <pre>
  * out(t) = in(t - 1)
@@ -19,18 +19,18 @@ public class DFF implements SequentialGate, CompositeGate {
   private final Pin input;
   private final Pin output;
 
-  private final Pin outputNext = new Pin("outputNext");
+  private final Pin buffer = new Pin("buffer");
 
-  private final AndCompositeGate andX;
-  private final AndCompositeGate andY;
+  private final IdentityCompositeGate writeOutput;
+  private final IdentityCompositeGate readInput;
 
   public DFF(Pin input, Pin output) {
     super();
     this.input = input;
     this.output = output;
 
-    andX = new AndCompositeGate(outputNext, outputNext, output);
-    andY = new AndCompositeGate(input, input, outputNext);
+    writeOutput = new IdentityCompositeGate(buffer, output);
+    readInput = new IdentityCompositeGate(input, buffer);
   }
 
   public Pin getInput() {
@@ -43,19 +43,19 @@ public class DFF implements SequentialGate, CompositeGate {
 
   @Override
   public void eval() {
-    andX.eval();
-    andY.eval();
+    writeOutput.eval();
+    readInput.eval();
   }
 
   @Override
   public void reset() {
-    andX.reset();
-    andY.reset();
+    writeOutput.reset();
+    readInput.reset();
   }
 
   @Override
   public String toString() {
-    return "DFF [input=" + input + ", outputNext=" + outputNext + ", output=" + output + "]";
+    return "DFF [input=" + input + ", buffer=" + buffer + ", output=" + output + "]";
   }
 
 }

@@ -29,31 +29,37 @@ public class ALUTest {
 
   @Test
   public void zeroXInputIfZXIsTrue() {
-    zeroInputIfSelectIsTrue(x, zx);
+    zeroInputIfSelectIsTrue(x, zx, nx);
   }
 
   @Test
   public void zeroYInputIfZYIsTrue() {
-    zeroInputIfSelectIsTrue(y, zy);
+    zeroInputIfSelectIsTrue(y, zy, ny);
   }
 
-  protected void zeroInputIfSelectIsTrue(List<Pin> in, Pin sel) {
-    // | sel | in | in' |
+  protected void zeroInputIfSelectIsTrue(List<Pin> in, Pin sel, Pin seln) {
+    // | sel | seln | in | in' |
     final boolean tt[][] = new boolean[][] {
-        { true, false, false },
-        { true, true, false },
-        { false, false, false },
-        { false, true, true }
+        { true, true, false, false },
+        { true, true, true, false },
+        { true, false, false, false },
+        { true, false, true, false },
+        { false, false, false, false },
+        { false, false, true, true }
     };
 
     for (int i = 0; i < tt.length; i++) {
       alu.reset();
 
       final boolean bsel = tt[i][0];
-      final boolean bin = tt[i][1];
-      final boolean binnext = tt[i][2];
+      // negation control bit should be ignored as long as zero control bit is 1
+      final boolean bseln = tt[i][1];
+      final boolean bin = tt[i][2];
+      final boolean binnext = tt[i][3];
 
       sel.setValue(bsel);
+      seln.setValue(bseln);
+
       in.forEach(p -> p.setValue(bin));
 
       alu.eval();
@@ -64,32 +70,36 @@ public class ALUTest {
 
   @Test
   public void negateXInputIfNXIsTrue() {
-    negateInputIfSelectIsTrue(x, nx);
+    negateInputIfSelectIsTrue(x, nx, zx);
   }
 
   @Test
   public void negateYInputIfNYIsTrue() {
-    negateInputIfSelectIsTrue(y, ny);
+    negateInputIfSelectIsTrue(y, ny, zy);
   }
 
-  protected void negateInputIfSelectIsTrue(List<Pin> in, Pin sel) {
+  protected void negateInputIfSelectIsTrue(List<Pin> in, Pin sel, Pin selz) {
 
-    // | sel | in | in' |
+    // | sel | selz | in | in' |
     final boolean tt[][] = new boolean[][] {
-        { true, false, true },
-        { true, true, false },
-        { false, false, false },
-        { false, true, true }
+        { true, false, false, true },
+        { true, false, true, false },
+        { false, false, false, false },
+        { false, false, true, true }
     };
 
     for (int i = 0; i < tt.length; i++) {
       alu.reset();
 
       final boolean bsel = tt[i][0];
-      final boolean bin = tt[i][1];
-      final boolean binnext = tt[i][2];
+      // zero control bit has to be false for negation control bit to be enabled
+      final boolean bselz = tt[i][1];
+      final boolean bin = tt[i][2];
+      final boolean binnext = tt[i][3];
 
       sel.setValue(bsel);
+      selz.setValue(bselz);
+
       in.forEach(p -> p.setValue(bin));
 
       alu.eval();

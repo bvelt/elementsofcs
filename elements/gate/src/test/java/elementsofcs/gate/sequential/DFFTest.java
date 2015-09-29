@@ -8,8 +8,8 @@ import elementsofcs.gate.Pin;
 
 public class DFFTest {
 
-  private final Pin input = new Pin("In");
-  private final Pin output = new Pin("Out");
+  private final Pin input = new Pin("input");
+  private final Pin output = new Pin("output");
 
   private final DFF gate = new DFF(input, output);
 

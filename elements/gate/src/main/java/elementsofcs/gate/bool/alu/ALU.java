@@ -18,14 +18,24 @@ import elementsofcs.gate.bool.composite.NotCompositeGate;
  * Arithmetic Logic Unit
  * 
  * <pre>
- * if zx=1 then x'=0 else x'=x
- * if nx=1 then x'=!x else x'=x
- * if zy=1 then y'=0 else y'=y
- * if ny=1 then y'=!y else y'=y
- * if f=1 then out=x + y ('+' = arithmetic addition) else out=x &amp; y
- * if no=1 then out'=!out else out'=out
+ * 
+ * if zx=1 then x'=0 
+ * else if nx=1 then x'=!x
+ * else x'=x
+ * 
+ * if zy=1 then y'=0
+ * else if ny=1 then y'=!y
+ * else y'=y
+ * 
+ * if f=1 then out=x + y ('+' = arithmetic addition) 
+ * else out=x &amp; y
+ * 
+ * if no=1 then out'=!out 
+ * else out'=out
+ * 
  * zr=1 iff out=0
  * ng=1 iff out&lt;0
+ * 
  * </pre>
  * 
  * @author brentvelthoen
@@ -80,22 +90,58 @@ public class ALU implements Bus {
     this.zr = zr;
     this.ng = ng;
 
-    // zx
+    // zx: enable if zx=1
     initZeroGate(x, zx);
     // nx
-    initNegationGate(x, nx);
-    // zy
+    initNegateXGate();
+
+    // zy: enable if zy=1
     initZeroGate(y, zy);
     // ny
-    initNegationGate(y, ny);
+    initNegateYGate();
+
     // f
     initFunctionCodeGate();
+
     // no
     initNegationGate(out, no);
+
     // zr
     initOutputEqualsZeroGate();
     // ng
     initOutputLessThanZeroGate();
+  }
+
+  private void initNegateYGate() {
+    // ny: enable only if zy=0 and ny=1
+
+    // NOT(zy)
+    Pin zyDisabledOut = new Pin("zyDisabledOut");
+    NotCompositeGate zyDisabledGate = new NotCompositeGate(zy, zyDisabledOut);
+    gates.add(zyDisabledGate);
+
+    // AND(NOT(zy), ny)
+    Pin nyEnabledOut = new Pin("nyEnabledOut");
+    AndCompositeGate nyEnabledGate = new AndCompositeGate(zyDisabledOut, ny, nyEnabledOut);
+    gates.add(nyEnabledGate);
+
+    initNegationGate(y, nyEnabledOut);
+  }
+
+  private void initNegateXGate() {
+    // nx: enable only if zx=0 and nx=1
+
+    // NOT(zx)
+    Pin zxDisabledOut = new Pin("zxDisabledOut");
+    NotCompositeGate zxDisabledGate = new NotCompositeGate(zx, zxDisabledOut);
+    gates.add(zxDisabledGate);
+
+    // AND(NOT(zx), nx)
+    Pin nxEnabledOut = new Pin("nxEnabledOut");
+    AndCompositeGate nxEnabledGate = new AndCompositeGate(zxDisabledOut, nx, nxEnabledOut);
+    gates.add(nxEnabledGate);
+
+    initNegationGate(x, nxEnabledOut);
   }
 
   /**

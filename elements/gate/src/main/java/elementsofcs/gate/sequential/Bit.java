@@ -70,7 +70,7 @@ public class Bit implements SequentialGate, CompositeGate {
 
   @Override
   public String toString() {
-    return "Bit [muxInAndOutToInNext=" + muxInAndOutToInNext + ", dff=" + dff + "]";
+    return "Bit [input=" + input + ", load=" + load + ", output=" + output + ", dff=" + dff + "]";
   }
 
 }
