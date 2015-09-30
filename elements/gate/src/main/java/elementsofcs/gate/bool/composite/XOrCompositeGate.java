@@ -3,12 +3,13 @@ package elementsofcs.gate.bool.composite;
 import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.AbstractBinaryPredicateGate;
+import elementsofcs.gate.bool.primitive.NAndPrimitiveGate;
 
 /**
- * XOR composite gate composed on internal NOT, AND, and OR gates
+ * XOR composite gate composed on internal gates
  * 
  * <pre>
- * XOR(A, B) = OR(AND(A, NOT(B)), AND(B, NOT(A)))
+ * XOR(A, B) = AND(NAND(A, B), OR(A, B))
  * </pre>
  * 
  * @author brentvelthoen
@@ -16,36 +17,34 @@ import elementsofcs.gate.bool.AbstractBinaryPredicateGate;
  */
 public class XOrCompositeGate extends AbstractBinaryPredicateGate implements CompositeGate {
 
-  private final AAndNotBCompositeGate aAndNotBGate;
-  private final AAndNotBCompositeGate bAndNotAGate;
-  private final OrCompositeGate leftOrRightGate;
+  private final NAndPrimitiveGate nandABGate;
+  private final OrCompositeGate orABGate;
+  private final AndCompositeGate andLeftRightGate;
 
   public XOrCompositeGate(Pin inputA, Pin inputB, Pin output) {
     super(inputA, inputB, output);
 
-    // AND(A, NOT(B))
-    Pin aAndNotBOut = new Pin("aAndNotBOut");
-    aAndNotBGate = new AAndNotBCompositeGate(inputA, inputB, aAndNotBOut);
+    Pin nandABOut = new Pin("nandABOut");
+    nandABGate = new NAndPrimitiveGate(inputA, inputB, nandABOut);
 
-    // AND(B, NOT(A))
-    Pin bAndNotAOut = new Pin("bAndNotAOut");
-    bAndNotAGate = new AAndNotBCompositeGate(inputB, inputA, bAndNotAOut);
+    Pin orABOut = new Pin("orABOut");
+    orABGate = new OrCompositeGate(inputA, inputB, orABOut);
 
-    leftOrRightGate = new OrCompositeGate(aAndNotBOut, bAndNotAOut, output);
+    andLeftRightGate = new AndCompositeGate(nandABOut, orABOut, output);
   }
 
   @Override
   public void eval() {
-    aAndNotBGate.eval();
-    bAndNotAGate.eval();
-    leftOrRightGate.eval();
+    nandABGate.eval();
+    orABGate.eval();
+    andLeftRightGate.eval();
   }
 
   @Override
   public void reset() {
-    aAndNotBGate.reset();
-    bAndNotAGate.reset();
-    leftOrRightGate.reset();
+    nandABGate.reset();
+    orABGate.reset();
+    andLeftRightGate.reset();
   }
 
   @Override

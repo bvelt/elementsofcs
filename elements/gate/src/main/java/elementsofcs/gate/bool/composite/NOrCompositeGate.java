@@ -8,7 +8,7 @@ import elementsofcs.gate.bool.AbstractBinaryPredicateGate;
  * NOR composite gate composed of internal OR and NOT gates
  * 
  * <pre>
- * NOR(A, B) = NOT(OR(A, B))
+ * NOR(A, B) = AND(NOT(A), NOT(B))
  * </pre>
  * 
  * @author brentvelthoen
@@ -16,35 +16,41 @@ import elementsofcs.gate.bool.AbstractBinaryPredicateGate;
  */
 public class NOrCompositeGate extends AbstractBinaryPredicateGate implements CompositeGate {
 
-  private final OrCompositeGate aOrBGate;
-  private final NotCompositeGate notAOrBGate;
+  private final NotCompositeGate notAGate;
+  private final NotCompositeGate notBGate;
+  private final AndCompositeGate andGate;
 
   public NOrCompositeGate(Pin inputA, Pin inputB, Pin output) {
     super(inputA, inputB, output);
+    // NOT(A)
+    Pin notAOut = new Pin("notAOut");
+    notAGate = new NotCompositeGate(inputA, notAOut);
 
-    // OR(A, B)
-    Pin aOrBOut = new Pin("aOrBOut");
-    aOrBGate = new OrCompositeGate(inputA, inputB, aOrBOut);
+    // NOT(B)
+    Pin notBOut = new Pin("notBOut");
+    notBGate = new NotCompositeGate(inputB, notBOut);
 
-    // NOT(OR(A, B))
-    notAOrBGate = new NotCompositeGate(aOrBOut, output);
+    // AND(NOT(A), NOT(B))
+    andGate = new AndCompositeGate(notAOut, notBOut, output);
   }
 
   @Override
   public void eval() {
-    aOrBGate.eval();
-    notAOrBGate.eval();
+    notAGate.eval();
+    notBGate.eval();
+    andGate.eval();
   }
 
   @Override
   public void reset() {
-    aOrBGate.reset();
-    notAOrBGate.reset();
+    notAGate.reset();
+    notBGate.reset();
+    andGate.reset();
   }
 
   @Override
   public String toString() {
-    return "NOrCompositeGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
+    return "OrCompositeGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
   }
 
 }

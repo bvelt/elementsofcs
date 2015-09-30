@@ -2,71 +2,56 @@ package elementsofcs.gate.bool.composite;
 
 import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.BinaryPredicateGate;
+import elementsofcs.gate.bool.AbstractBinaryPredicateGate;
 import elementsofcs.gate.bool.primitive.NAndPrimitiveGate;
 
 /**
- * OR composite gate composed of internal NAND gates
+ * OR composite gate composed of internal NAND and NOT gates
  * 
  * <pre>
- * OR(A, B) = NAND(NAND(A, A), NAND(B, B))
+ * OR(A, B) = NAND(NOT(A), NOT(B))
  * </pre>
  * 
  * @author brentvelthoen
  *
  */
-public class OrCompositeGate implements BinaryPredicateGate, CompositeGate {
+public class OrCompositeGate extends AbstractBinaryPredicateGate implements CompositeGate {
 
-  private final NAndPrimitiveGate notAAndAGate;
-  private final NAndPrimitiveGate notBAndBGate;
-  private final NAndPrimitiveGate notLeftAndRightGate;
+  private final NotCompositeGate notAGate;
+  private final NotCompositeGate notBGate;
+  private final NAndPrimitiveGate nandGate;
 
   public OrCompositeGate(Pin inputA, Pin inputB, Pin output) {
-    super();
-    // NAND(A, A)
-    Pin notAAndAOut = new Pin("notAAndAOut");
-    notAAndAGate = new NAndPrimitiveGate(inputA, inputA, notAAndAOut);
+    super(inputA, inputB, output);
+    // NOT(A)
+    Pin notAOut = new Pin("notAOut");
+    notAGate = new NotCompositeGate(inputA, notAOut);
 
-    // NAND(B, B)
-    Pin notBAndBOut = new Pin("notBAndBOut");
-    notBAndBGate = new NAndPrimitiveGate(inputB, inputB, notBAndBOut);
+    // NOT(B)
+    Pin notBOut = new Pin("notBOut");
+    notBGate = new NotCompositeGate(inputB, notBOut);
 
-    // NAND(NAND(A, A), NAND(B, B))
-    notLeftAndRightGate = new NAndPrimitiveGate(notAAndAOut, notBAndBOut, output);
-  }
-
-  @Override
-  public Pin getInputA() {
-    return notAAndAGate.getInputA();
-  }
-
-  @Override
-  public Pin getInputB() {
-    return notBAndBGate.getInputA();
-  }
-
-  @Override
-  public Pin getOutput() {
-    return notLeftAndRightGate.getOutput();
+    // NAND(NOT(A), NOT(B))
+    nandGate = new NAndPrimitiveGate(notAOut, notBOut, output);
   }
 
   @Override
   public void eval() {
-    notAAndAGate.eval();
-    notBAndBGate.eval();
-    notLeftAndRightGate.eval();
+    notAGate.eval();
+    notBGate.eval();
+    nandGate.eval();
   }
 
   @Override
   public void reset() {
-    notAAndAGate.reset();
-    notBAndBGate.reset();
-    notLeftAndRightGate.reset();
+    notAGate.reset();
+    notBGate.reset();
+    nandGate.reset();
   }
 
   @Override
   public String toString() {
-    return "OrCompositeGate [getInputA()=" + getInputA() + ", getInputB()=" + getInputB() + ", getOutput()=" + getOutput() + "]";
+    return "OrCompositeGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
   }
 
 }
