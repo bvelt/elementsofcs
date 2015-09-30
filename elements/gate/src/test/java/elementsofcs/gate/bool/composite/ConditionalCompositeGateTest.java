@@ -2,7 +2,7 @@ package elementsofcs.gate.bool.composite;
 
 import elementsofcs.gate.Gate;
 import elementsofcs.gate.bool.AbstractBinaryPredicateGateTest;
-import elementsofcs.gate.bool.composite.ConditionalCompositeGate;
+import elementsofcs.gate.bool.TruthTables;
 
 public class ConditionalCompositeGateTest extends AbstractBinaryPredicateGateTest {
 
@@ -13,11 +13,7 @@ public class ConditionalCompositeGateTest extends AbstractBinaryPredicateGateTes
 
   @Override
   protected boolean[][] createTruthTable() {
-    return new boolean[][] {
-        { true, true, true },
-        { true, false, false },
-        { false, true, true },
-        { false, false, true } };
+    return TruthTables.COND;
   }
 
 }

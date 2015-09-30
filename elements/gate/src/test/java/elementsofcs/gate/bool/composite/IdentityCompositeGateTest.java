@@ -2,6 +2,7 @@ package elementsofcs.gate.bool.composite;
 
 import elementsofcs.gate.Gate;
 import elementsofcs.gate.bool.AbstractUnaryPredicateGateTest;
+import elementsofcs.gate.bool.TruthTables;
 
 public class IdentityCompositeGateTest extends AbstractUnaryPredicateGateTest {
 
@@ -12,9 +13,7 @@ public class IdentityCompositeGateTest extends AbstractUnaryPredicateGateTest {
 
   @Override
   protected boolean[][] createTruthTable() {
-    return new boolean[][] {
-        { true, true },
-        { false, false } };
+    return TruthTables.IDENTITY;
   }
 
 }

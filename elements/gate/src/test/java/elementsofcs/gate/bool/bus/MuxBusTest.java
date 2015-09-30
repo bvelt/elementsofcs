@@ -15,10 +15,10 @@ public class MuxBusTest {
   private final Pin select = new Pin("select");
   private final List<Pin> output = Pin.create16("output");
 
-  private MuxBus gate = MuxBus.create16(inputA, inputB, select, output);
+  private final MuxBus gate = MuxBus.create16(inputA, inputB, select, output);
 
   // | A | B | Sel | Out |
-  private boolean[][] truthTable = new boolean[][] {
+  private final boolean[][] tt = new boolean[][] {
       { true, true, true, true },
       { true, true, false, true },
       { true, false, true, true },
@@ -30,14 +30,14 @@ public class MuxBusTest {
   };
 
   @Test
-  public void outputsShouldMatchExpectedOutputsInTruthTable() {
-    for (int i = 0; i < truthTable.length; i++) {
-      boolean inputAValue = truthTable[i][0];
-      boolean inputBValue = truthTable[i][1];
+  public void verifyTruthTable() {
+    for (int i = 0; i < tt.length; i++) {
+      boolean inputAValue = tt[i][0];
+      boolean inputBValue = tt[i][1];
 
-      boolean selectBit = truthTable[i][2];
+      boolean selectBit = tt[i][2];
 
-      boolean expectedOutputValue = truthTable[i][3];
+      boolean expectedOutputValue = tt[i][3];
 
       gate.reset();
 

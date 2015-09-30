@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.alu.HalfAdderGate;
 
 public class HalfAdderGateTest {
 
@@ -16,7 +15,7 @@ public class HalfAdderGateTest {
 
   private final HalfAdderGate gate = new HalfAdderGate(inputA, inputB, carry, sum);
 
-  private final boolean[][] truthTable = new boolean[][] {
+  private final boolean[][] tt = new boolean[][] {
       { false, false, false, false },
       { false, true, false, true },
       { true, false, false, true },
@@ -24,24 +23,25 @@ public class HalfAdderGateTest {
   };
 
   @Test
-  public void verifyOutputsMatchOutputsInTruthTable() {
-    for (int i = 0; i < truthTable.length; i++) {
+  public void verifyTruthTable() {
+    for (int i = 0; i < tt.length; i++) {
+      boolean inputAValue = tt[i][0];
+      boolean inputBValue = tt[i][1];
+
+      boolean expectedCarryValue = tt[i][2];
+      boolean expectedSumValue = tt[i][3];
+
       gate.reset();
 
-      boolean inputAValue = truthTable[i][0];
-      boolean inputBValue = truthTable[i][1];
-      boolean expectedCarryValue = truthTable[i][2];
-      boolean expectedSumValue = truthTable[i][3];
-
-      gate.getInputA().setValue(inputAValue);
-      gate.getInputB().setValue(inputBValue);
+      inputA.setValue(inputAValue);
+      inputB.setValue(inputBValue);
 
       gate.eval();
 
       assertTrue("When A is " + inputAValue + " and B is " + inputBValue + ", expected carry is " + expectedCarryValue,
-          expectedCarryValue == gate.getCarry().getValue());
+          expectedCarryValue == carry.getValue());
       assertTrue("When A is " + inputAValue + " and B is " + inputBValue + ", expected sum is " + expectedSumValue,
-          expectedSumValue == gate.getSum().getValue());
+          expectedSumValue == sum.getValue());
     }
   }
 }

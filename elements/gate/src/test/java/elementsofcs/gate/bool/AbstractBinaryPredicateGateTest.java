@@ -28,10 +28,11 @@ public abstract class AbstractBinaryPredicateGateTest {
   protected abstract Gate createGate();
 
   @Test
-  public void outputsShouldMatchExpectedOutputsInTruthTable() {
+  public void verifyTruthTable() {
     for (int i = 0; i < tt.length; i++) {
       boolean inputAValue = tt[i][0];
       boolean inputBValue = tt[i][1];
+
       boolean expectedOutputValue = tt[i][2];
 
       gate.reset();

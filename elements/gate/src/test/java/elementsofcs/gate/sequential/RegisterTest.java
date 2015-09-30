@@ -17,7 +17,7 @@ public class RegisterTest {
   private final Register register = new Register(Pin.SIZE_16, input, load, output);
 
   // | In(t - 1) | Out(t - 1) | Load(t - 1) | Out(t) (when Load(t)=0) |
-  private final boolean[][] truthTable = new boolean[][] {
+  private final boolean[][] tt = new boolean[][] {
       { false, false, false, false },
       { false, false, true, false },
       { false, true, false, true },
@@ -29,13 +29,13 @@ public class RegisterTest {
   };
 
   @Test
-  public void verifyOutputsMatchExpectedOutputsInTruthTable() {
-    for (int i = 0; i < truthTable.length; i++) {
-      boolean inputValue = truthTable[i][0];
-      boolean outputValue = truthTable[i][1];
-      boolean loadValue = truthTable[i][2];
+  public void verifyTruthTable() {
+    for (int i = 0; i < tt.length; i++) {
+      boolean inputValue = tt[i][0];
+      boolean outputValue = tt[i][1];
+      boolean loadValue = tt[i][2];
 
-      boolean expectedOutNextValue = truthTable[i][3];
+      boolean expectedOutNextValue = tt[i][3];
 
       register.reset();
 

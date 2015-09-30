@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.Test;
 
 import elementsofcs.gate.Pin;
+import elementsofcs.gate.bool.TruthTables;
 
 public class NotBusTest {
 
@@ -14,28 +15,26 @@ public class NotBusTest {
   private final List<Pin> output = Pin.create16("output");
 
   private final NotBus bus = NotBus.create16(input, output);
-
-  // | In | Out |
-  private final boolean[][] truthTable = new boolean[][] {
-      { true, false },
-      { false, true } };
+  private final boolean[][] tt = TruthTables.NOT;
 
   @Test
-  public void verifyNot16Bus() {
-    for (int i = 0; i < truthTable.length; i++) {
+  public void verifyTruthTable() {
+    for (int i = 0; i < tt.length; i++) {
+      boolean inputValue = tt[i][0];
+
+      boolean expectedOutputValue = tt[i][1];
+
       bus.reset();
 
-      boolean inputValue = truthTable[i][0];
       for (int j = 0; j < bus.getInput().size(); j++) {
-        bus.getInput().get(j).setValue(inputValue);
+        input.get(j).setValue(inputValue);
       }
 
       bus.eval();
 
-      boolean expectedOutputValue = truthTable[i][1];
       for (int j = 0; j < bus.getInput().size(); j++) {
         assertTrue("output[" + j + "] expected to be " + expectedOutputValue,
-            bus.getOutput().get(j).getValue() == expectedOutputValue);
+            output.get(j).getValue() == expectedOutputValue);
       }
     }
   }

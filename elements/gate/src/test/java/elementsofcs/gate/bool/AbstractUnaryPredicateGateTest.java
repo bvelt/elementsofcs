@@ -27,9 +27,10 @@ public abstract class AbstractUnaryPredicateGateTest {
   protected abstract Gate createGate();
 
   @Test
-  public void outputsShouldMatchExpectedOutputsInTruthTable() {
+  public void verifyTruthTable() {
     for (int i = 0; i < tt.length; i++) {
       boolean inputAValue = tt[i][0];
+
       boolean expectedOutputValue = tt[i][1];
 
       gate.reset();

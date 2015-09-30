@@ -16,7 +16,7 @@ public class OrNWayBusTest {
   private final OrNWayBus bus = OrNWayBus.create8(input, output);
 
   // | In[0]..In[7] | Out |
-  private final boolean[][] truthTable = new boolean[][] {
+  private final boolean[][] tt = new boolean[][] {
       { true, false, false, false, false, false, false, false, true },
       { false, true, false, false, false, false, false, false, true },
       { false, false, true, false, false, false, false, false, true },
@@ -29,19 +29,19 @@ public class OrNWayBusTest {
   };
 
   @Test
-  public void verifyOutputsMatchExpectedOutputsInTruthTable() {
-    for (int i = 0; i < truthTable.length; i++) {
+  public void verifyTruthTable() {
+    for (int i = 0; i < tt.length; i++) {
       bus.reset();
 
-      for (int j = 0; j < (truthTable[i].length - 1); j++) {
-        bus.getInput().get(j).setValue(truthTable[i][j]);
+      for (int j = 0; j < (tt[i].length - 1); j++) {
+        input.get(j).setValue(tt[i][j]);
       }
 
-      boolean expectedOutputValue = truthTable[i][8];
-
       bus.eval();
+
+      boolean expectedOutputValue = tt[i][8];
       assertTrue("At index " + i + ", expecting output " + expectedOutputValue,
-          expectedOutputValue == bus.getOutput().getValue());
+          expectedOutputValue == output.getValue());
     }
   }
 }

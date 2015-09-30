@@ -49,13 +49,13 @@ public class ALUTest {
     };
 
     for (int i = 0; i < tt.length; i++) {
-      alu.reset();
-
       final boolean bsel = tt[i][0];
       // negation control bit should be ignored as long as zero control bit is 1
       final boolean bseln = tt[i][1];
       final boolean bin = tt[i][2];
       final boolean binnext = tt[i][3];
+
+      alu.reset();
 
       sel.setValue(bsel);
       seln.setValue(bseln);
@@ -89,13 +89,13 @@ public class ALUTest {
     };
 
     for (int i = 0; i < tt.length; i++) {
-      alu.reset();
-
       final boolean bsel = tt[i][0];
       // zero control bit has to be false for negation control bit to be enabled
       final boolean bselz = tt[i][1];
       final boolean bin = tt[i][2];
       final boolean binnext = tt[i][3];
+
+      alu.reset();
 
       sel.setValue(bsel);
       selz.setValue(bselz);
@@ -124,12 +124,12 @@ public class ALUTest {
     };
 
     for (int i = 0; i < tt.length; i++) {
-      alu.reset();
-
       final boolean bf = tt[i][0];
       final boolean bx = tt[i][1];
       final boolean by = tt[i][2];
       final boolean bout = tt[i][3];
+
+      alu.reset();
 
       f.setValue(bf);
       // just set least-significant bit
@@ -155,11 +155,11 @@ public class ALUTest {
     };
 
     for (int i = 0; i < tt.length; i++) {
-      alu.reset();
-
       final boolean bno = tt[i][0];
       final boolean bout = tt[i][1];
       final boolean boutnext = tt[i][2];
+
+      alu.reset();
 
       // negate x,y if need to set out=true
       nx.setValue(bout);
@@ -183,9 +183,10 @@ public class ALUTest {
     };
 
     for (int i = 0; i < tt.length; i++) {
-      alu.reset();
       final boolean bout = tt[i][0];
       final boolean bzr = tt[i][1];
+
+      alu.reset();
 
       // negate x,y if need to set out=true, else out=false
       nx.setValue(bout);
@@ -207,9 +208,10 @@ public class ALUTest {
     };
 
     for (int i = 0; i < tt.length; i++) {
-      alu.reset();
       final boolean bout = tt[i][0];
       final boolean bzr = tt[i][1];
+
+      alu.reset();
 
       // negate x,y if need to set out=true, else out=false
       nx.setValue(bout);

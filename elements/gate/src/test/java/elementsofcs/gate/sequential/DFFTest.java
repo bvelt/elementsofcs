@@ -14,7 +14,7 @@ public class DFFTest {
   private final DFF gate = new DFF(input, output);
 
   // | In | In Next | Out |
-  private final boolean[][] truthTable = new boolean[][] {
+  private final boolean[][] tt = new boolean[][] {
       { false, false, false },
       { false, true, false },
       { true, false, true },
@@ -22,13 +22,14 @@ public class DFFTest {
   };
 
   @Test
-  public void verifyOutputsMatchExpectedOutputsInTruthTable() {
-    for (int i = 0; i < truthTable.length; i++) {
-      gate.reset();
+  public void verifyTruthTable() {
+    for (int i = 0; i < tt.length; i++) {
+      boolean input1stValue = tt[i][0];
+      boolean input2ndValue = tt[i][1];
 
-      boolean input1stValue = truthTable[i][0];
-      boolean input2ndValue = truthTable[i][1];
-      boolean expectedOutputValue = truthTable[i][2];
+      boolean expectedOutputValue = tt[i][2];
+
+      gate.reset();
 
       input.setValue(input1stValue);
       gate.eval(); // load

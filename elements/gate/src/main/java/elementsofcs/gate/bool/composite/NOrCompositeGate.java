@@ -5,7 +5,7 @@ import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.AbstractBinaryPredicateGate;
 
 /**
- * NOR composite gate composed of internal OR and NOT gates
+ * NOR composite gate composed of internal gates
  * 
  * <pre>
  * NOR(A, B) = AND(NOT(A), NOT(B))

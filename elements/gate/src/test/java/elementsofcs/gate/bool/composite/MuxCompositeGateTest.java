@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import elementsofcs.gate.Pin;
+import elementsofcs.gate.bool.TruthTables;
 
 public class MuxCompositeGateTest {
 
@@ -14,19 +15,10 @@ public class MuxCompositeGateTest {
   private final Pin output = new Pin("Output");
 
   private MuxCompositeGate gate = new MuxCompositeGate(inputA, inputB, selector, output);
-
-  private boolean[][] tt = new boolean[][] {
-      { true, true, true, true },
-      { true, true, false, true },
-      { true, false, true, true },
-      { true, false, false, false },
-      { false, true, true, false },
-      { false, true, false, true },
-      { false, false, true, false },
-      { false, false, false, false } };;
+  private boolean[][] tt = TruthTables.MUX;
 
   @Test
-  public void outputsShouldMatchExpectedOutputsInTruthTable() {
+  public void verifyTruthTable() {
     for (int i = 0; i < tt.length; i++) {
       boolean inputAValue = tt[i][0];
       boolean inputBValue = tt[i][1];

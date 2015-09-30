@@ -62,7 +62,7 @@ public class Counter16Test {
   };
 
   @Test
-  public void verifyTT() {
+  public void verifyTruthTable() {
     for (int i = 0; i < tt.length; i++) {
       counter.reset();
 

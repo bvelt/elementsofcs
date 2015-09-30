@@ -6,7 +6,7 @@ import elementsofcs.gate.bool.AbstractBinaryPredicateGate;
 import elementsofcs.gate.bool.primitive.NAndPrimitiveGate;
 
 /**
- * OR composite gate composed of internal NAND and NOT gates
+ * OR composite gate composed of internal gates
  * 
  * <pre>
  * OR(A, B) = NAND(NOT(A), NOT(B))

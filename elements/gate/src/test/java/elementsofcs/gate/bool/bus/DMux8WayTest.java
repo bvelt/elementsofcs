@@ -21,10 +21,10 @@ public class DMux8WayTest {
   private final Pin outputG = new Pin("outputG");
   private final Pin outputH = new Pin("outputH");
 
-  private DMux8Way gate = new DMux8Way(input, select, outputA, outputB, outputC, outputD, outputE, outputF, outputG, outputH);
+  private final DMux8Way gate = new DMux8Way(input, select, outputA, outputB, outputC, outputD, outputE, outputF, outputG, outputH);
 
   // | Input | Sel[3] | OutA | OutB | OutC | OutD | OutE | OutF | OutG | OutH |
-  private boolean[][] truthTable = new boolean[][] {
+  private final boolean[][] tt = new boolean[][] {
       // Sel=000
       { true, false, false, false, true, false, false, false, false, false, false, false },
       { false, false, false, false, false, false, false, false, false, false, false, false },
@@ -52,22 +52,22 @@ public class DMux8WayTest {
   };
 
   @Test
-  public void outputsShouldMatchExpectedOutputsInTruthTable() {
-    for (int i = 0; i < truthTable.length; i++) {
-      boolean inputValue = truthTable[i][0];
+  public void verifyTruthTable() {
+    for (int i = 0; i < tt.length; i++) {
+      boolean inputValue = tt[i][0];
 
-      boolean select1stBit = truthTable[i][1];
-      boolean select2ndBit = truthTable[i][2];
-      boolean select3rdBit = truthTable[i][3];
+      boolean select1stBit = tt[i][1];
+      boolean select2ndBit = tt[i][2];
+      boolean select3rdBit = tt[i][3];
 
-      boolean outputAValue = truthTable[i][4];
-      boolean outputBValue = truthTable[i][5];
-      boolean outputCValue = truthTable[i][6];
-      boolean outputDValue = truthTable[i][7];
-      boolean outputEValue = truthTable[i][8];
-      boolean outputFValue = truthTable[i][9];
-      boolean outputGValue = truthTable[i][10];
-      boolean outputHValue = truthTable[i][11];
+      boolean outputAValue = tt[i][4];
+      boolean outputBValue = tt[i][5];
+      boolean outputCValue = tt[i][6];
+      boolean outputDValue = tt[i][7];
+      boolean outputEValue = tt[i][8];
+      boolean outputFValue = tt[i][9];
+      boolean outputGValue = tt[i][10];
+      boolean outputHValue = tt[i][11];
 
       gate.reset();
 

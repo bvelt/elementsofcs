@@ -17,10 +17,10 @@ public class DMux4WayTest {
   private final Pin outputC = new Pin("outputC");
   private final Pin outputD = new Pin("outputD");
 
-  private DMux4Way gate = new DMux4Way(input, select, outputA, outputB, outputC, outputD);
+  private final DMux4Way gate = new DMux4Way(input, select, outputA, outputB, outputC, outputD);
 
   // | Input | Sel[2] | OutA | OutB | OutC | OutD |
-  private boolean[][] truthTable = new boolean[][] {
+  private final boolean[][] tt = new boolean[][] {
       // Sel=00
       { true, false, false, true, false, false, false },
       { false, false, false, false, false, false, false },
@@ -36,17 +36,17 @@ public class DMux4WayTest {
   };
 
   @Test
-  public void outputsShouldMatchExpectedOutputsInTruthTable() {
-    for (int i = 0; i < truthTable.length; i++) {
-      boolean inputValue = truthTable[i][0];
+  public void verifyTruthTable() {
+    for (int i = 0; i < tt.length; i++) {
+      boolean inputValue = tt[i][0];
 
-      boolean select1stBit = truthTable[i][1];
-      boolean select2ndBit = truthTable[i][2];
+      boolean select1stBit = tt[i][1];
+      boolean select2ndBit = tt[i][2];
 
-      boolean outputAValue = truthTable[i][3];
-      boolean outputBValue = truthTable[i][4];
-      boolean outputCValue = truthTable[i][5];
-      boolean outputDValue = truthTable[i][6];
+      boolean outputAValue = tt[i][3];
+      boolean outputBValue = tt[i][4];
+      boolean outputCValue = tt[i][5];
+      boolean outputDValue = tt[i][6];
 
       gate.reset();
 

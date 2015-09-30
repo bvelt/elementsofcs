@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.alu.FullAdderGate;
 
 public class FullAdderGateTest {
 
@@ -17,7 +16,7 @@ public class FullAdderGateTest {
 
   private final FullAdderGate gate = new FullAdderGate(inputA, inputB, inputC, carry, sum);
 
-  private final boolean[][] truthTable = new boolean[][] {
+  private final boolean[][] tt = new boolean[][] {
       { false, false, false, false, false },
       { false, false, true, false, true },
       { false, true, false, false, true },
@@ -29,26 +28,27 @@ public class FullAdderGateTest {
   };
 
   @Test
-  public void verifyOutputsMatchOutputsInTruthTable() {
-    for (int i = 0; i < truthTable.length; i++) {
+  public void verifyTruthTable() {
+    for (int i = 0; i < tt.length; i++) {
+      boolean inputAValue = tt[i][0];
+      boolean inputBValue = tt[i][1];
+      boolean inputCValue = tt[i][2];
+
+      boolean expectedCarryValue = tt[i][3];
+      boolean expectedSumValue = tt[i][4];
+
       gate.reset();
 
-      boolean inputAValue = truthTable[i][0];
-      boolean inputBValue = truthTable[i][1];
-      boolean inputCValue = truthTable[i][2];
-      boolean expectedCarryValue = truthTable[i][3];
-      boolean expectedSumValue = truthTable[i][4];
-
-      gate.getInputA().setValue(inputAValue);
-      gate.getInputB().setValue(inputBValue);
-      gate.getInputC().setValue(inputCValue);
+      inputA.setValue(inputAValue);
+      inputB.setValue(inputBValue);
+      inputC.setValue(inputCValue);
 
       gate.eval();
 
       assertTrue("When A is " + inputAValue + ", B is " + inputBValue + ", and C is " + inputCValue + ", expected carry is " + expectedCarryValue,
-          expectedCarryValue == gate.getCarry().getValue());
+          expectedCarryValue == carry.getValue());
       assertTrue("When A is " + inputAValue + ", B is " + inputBValue + ", and C is " + inputCValue + ", expected sum is " + expectedSumValue,
-          expectedSumValue == gate.getSum().getValue());
+          expectedSumValue == sum.getValue());
     }
   }
 }

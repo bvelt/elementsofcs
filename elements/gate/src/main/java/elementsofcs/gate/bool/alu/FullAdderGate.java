@@ -35,9 +35,9 @@ public class FullAdderGate implements BooleanGate, CompositeGate {
   private final Pin carry;
   private final Pin sum;
 
-  private final Gate haddAB;
-  private final Gate haddABC;
-  private final Gate xorCarry;
+  private final Gate addABGate;
+  private final Gate addABCGate;
+  private final Gate carryGate;
 
   public FullAdderGate(Pin inputA, Pin inputB, Pin inputC, Pin carry, Pin sum) {
     super();
@@ -52,14 +52,14 @@ public class FullAdderGate implements BooleanGate, CompositeGate {
     this.carry = carry;
     this.sum = sum;
 
-    Pin sumAB = new Pin("sumOfA+B");
-    Pin carryAB = new Pin("carryOfA+B");
-    haddAB = new HalfAdderGate(inputA, inputB, carryAB, sumAB);
+    Pin sumABOut = new Pin("sumOfA+B");
+    Pin carryABOut = new Pin("carryOfA+B");
+    addABGate = new HalfAdderGate(inputA, inputB, carryABOut, sumABOut);
 
-    Pin carryABC = new Pin("carryOfA+B+C");
-    haddABC = new HalfAdderGate(sumAB, inputC, carryABC, sum);
+    Pin carryABCOut = new Pin("carryOfA+B+C");
+    addABCGate = new HalfAdderGate(sumABOut, inputC, carryABCOut, sum);
 
-    xorCarry = new XOrCompositeGate(carryAB, carryABC, carry);
+    carryGate = new XOrCompositeGate(carryABOut, carryABCOut, carry);
   }
 
   public Pin getInputA() {
@@ -84,16 +84,16 @@ public class FullAdderGate implements BooleanGate, CompositeGate {
 
   @Override
   public void eval() {
-    haddAB.eval();
-    haddABC.eval();
-    xorCarry.eval();
+    addABGate.eval();
+    addABCGate.eval();
+    carryGate.eval();
   }
 
   @Override
   public void reset() {
-    haddAB.reset();
-    haddABC.reset();
-    xorCarry.reset();
+    addABGate.reset();
+    addABCGate.reset();
+    carryGate.reset();
   }
 
   @Override
