@@ -52,3 +52,12 @@
  project('gate'){
  
  }
+ 
+ project('gate-ext'){
+ 	
+ 	dependencies {
+        compile project(':elements:gate')
+    }
+    
+ }
+ 

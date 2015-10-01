@@ -19,3 +19,4 @@ rootProject.name = 'elements-bundle'
 
 include 'elements'
 include 'elements:gate'
+include 'elements:gate-ext'
