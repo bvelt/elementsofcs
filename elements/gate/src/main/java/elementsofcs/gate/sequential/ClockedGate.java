@@ -34,4 +34,9 @@ public interface ClockedGate extends SequentialGate {
     getClockInput().setValue(clockSignal);
     eval();
   }
+
+  default void onClockCycle() {
+    onClockSignal(false);
+    onClockSignal(true);
+  }
 }

@@ -18,6 +18,7 @@ import elementsofcs.gate.bool.bus.Mux8Way16;
  */
 public class RAM256 implements RAM {
 
+  private final Pin clockInput;
   private final List<Pin> input;
   private final List<Pin> address;
   private final Pin load;
@@ -28,7 +29,12 @@ public class RAM256 implements RAM {
   private final Mux8Way16 muxOutput;
 
   public RAM256(List<Pin> input, List<Pin> address, Pin load, List<Pin> output) {
+    this(new Pin("clockInput"), input, address, load, output);
+  }
+
+  public RAM256(Pin clockInput, List<Pin> input, List<Pin> address, Pin load, List<Pin> output) {
     super();
+    this.clockInput = clockInput;
     this.input = input;
     Objects.requireNonNull(address, "address");
     this.address = address;
@@ -49,7 +55,7 @@ public class RAM256 implements RAM {
     // init rams
     for (int i = 0; i < Pin.SIZE_8; i++) {
       List<Pin> rout = Pin.create16("rout[" + i + "]");
-      rams.add(new RAM128(input, regAddress, rload.get(i), rout));
+      rams.add(new RAM128(clockInput, input, regAddress, rload.get(i), rout));
     }
 
     // mux ram outputs to output
@@ -62,23 +68,25 @@ public class RAM256 implements RAM {
   }
 
   @Override
-  public int getSize() {
-    return Pin.SIZE_256;
-  }
-
-  @Override
-  public int getWidth() {
-    return Pin.SIZE_16;
-  }
-
-  @Override
-  public List<Pin> getInput() {
-    return input;
+  public void eval() {
+    dmuxLoad.eval();
+    rams.forEach(Gate::eval);
+    muxOutput.eval();
   }
 
   @Override
   public List<Pin> getAddress() {
     return address;
+  }
+
+  @Override
+  public Pin getClockInput() {
+    return clockInput;
+  }
+
+  @Override
+  public List<Pin> getInput() {
+    return input;
   }
 
   @Override
@@ -92,10 +100,13 @@ public class RAM256 implements RAM {
   }
 
   @Override
-  public void eval() {
-    dmuxLoad.eval();
-    rams.forEach(Gate::eval);
-    muxOutput.eval();
+  public int getSize() {
+    return Pin.SIZE_256;
+  }
+
+  @Override
+  public int getWidth() {
+    return Pin.SIZE_16;
   }
 
   @Override

@@ -18,21 +18,27 @@ public class ENFlipFlop implements ClockedGate, CompositeGate {
   private final Pin inputD;
   private final Pin load;
   private final Pin outputQ;
+  private final Pin outputNQ;
 
   private final AndCompositeGate enableGate;
   private final DFlipFlop dff;
 
   public ENFlipFlop(Pin clockInput, Pin inputD, Pin load, Pin outputQ) {
+    this(clockInput, inputD, load, outputQ, new Pin("outputNQ"));
+  }
+
+  public ENFlipFlop(Pin clockInput, Pin inputD, Pin load, Pin outputQ, Pin outputNQ) {
     super();
     this.clockInput = clockInput;
     this.inputD = inputD;
     this.load = load;
     this.outputQ = outputQ;
+    this.outputNQ = outputNQ;
 
     Pin enableOut = new Pin("enableOut");
     enableGate = new AndCompositeGate(clockInput, load, enableOut);
 
-    dff = new DFlipFlop(enableOut, inputD, outputQ);
+    dff = new DFlipFlop(enableOut, inputD, outputQ, outputNQ);
   }
 
   @Override
@@ -52,6 +58,10 @@ public class ENFlipFlop implements ClockedGate, CompositeGate {
 
   public Pin getLoad() {
     return load;
+  }
+
+  public Pin getOutputNQ() {
+    return outputNQ;
   }
 
   public Pin getOutputQ() {

@@ -23,37 +23,63 @@ import elementsofcs.gate.Pin;
  * @author brentvelthoen
  *
  */
-public class Register implements SequentialGate, CompositeGate {
+public class Register implements ClockedGate, CompositeGate {
 
-  protected final int size;
-
-  protected final List<Pin> input;
-  protected final Pin load;
-  protected final List<Pin> output;
-
-  protected final List<Bit> bits = new ArrayList<Bit>();
-
-  public static Register create16(List<Pin> input, Pin load, List<Pin> output) {
-    return new Register(Pin.SIZE_16, input, load, output);
+  public static Register create16(Pin clockInput, List<Pin> input, Pin load, List<Pin> output) {
+    return new Register(Pin.SIZE_16, clockInput, input, load, output);
   }
 
+  protected final int size;
+  protected final Pin clockInput;
+  protected final List<Pin> input;
+  protected final Pin load;
+
+  protected final List<Pin> output;
+  protected final List<Pin> outputNQ;
+
+  protected final List<ENFlipFlop> bits = new ArrayList<ENFlipFlop>();
+
   public Register(int size, List<Pin> input, Pin load, List<Pin> output) {
+    this(size, new Pin("clockInput"), input, load, output);
+  }
+
+  public Register(int size, Pin clockInput, List<Pin> input, Pin load, List<Pin> output) {
+    this(size, clockInput, input, load, output, Pin.createList("outputNQ", size));
+  }
+
+  public Register(int size, Pin clockInput, List<Pin> input, Pin load, List<Pin> output, List<Pin> outputNQ) {
     super();
     this.size = size;
+
+    this.clockInput = clockInput;
 
     Objects.requireNonNull(input, "input");
     checkListSize(input, size, "input");
     this.input = input;
 
+    this.load = load;
+
     Objects.requireNonNull(output, "output");
     checkListSize(output, size, "output");
     this.output = output;
 
-    this.load = load;
+    Objects.requireNonNull(outputNQ, "outputNQ");
+    checkListSize(output, size, "outputNQ");
+    this.outputNQ = outputNQ;
 
     for (int i = 0; i < size; i++) {
-      bits.add(new Bit(input.get(i), load, output.get(i)));
+      bits.add(new ENFlipFlop(clockInput, input.get(i), load, output.get(i), outputNQ.get(i)));
     }
+  }
+
+  @Override
+  public void eval() {
+    bits.forEach(Gate::eval);
+  }
+
+  @Override
+  public Pin getClockInput() {
+    return clockInput;
   }
 
   public List<Pin> getInput() {
@@ -68,13 +94,12 @@ public class Register implements SequentialGate, CompositeGate {
     return output;
   }
 
-  public int getSize() {
-    return size;
+  List<Pin> getOutputNQ() {
+    return outputNQ;
   }
 
-  @Override
-  public void eval() {
-    bits.forEach(Gate::eval);
+  public int getSize() {
+    return size;
   }
 
   @Override
@@ -84,7 +109,7 @@ public class Register implements SequentialGate, CompositeGate {
 
   @Override
   public String toString() {
-    return "Register [size=" + size + ", input=" + input + ", load=" + load + ", output=" + output + ", bits=" + bits + "]";
+    return "Register [size=" + size + ", clockInput=" + clockInput + ", input=" + input + ", load=" + load + ", output=" + output + "]";
   }
 
 }

@@ -35,17 +35,17 @@ public class RAM8Test {
 
   @Test
   public void loadInputsAndVerifyOutputsForEachRegisterInRAMBank() {
+    ram.reset();
+    load.setValue(true);
     for (int i = 0; i < size; i++, increment(address)) {
-      // load register at current address
-      load.setValue(true);
+      // load buffer at current address
       for (int j = 0; j < width; j++) {
         input.get(j % 8).setValue(registerValues[i][j % 8]);
       }
-      ram.eval();
+      ram.onClockSignal(false);
 
-      // write register to output
-      load.setValue(false);
-      ram.eval();
+      // write buffer to output
+      ram.onClockSignal(true);
 
       // verify outputs against original register values
       for (int j = 0; j < width; j++) {

@@ -23,7 +23,9 @@ import elementsofcs.gate.bool.bus.OrNWayBus;
  * @author brentvelthoen
  *
  */
-public class Counter16 implements SequentialGate, CompositeGate {
+public class Counter16 implements ClockedGate, CompositeGate {
+
+  private final Pin clockInput;
 
   private final List<Pin> input;
 
@@ -32,16 +34,23 @@ public class Counter16 implements SequentialGate, CompositeGate {
   private final Pin reset;
 
   private final List<Pin> output;
+  private final List<Pin> outputNQ;
 
   private final List<Gate> gates = new ArrayList<Gate>();
 
   public Counter16(List<Pin> input, Pin increment, Pin load, Pin reset, List<Pin> output) {
+    this(new Pin("clockInput"), input, increment, load, reset, output, Pin.create16("outputNQ"));
+  }
+
+  public Counter16(Pin clockInput, List<Pin> input, Pin increment, Pin load, Pin reset, List<Pin> output, List<Pin> outputNQ) {
     super();
+    this.clockInput = clockInput;
     this.input = input;
     this.increment = increment;
     this.load = load;
     this.reset = reset;
     this.output = output;
+    this.outputNQ = outputNQ;
 
     // INCR(output)=incrOut
     List<Pin> incrOut = Pin.create16("incrOut");
@@ -71,33 +80,42 @@ public class Counter16 implements SequentialGate, CompositeGate {
     OrNWayBus rloadGate = new OrNWayBus(3, Pin.createList(increment, load, reset), rload);
     gates.add(rloadGate);
 
-    Register reg = new Register(Pin.SIZE_16, muxZOut, rload, output);
+    Register reg = new Register(Pin.SIZE_16, clockInput, muxZOut, rload, output, outputNQ);
     gates.add(reg);
   }
 
-  public List<Pin> getInput() {
-    return input;
+  @Override
+  public void eval() {
+    gates.forEach(Gate::eval);
+  }
+
+  @Override
+  public Pin getClockInput() {
+    return clockInput;
   }
 
   public Pin getIncrement() {
     return increment;
   }
 
-  public Pin getLoad() {
-    return load;
+  public List<Pin> getInput() {
+    return input;
   }
 
-  public Pin getReset() {
-    return reset;
+  public Pin getLoad() {
+    return load;
   }
 
   public List<Pin> getOutput() {
     return output;
   }
 
-  @Override
-  public void eval() {
-    gates.forEach(Gate::eval);
+  List<Pin> getOutputNQ() {
+    return outputNQ;
+  }
+
+  public Pin getReset() {
+    return reset;
   }
 
   @Override

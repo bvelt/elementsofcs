@@ -35,17 +35,17 @@ public class RAM256Test {
 
   @Test
   public void loadInputsAndVerifyOutputsForEachRegisterInRAMBank() {
-    for (int i = 0; i < size; i++, increment(address)) {
+    ram.reset();
+    load.setValue(true);
+    for (int i = 0; i < size; i += 8, increment(address, 8)) {
       // load register at current address
-      load.setValue(true);
       for (int j = 0; j < width; j++) {
         input.get(j % 8).setValue(registerValues[i % 8][j % 8]);
       }
-      ram.eval();
+      ram.onClockSignal(false);
 
       // write register to output
-      load.setValue(false);
-      ram.eval();
+      ram.onClockSignal(true);
 
       // verify outputs against original register values
       for (int j = 0; j < width; j++) {

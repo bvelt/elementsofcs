@@ -19,7 +19,7 @@ import elementsofcs.gate.Pin;
  * @author brentvelthoen
  *
  */
-public interface RAM extends SequentialGate, CompositeGate {
+public interface RAM extends ClockedGate, CompositeGate {
   int getSize();
 
   int getWidth();

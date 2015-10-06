@@ -10,6 +10,8 @@ import elementsofcs.gate.Pin;
 
 public class Counter16Test {
 
+  private final Pin clockInput = new Pin("clockInput");
+
   private final List<Pin> input = Pin.create16("input");
 
   private final Pin increment = new Pin("increment");
@@ -17,8 +19,9 @@ public class Counter16Test {
   private final Pin reset = new Pin("reset");
 
   private final List<Pin> output = Pin.create16("output");
+  private final List<Pin> outputNQ = Pin.create16("outputNQ");
 
-  private final Counter16 counter = new Counter16(input, increment, load, reset, output);
+  private final Counter16 counter = new Counter16(clockInput, input, increment, load, reset, output, outputNQ);
 
   private final boolean[][] tt = new boolean[][] {
       // in[14]|in[15]|incr|load|reset|ou[14]|ou[15]|in[14]'|in[15]'|ou[14]'|ou[15]'
@@ -76,13 +79,12 @@ public class Counter16Test {
       output.get(output.size() - 2).setValue(tt[i][5]);
       output.get(output.size() - 1).setValue(tt[i][6]);
 
-      counter.eval(); // eval at (t - 1)
+      // Q complement of NQ
+      for (int j = 0; j < output.size(); j++) {
+        outputNQ.get(j).setValue(!output.get(j).getValue());
+      }
 
-      increment.setValue(false);
-      load.setValue(false);
-      reset.setValue(false);
-
-      counter.eval(); // eval at (t)
+      counter.onClockCycle();
 
       // input should be same
       assertTrue("At i=" + i + ", expecting in[14]'=" + tt[i][7],

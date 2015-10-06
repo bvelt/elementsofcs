@@ -16,42 +16,40 @@ public class RegisterTest {
 
   private final Register register = new Register(Pin.SIZE_16, input, load, output);
 
-  // | In(t - 1) | Out(t - 1) | Load(t - 1) | Out(t) (when Load(t)=0) |
   private final boolean[][] tt = new boolean[][] {
-      { false, false, false, false },
-      { false, false, true, false },
-      { false, true, false, true },
-      { false, true, true, false },
-      { true, false, true, true },
+      // Clock | D | Load | Q' |
+      { false, false, false, false }, // at reset, Q=false
       { true, false, false, false },
-      { true, true, true, true },
-      { true, true, false, true }
+      { false, false, true, false },
+      { true, false, true, false },
+      { false, true, false, false }, // buffer true
+      { true, true, false, false },
+      { false, true, true, false },
+      { true, false, true, true }, // write true, buffer false
+      { true, false, false, true },
+      { false, false, true, true },
+      { true, false, true, false }, // write false
+      { false, true, false, false }, // buffer true
+      { true, true, false, false },
+      { false, true, true, false },
+      { true, true, true, true } // load true
   };
 
   @Test
   public void verifyTruthTable() {
+    register.reset();
     for (int i = 0; i < tt.length; i++) {
-      boolean inputValue = tt[i][0];
-      boolean outputValue = tt[i][1];
-      boolean loadValue = tt[i][2];
+      final boolean inputValue = tt[i][1];
+      input.forEach(p -> {
+        p.setValue(inputValue);
+      });
+      load.setValue(tt[i][2]);
 
-      boolean expectedOutNextValue = tt[i][3];
+      register.onClockSignal(tt[i][0]);
 
-      register.reset();
-
-      input.forEach(in -> in.setValue(inputValue));
-      output.forEach(out -> out.setValue(outputValue));
-      load.setValue(loadValue);
-
-      // at time t - 1, store either output or input in dff internal bit
-      register.eval();
-
-      // at time t, send dff's internal bit to output
-      load.setValue(false);
-      register.eval();
-
-      assertTrue("At i=" + i + ", expecting out=" + expectedOutNextValue,
-          output.stream().allMatch(out -> expectedOutNextValue == out.getValue()));
+      boolean expectedOutputValue = tt[i][3];
+      assertTrue("At i=" + i + ", expecting outputQ=" + expectedOutputValue,
+          output.stream().allMatch(p -> p.getValue() == expectedOutputValue));
     }
   }
 
