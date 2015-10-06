@@ -1,4 +1,4 @@
-package com.elementsofcs.gate.sequential;
+package elementsofcs.gate.sequential;
 
 import static org.junit.Assert.assertTrue;
 
@@ -16,15 +16,15 @@ public class DLatchTest {
   private final DLatch latch = new DLatch(clockInput, inputD, outputQ, outputNQ);
 
   private final boolean[][] tt = new boolean[][] {
-      // CLK | D | Q | NQ | Q' | NQ' |
-      { false, false, false, true, false, true },
-      { false, false, true, false, true, false },
-      { false, true, false, true, false, true },
-      { false, true, true, false, true, false },
-      { true, false, false, true, false, true },
-      { true, false, true, false, false, true },
-      { true, true, false, true, true, false },
-      { true, true, true, false, true, false }
+      // CLK | D | Q | Q' |
+      { false, false, false, false },
+      { false, false, true, true },
+      { false, true, false, false },
+      { false, true, true, true },
+      { true, false, false, false },
+      { true, false, true, false },
+      { true, true, false, true },
+      { true, true, true, true }
   };
 
   @Test
@@ -33,16 +33,15 @@ public class DLatchTest {
       boolean clockPhaseValue = tt[i][0];
       boolean inputDValue = tt[i][1];
       boolean outputQValue = tt[i][2];
-      boolean outputNQValue = tt[i][3];
 
-      boolean expectedOutputQValue = tt[i][4];
-      boolean expectedOutputNQValue = tt[i][5];
+      boolean expectedOutputQValue = tt[i][3];
+      boolean expectedOutputNQValue = !expectedOutputQValue;
 
       latch.reset();
 
       inputD.setValue(inputDValue);
       outputQ.setValue(outputQValue);
-      outputNQ.setValue(outputNQValue);
+      outputNQ.setValue(!outputQValue);
 
       latch.onClockSignal(clockPhaseValue);
 

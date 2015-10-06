@@ -1,4 +1,4 @@
-package com.elementsofcs.gate.sequential;
+package elementsofcs.gate.sequential;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,17 @@ import java.util.List;
 import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.composite.NotCompositeGate;
-import elementsofcs.gate.sequential.ClockedGate;
 
+/**
+ * Data flip-flop composed of two latches, master and slave, controlled by
+ * complementary clocks. Copies input D to master's buffer when clockInput is
+ * false, copies master's buffer to output Q (slave's internal buffer) when
+ * clockInput is true (i.e. on the rising edge of the clock). When clockInput is
+ * false, output Q maintains its old value.
+ * 
+ * @author brentvelthoen
+ *
+ */
 public class DFlipFlop implements ClockedGate {
 
   private final Pin clockInput;

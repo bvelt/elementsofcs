@@ -1,4 +1,4 @@
-package com.elementsofcs.gate.sequential;
+package elementsofcs.gate.sequential;
 
 import static org.junit.Assert.assertTrue;
 
@@ -16,16 +16,33 @@ public class SRLatchTest {
   private final SRLatch latch = new SRLatch(inputS, inputR, outputQ, outputNQ);
 
   private final boolean[][] tt = new boolean[][] {
-      // | S | R | Q | NQ | Q' | NQ' |
-      { false, false, false, true, false, true },
-      { false, false, true, false, true, false },
-      { false, true, true, false, false, true },
-      { false, true, false, true, false, true },
-      { true, false, false, true, true, false },
-      { true, false, true, false, true, false },
-      { true, true, false, true, false, false },
-      { true, true, true, false, false, false }
+      // | S | R | Q | Q' |
+      // S=R=0, Q'=Q
+      { false, false, false, false },
+      { false, false, true, true },
+      // R=1, Q'=0
+      { false, true, true, false },
+      { false, true, false, false },
+      // S=1, Q'=0
+      { true, false, false, true },
+      { true, false, true, true }
   };
+
+  @Test(expected = IllegalStateException.class)
+  public void assertingSetAndResetShouldThrowIllegalStateExceptionOnEvaluation() {
+    latch.reset();
+    inputS.setValue(true);
+    inputR.setValue(true);
+    latch.eval();
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void equalOutputsShouldThrowIllegalStateExceptionOnEvaluation() {
+    latch.reset();
+    outputQ.setValue(true);
+    outputNQ.setValue(true);
+    latch.eval();
+  }
 
   @Test
   public void verifyTruthTable() {
@@ -33,17 +50,16 @@ public class SRLatchTest {
       boolean inputSValue = tt[i][0];
       boolean inputRValue = tt[i][1];
       boolean outputQValue = tt[i][2];
-      boolean outputNQValue = tt[i][3];
 
-      boolean expectedOutputQValue = tt[i][4];
-      boolean expectedOutputNQValue = tt[i][5];
+      boolean expectedOutputQValue = tt[i][3];
+      boolean expectedOutputNQValue = !expectedOutputQValue;
 
       latch.reset();
 
       inputS.setValue(inputSValue);
       inputR.setValue(inputRValue);
       outputQ.setValue(outputQValue);
-      outputNQ.setValue(outputNQValue);
+      outputNQ.setValue(!outputQValue);
 
       latch.eval();
 

@@ -1,4 +1,4 @@
-package com.elementsofcs.gate.sequential;
+package elementsofcs.gate.sequential;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,8 +7,16 @@ import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.composite.AndCompositeGate;
 import elementsofcs.gate.bool.composite.NotCompositeGate;
-import elementsofcs.gate.sequential.ClockedGate;
 
+/**
+ * Single-bit latch that only accepts input D on the rising edge of the clock.
+ * When clockSignal is true, latch behaves like a single-bit buffer, setting
+ * output Q to value of input D. When clockSignal is false, latch maintains
+ * value of output Q regardless of value of input D.
+ * 
+ * @author brentvelthoen
+ *
+ */
 public class DLatch implements ClockedGate {
 
   private final Pin clockInput;

@@ -1,10 +1,11 @@
-package com.elementsofcs.gate.sequential;
+package elementsofcs.gate.sequential;
 
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import elementsofcs.gate.Pin;
+import elementsofcs.gate.sequential.DFlipFlop;
 
 public class DFlipFlopTest {
 
