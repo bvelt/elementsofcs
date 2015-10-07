@@ -3,6 +3,7 @@ package elementsofcs.gate.sequential;
 import java.util.ArrayList;
 import java.util.List;
 
+import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.composite.AndCompositeGate;
@@ -17,7 +18,7 @@ import elementsofcs.gate.bool.composite.NotCompositeGate;
  * @author brentvelthoen
  *
  */
-public class DLatch implements ClockedGate {
+public class DLatch implements ClockedGate, CompositeGate {
 
   private final Pin clockInput;
   private final Pin inputD;

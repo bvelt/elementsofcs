@@ -1,5 +1,6 @@
 package elementsofcs.gate.sequential;
 
+import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.composite.NOrCompositeGate;
 
@@ -16,7 +17,7 @@ import elementsofcs.gate.bool.composite.NOrCompositeGate;
  * @author brentvelthoen
  *
  */
-public class SRLatch implements SequentialGate {
+public class SRLatch implements SequentialGate, CompositeGate {
 
   private final Pin inputS;
   private final Pin inputR;

@@ -3,6 +3,7 @@ package elementsofcs.gate.sequential;
 import java.util.ArrayList;
 import java.util.List;
 
+import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.composite.NotCompositeGate;
@@ -22,7 +23,7 @@ import elementsofcs.gate.bool.composite.NotCompositeGate;
  * @author brentvelthoen
  *
  */
-public class DFlipFlop implements ClockedGate {
+public class DFlipFlop implements ClockedGate, CompositeGate {
 
   private final Pin clockInput;
   private final Pin inputD;
