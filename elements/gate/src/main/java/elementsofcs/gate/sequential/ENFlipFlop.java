@@ -2,12 +2,17 @@ package elementsofcs.gate.sequential;
 
 import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.composite.AndCompositeGate;
+import elementsofcs.gate.bool.composite.MuxCompositeGate;
 
 /**
  * Enabled flip-flop that behaves like a {@link DFlipFlop} while load input is
  * true. When load input is false, latch is opaque: clock is ignored and output
  * Q maintains its old state.
+ * 
+ * <pre>
+ * if clock(t)=1 and load(t)=1 then outputQ(t) = inputD(t - 1)
+ * else outputQ(t) = outputQ(t - 1)
+ * </pre>
  * 
  * @author brentvelthoen
  *
@@ -20,7 +25,7 @@ public class ENFlipFlop implements ClockedGate, CompositeGate {
   private final Pin outputQ;
   private final Pin outputNQ;
 
-  private final AndCompositeGate enableGate;
+  private final MuxCompositeGate muxInputGate;
   private final DFlipFlop dff;
 
   public ENFlipFlop(Pin clockInput, Pin inputD, Pin load, Pin outputQ) {
@@ -35,15 +40,15 @@ public class ENFlipFlop implements ClockedGate, CompositeGate {
     this.outputQ = outputQ;
     this.outputNQ = outputNQ;
 
-    Pin enableOut = new Pin("enableOut");
-    enableGate = new AndCompositeGate(clockInput, load, enableOut);
+    Pin muxInputOut = new Pin("muxInputOut");
+    muxInputGate = new MuxCompositeGate(inputD, outputQ, load, muxInputOut);
 
-    dff = new DFlipFlop(enableOut, inputD, outputQ, outputNQ);
+    dff = new DFlipFlop(clockInput, muxInputOut, outputQ, outputNQ);
   }
 
   @Override
   public void eval() {
-    enableGate.eval();
+    muxInputGate.eval();
     dff.eval();
   }
 
@@ -70,7 +75,7 @@ public class ENFlipFlop implements ClockedGate, CompositeGate {
 
   @Override
   public void reset() {
-    enableGate.reset();
+    muxInputGate.reset();
     dff.reset();
   }
 

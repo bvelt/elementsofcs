@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.sequential.DFlipFlop;
 
 public class DFlipFlopTest {
 
@@ -33,9 +32,10 @@ public class DFlipFlopTest {
       boolean inputDValue = tt[i][1];
       boolean outputQValue = tt[i][2];
 
+      clockInput.setValue(clockPhaseValue);
       inputD.setValue(inputDValue);
 
-      dff.onClockSignal(clockPhaseValue);
+      dff.eval();
 
       assertTrue("At i=" + i + ", expecting Q=" + outputQValue, outputQValue == outputQ.getValue());
     }

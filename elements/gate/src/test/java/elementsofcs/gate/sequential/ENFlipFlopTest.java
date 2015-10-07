@@ -38,10 +38,11 @@ public class ENFlipFlopTest {
   public void verifyTruthTable() {
     dff.reset();
     for (int i = 0; i < tt.length; i++) {
+      clockInput.setValue(tt[i][0]);
       inputD.setValue(tt[i][1]);
       load.setValue(tt[i][2]);
 
-      dff.onClockSignal(tt[i][0]);
+      dff.eval();
 
       boolean expectedOutputValue = tt[i][3];
       assertTrue("At i=" + i + ", expecting outputQ=" + expectedOutputValue,

@@ -1,8 +1,9 @@
 package elementsofcs.gate;
 
 /**
- * Computes a function on one or more input pins and stores the results in one
- * or more output pins. Models a digital circuit.
+ * Computes a function on one or more binary input variables (input pins) and
+ * stores the result in one or more binary output variables (output pins).
+ * Models a physical digital circuit that manipulates binary signals.
  * 
  * @author brentvelthoen
  *

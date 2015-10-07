@@ -14,6 +14,11 @@ import elementsofcs.gate.bool.composite.NotCompositeGate;
  * clockInput is true (i.e. on the rising edge of the clock). When clockInput is
  * false, output Q maintains its old value.
  * 
+ * <pre>
+ * if clock(t)=1 then outputQ(t) = inputD(t - 1)
+ * else outputQ(t) = outputQ(t - 1)
+ * </pre>
+ * 
  * @author brentvelthoen
  *
  */

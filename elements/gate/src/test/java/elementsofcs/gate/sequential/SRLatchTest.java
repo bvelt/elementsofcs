@@ -23,7 +23,7 @@ public class SRLatchTest {
       // R=1, Q'=0
       { false, true, true, false },
       { false, true, false, false },
-      // S=1, Q'=0
+      // S=1, Q'=1
       { true, false, false, true },
       { true, false, true, true }
   };

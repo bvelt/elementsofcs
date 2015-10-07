@@ -14,7 +14,7 @@ import elementsofcs.gate.Pin;
  * Mult-bit memory composed of list of bits of specified size
  * 
  * <pre>
- * if load(t - 1) then
+ * if load(t) then
  *   out(t) = in(t - 1)
  * else
  *   out(t) = out(t - 1)

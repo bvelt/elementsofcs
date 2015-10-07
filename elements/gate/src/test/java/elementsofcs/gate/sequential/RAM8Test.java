@@ -14,13 +14,15 @@ public class RAM8Test {
   private final int size = 8;
   private final int width = 16;
 
+  private final Pin clockInput = new Pin("clockInput");
+
   private final List<Pin> address = Pin.createList("address", 3);
 
   private final List<Pin> input = Pin.create16("in");
   private final Pin load = new Pin("load");
   private final List<Pin> output = Pin.create16("out");
 
-  private final RAM8 ram = new RAM8(input, address, load, output);
+  private final RAM8 ram = new RAM8(clockInput, input, address, load, output);
 
   private final boolean[][] registerValues = new boolean[][] {
       { false, false, false, false, false, false, false, false },
@@ -39,18 +41,20 @@ public class RAM8Test {
     load.setValue(true);
     for (int i = 0; i < size; i++, increment(address)) {
       // load buffer at current address
+      clockInput.setValue(false);
       for (int j = 0; j < width; j++) {
-        input.get(j % 8).setValue(registerValues[i][j % 8]);
+        input.get(j).setValue(registerValues[i][j % 8]);
       }
-      ram.onClockSignal(false);
+      ram.eval();
 
       // write buffer to output
-      ram.onClockSignal(true);
+      clockInput.setValue(true);
+      ram.eval();
 
       // verify outputs against original register values
       for (int j = 0; j < width; j++) {
         boolean expectedOutputValue = registerValues[i][j % 8];
-        boolean actualOutputValue = output.get(j % 8).getValue();
+        boolean actualOutputValue = output.get(j).getValue();
         assertTrue("At row=" + i + ", col=" + j + ", expecting " + expectedOutputValue,
             expectedOutputValue == actualOutputValue);
       }

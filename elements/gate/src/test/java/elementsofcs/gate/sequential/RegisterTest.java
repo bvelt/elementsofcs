@@ -10,11 +10,12 @@ import elementsofcs.gate.Pin;
 
 public class RegisterTest {
 
+  private final Pin clockInput = new Pin("clockInput");
   private final List<Pin> input = Pin.create16("in");
   private final List<Pin> output = Pin.create16("out");
   private final Pin load = new Pin("load");
 
-  private final Register register = new Register(Pin.SIZE_16, input, load, output);
+  private final Register register = new Register(Pin.SIZE_16, clockInput, input, load, output);
 
   private final boolean[][] tt = new boolean[][] {
       // Clock | D | Load | Q' |
@@ -39,13 +40,14 @@ public class RegisterTest {
   public void verifyTruthTable() {
     register.reset();
     for (int i = 0; i < tt.length; i++) {
+      clockInput.setValue(tt[i][0]);
       final boolean inputValue = tt[i][1];
       input.forEach(p -> {
         p.setValue(inputValue);
       });
       load.setValue(tt[i][2]);
 
-      register.onClockSignal(tt[i][0]);
+      register.eval();
 
       boolean expectedOutputValue = tt[i][3];
       assertTrue("At i=" + i + ", expecting outputQ=" + expectedOutputValue,

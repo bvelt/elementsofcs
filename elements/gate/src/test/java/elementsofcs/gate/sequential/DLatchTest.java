@@ -39,11 +39,12 @@ public class DLatchTest {
 
       latch.reset();
 
+      clockInput.setValue(clockPhaseValue);
       inputD.setValue(inputDValue);
       outputQ.setValue(outputQValue);
       outputNQ.setValue(!outputQValue);
 
-      latch.onClockSignal(clockPhaseValue);
+      latch.eval();
 
       assertTrue("At i=" + i + ", expecting Q=" + expectedOutputQValue, expectedOutputQValue == outputQ.getValue());
       assertTrue("At i=" + i + ", expecting NQ=" + expectedOutputNQValue, expectedOutputNQValue == outputNQ.getValue());

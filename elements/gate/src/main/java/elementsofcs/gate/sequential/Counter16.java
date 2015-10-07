@@ -14,9 +14,9 @@ import elementsofcs.gate.bool.bus.OrNWayBus;
  * 16-bit counter
  * 
  * <pre>
- * if reset(t - 1)=1 then out(t)=0
- * else if load(t - 1)=1 then out(t)=in(t - 1)
- * else if increment(t - 1) then out(t)=out(t - 1) + 1
+ * if reset(t)=1 then out(t)=0
+ * else if load(t)=1 then out(t)=in(t - 1)
+ * else if increment(t) then out(t)=out(t - 1) + 1
  * else out(t) = out(t - 1)
  * </pre>
  * 

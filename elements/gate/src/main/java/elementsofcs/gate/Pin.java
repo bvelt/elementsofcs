@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Mutable storage location for boolean value of TRUE or FALSE. Models a digital
- * signal.
+ * Mutable storage location for boolean value. Models a binary signal that is
+ * the input or output of a digital circuit.
  * 
  * @author brentvelthoen
  *

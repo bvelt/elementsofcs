@@ -84,7 +84,13 @@ public class Counter16Test {
         outputNQ.get(j).setValue(!output.get(j).getValue());
       }
 
-      counter.onClockCycle();
+      // buffer input
+      clockInput.setValue(false);
+      counter.eval();
+
+      // write buffer to output
+      clockInput.setValue(true);
+      counter.eval();
 
       // input should be same
       assertTrue("At i=" + i + ", expecting in[14]'=" + tt[i][7],
