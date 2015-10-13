@@ -23,6 +23,10 @@ public class FalsifyCompositeGate extends AbstractUnaryPredicateGate implements 
     andGate = new AndCompositeGate(input, new Pin(), output);
   }
 
+  public FalsifyCompositeGate(Pin input) {
+    this(input, new Pin());
+  }
+
   @Override
   public void eval() {
     andGate.eval();

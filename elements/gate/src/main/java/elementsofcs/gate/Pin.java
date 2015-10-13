@@ -2,6 +2,7 @@ package elementsofcs.gate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Mutable storage location for boolean value. Models a binary signal that is
@@ -40,10 +41,6 @@ public final class Pin {
     return createList(SIZE_16);
   }
 
-  public static List<Pin> fill16(Pin pin) {
-    return fillList(pin, SIZE_16);
-  }
-
   public static List<Pin> create32() {
     return createList(SIZE_32);
   }
@@ -62,6 +59,9 @@ public final class Pin {
    * @return list of pins
    */
   public static List<Pin> createList(int size) {
+    if (size == 0) {
+      throw new IllegalArgumentException("At least one pin required");
+    }
     List<Pin> pins = new ArrayList<Pin>(size);
     for (int i = 0; i < size; i++) {
       Pin pin = new Pin();
@@ -88,6 +88,10 @@ public final class Pin {
     return out;
   }
 
+  public static List<Pin> fill16(Pin pin) {
+    return fillList(pin, SIZE_16);
+  }
+
   /**
    * Factory method to create a list of pins of specified length where each
    * member is specified pin
@@ -99,6 +103,10 @@ public final class Pin {
    * @return list of pins
    */
   public static List<Pin> fillList(Pin pin, int size) {
+    Objects.requireNonNull(pin, "pin");
+    if (size == 0) {
+      throw new IllegalArgumentException("At least one pin required");
+    }
     List<Pin> pins = new ArrayList<Pin>(size);
     while (size-- > 0) {
       pins.add(pin);

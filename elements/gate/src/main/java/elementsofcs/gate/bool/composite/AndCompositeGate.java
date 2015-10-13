@@ -22,13 +22,14 @@ public class AndCompositeGate extends AbstractBinaryPredicateGate implements Com
 
   public AndCompositeGate(Pin inputA, Pin inputB, Pin output) {
     super(inputA, inputB, output);
-
     // NAND(A, B)
-    Pin nandOut = new Pin();
-    nandGate = new NAndPrimitiveGate(inputA, inputB, nandOut);
-
+    nandGate = new NAndPrimitiveGate(inputA, inputB);
     // NOT(NAND(A, B))
-    notGate = new NotCompositeGate(nandOut, output);
+    notGate = new NotCompositeGate(nandGate.getOutput(), output);
+  }
+
+  public AndCompositeGate(Pin inputA, Pin inputB) {
+    this(inputA, inputB, new Pin());
   }
 
   @Override

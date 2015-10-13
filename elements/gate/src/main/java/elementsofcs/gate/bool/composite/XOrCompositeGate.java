@@ -23,14 +23,16 @@ public class XOrCompositeGate extends AbstractBinaryPredicateGate implements Com
 
   public XOrCompositeGate(Pin inputA, Pin inputB, Pin output) {
     super(inputA, inputB, output);
+    // NAND(A, B)
+    nandABGate = new NAndPrimitiveGate(inputA, inputB);
+    // OR(A, B)
+    orABGate = new OrCompositeGate(inputA, inputB);
+    // AND(NAND(A, B), OR(A, B))
+    andLeftRightGate = new AndCompositeGate(nandABGate.getOutput(), orABGate.getOutput(), output);
+  }
 
-    Pin nandABOut = new Pin();
-    nandABGate = new NAndPrimitiveGate(inputA, inputB, nandABOut);
-
-    Pin orABOut = new Pin();
-    orABGate = new OrCompositeGate(inputA, inputB, orABOut);
-
-    andLeftRightGate = new AndCompositeGate(nandABOut, orABOut, output);
+  public XOrCompositeGate(Pin inputA, Pin inputB) {
+    this(inputA, inputB, new Pin());
   }
 
   @Override

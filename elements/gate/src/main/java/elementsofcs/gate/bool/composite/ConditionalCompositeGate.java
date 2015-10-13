@@ -21,11 +21,14 @@ public class ConditionalCompositeGate extends AbstractBinaryPredicateGate implem
 
   public ConditionalCompositeGate(Pin inputA, Pin inputB, Pin output) {
     super(inputA, inputB, output);
+    // NOT(A)
+    notAGate = new NotCompositeGate(inputA);
+    // OR(NOT(A), B)
+    orGate = new OrCompositeGate(notAGate.getOutput(), inputB, output);
+  }
 
-    Pin notAOut = new Pin();
-    notAGate = new NotCompositeGate(inputA, notAOut);
-
-    orGate = new OrCompositeGate(notAOut, inputB, output);
+  public ConditionalCompositeGate(Pin inputA, Pin inputB) {
+    this(inputA, inputB, new Pin());
   }
 
   @Override

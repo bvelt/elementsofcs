@@ -8,7 +8,7 @@ import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.bus.AndBus;
 import elementsofcs.gate.bool.bus.Bus;
-import elementsofcs.gate.bool.bus.MuxBus;
+import elementsofcs.gate.bool.bus.Mux2Way;
 import elementsofcs.gate.bool.bus.OrNWayBus;
 import elementsofcs.gate.bool.bus.XOrBus;
 import elementsofcs.gate.bool.composite.AndCompositeGate;
@@ -208,7 +208,7 @@ public class ALU implements Bus {
     AndBus andXYGate = AndBus.create16(x, y, andXYOut);
     gates.add(andXYGate);
 
-    MuxBus muxF = new MuxBus(Pin.SIZE_16, addXYOut, andXYOut, f, out);
+    Mux2Way muxF = new Mux2Way(Pin.SIZE_16, addXYOut, andXYOut, f, out);
     gates.add(muxF);
   }
 

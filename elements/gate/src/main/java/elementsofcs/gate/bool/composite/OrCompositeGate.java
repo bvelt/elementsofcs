@@ -24,15 +24,15 @@ public class OrCompositeGate extends AbstractBinaryPredicateGate implements Comp
   public OrCompositeGate(Pin inputA, Pin inputB, Pin output) {
     super(inputA, inputB, output);
     // NOT(A)
-    Pin notAOut = new Pin();
-    notAGate = new NotCompositeGate(inputA, notAOut);
-
+    notAGate = new NotCompositeGate(inputA);
     // NOT(B)
-    Pin notBOut = new Pin();
-    notBGate = new NotCompositeGate(inputB, notBOut);
-
+    notBGate = new NotCompositeGate(inputB);
     // NAND(NOT(A), NOT(B))
-    nandGate = new NAndPrimitiveGate(notAOut, notBOut, output);
+    nandGate = new NAndPrimitiveGate(notAGate.getOutput(), notBGate.getOutput(), output);
+  }
+
+  public OrCompositeGate(Pin inputA, Pin inputB) {
+    this(inputA, inputB, new Pin());
   }
 
   @Override

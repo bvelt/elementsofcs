@@ -34,6 +34,10 @@ public class AndBus extends AbstractBinaryPredicateBus {
     super(size, inputA, inputB, output);
   }
 
+  public AndBus(int size, List<Pin> inputA, List<Pin> inputB) {
+    this(size, inputA, inputB, Pin.createList(size));
+  }
+
   @Override
   protected BinaryPredicateGate createGate(Pin inA, Pin inB, Pin out) {
     return new AndCompositeGate(inA, inB, out);

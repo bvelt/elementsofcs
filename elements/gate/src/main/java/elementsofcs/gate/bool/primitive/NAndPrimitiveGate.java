@@ -17,6 +17,10 @@ public class NAndPrimitiveGate extends AbstractBinaryPredicateGate implements Pr
     super(inputA, inputB, output);
   }
 
+  public NAndPrimitiveGate(Pin inputA, Pin inputB) {
+    this(inputA, inputB, new Pin());
+  }
+
   @Override
   public void eval() {
     output.setValue(!(inputA.getValue() && inputB.getValue()));

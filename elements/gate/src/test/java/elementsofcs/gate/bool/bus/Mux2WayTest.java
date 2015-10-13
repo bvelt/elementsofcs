@@ -8,14 +8,14 @@ import org.junit.Test;
 
 import elementsofcs.gate.Pin;
 
-public class MuxBusTest {
+public class Mux2WayTest {
 
   private final List<Pin> inputA = Pin.create16();
   private final List<Pin> inputB = Pin.create16();
   private final Pin select = new Pin();
   private final List<Pin> output = Pin.create16();
 
-  private final MuxBus gate = MuxBus.create16(inputA, inputB, select, output);
+  private final Mux2Way gate = Mux2Way.create16(inputA, inputB, select, output);
 
   // | A | B | Sel | Out |
   private final boolean[][] tt = new boolean[][] {

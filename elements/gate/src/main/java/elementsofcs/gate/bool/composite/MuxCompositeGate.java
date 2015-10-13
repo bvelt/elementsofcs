@@ -22,7 +22,10 @@ public class MuxCompositeGate implements CompositeGate, BooleanGate {
   private final Pin output;
 
   private final AndCompositeGate leftAndGate;
-  private final AAndNotBCompositeGate rightAndGate;
+
+  private final NotCompositeGate notSelGate;
+  private final AndCompositeGate rightAndGate;
+
   private final OrCompositeGate leftOrRightGate;
 
   public MuxCompositeGate(Pin inputA, Pin inputB, Pin select, Pin output) {
@@ -31,17 +34,18 @@ public class MuxCompositeGate implements CompositeGate, BooleanGate {
     this.inputB = inputB;
     this.select = select;
     this.output = output;
-
     // AND(A, Sel)
-    Pin leftAndOut = new Pin();
-    leftAndGate = new AndCompositeGate(inputA, select, leftAndOut);
-
+    leftAndGate = new AndCompositeGate(inputA, select);
+    // NOT(Sel)
+    notSelGate = new NotCompositeGate(select);
     // AND(B, NOT(Sel))
-    Pin rightAndOut = new Pin();
-    rightAndGate = new AAndNotBCompositeGate(inputB, select, rightAndOut);
-
+    rightAndGate = new AndCompositeGate(inputB, notSelGate.getOutput());
     // OR(AND(A, Sel), AND(B, NOT(Sel)))
-    leftOrRightGate = new OrCompositeGate(leftAndOut, rightAndOut, output);
+    leftOrRightGate = new OrCompositeGate(leftAndGate.getOutput(), rightAndGate.getOutput(), output);
+  }
+
+  public MuxCompositeGate(Pin inputA, Pin inputB, Pin select) {
+    this(inputA, inputB, select, new Pin());
   }
 
   public Pin getInputA() {
@@ -63,6 +67,7 @@ public class MuxCompositeGate implements CompositeGate, BooleanGate {
   @Override
   public void eval() {
     leftAndGate.eval();
+    notSelGate.eval();
     rightAndGate.eval();
     leftOrRightGate.eval();
   }
@@ -70,6 +75,7 @@ public class MuxCompositeGate implements CompositeGate, BooleanGate {
   @Override
   public void reset() {
     leftAndGate.reset();
+    notSelGate.reset();
     rightAndGate.reset();
     leftOrRightGate.reset();
   }

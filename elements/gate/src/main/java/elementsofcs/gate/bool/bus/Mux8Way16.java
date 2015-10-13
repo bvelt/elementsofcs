@@ -39,7 +39,7 @@ public class Mux8Way16 implements Bus {
 
   private final Mux4Way16 muxX;
   private final Mux4Way16 muxY;
-  private final MuxBus muxZ;
+  private final Mux2Way muxZ;
 
   public Mux8Way16(List<Pin> inputA, List<Pin> inputB, List<Pin> inputC, List<Pin> inputD,
       List<Pin> inputE, List<Pin> inputF, List<Pin> inputG, List<Pin> inputH,
@@ -62,15 +62,17 @@ public class Mux8Way16 implements Bus {
     this.output = output;
 
     List<Pin> selXY = select.subList(1, 3);
-
-    List<Pin> outABCD = Pin.create16();
-    muxX = new Mux4Way16(inputA, inputB, inputC, inputD, selXY, outABCD);
-
-    List<Pin> outEFGH = Pin.create16();
-    muxY = new Mux4Way16(inputE, inputF, inputG, inputH, selXY, outEFGH);
+    muxX = new Mux4Way16(inputA, inputB, inputC, inputD, selXY);
+    muxY = new Mux4Way16(inputE, inputF, inputG, inputH, selXY);
 
     // if sel=1XX then out=outEFGH else out=outABCD
-    muxZ = new MuxBus(Pin.SIZE_16, outEFGH, outABCD, select.get(0), output);
+    muxZ = new Mux2Way(Pin.SIZE_16, muxY.getOutput(), muxX.getOutput(), select.get(0), output);
+  }
+
+  public Mux8Way16(List<Pin> inputA, List<Pin> inputB, List<Pin> inputC, List<Pin> inputD,
+      List<Pin> inputE, List<Pin> inputF, List<Pin> inputG, List<Pin> inputH,
+      List<Pin> select) {
+    this(inputA, inputB, inputC, inputD, inputE, inputF, inputG, inputH, select, Pin.create16());
   }
 
   public List<Pin> getInputA() {

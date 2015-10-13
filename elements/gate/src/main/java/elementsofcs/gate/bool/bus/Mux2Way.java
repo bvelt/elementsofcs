@@ -15,22 +15,22 @@ import elementsofcs.gate.bool.composite.MuxCompositeGate;
  * @author brentvelthoen
  *
  */
-public class MuxBus implements Bus {
+public class Mux2Way implements Bus {
 
-  public static MuxBus create8(List<Pin> inputA, List<Pin> inputB, Pin selector, List<Pin> output) {
-    return new MuxBus(Pin.SIZE_8, inputA, inputB, selector, output);
+  public static Mux2Way create8(List<Pin> inputA, List<Pin> inputB, Pin selector, List<Pin> output) {
+    return new Mux2Way(Pin.SIZE_8, inputA, inputB, selector, output);
   }
 
-  public static MuxBus create16(List<Pin> inputA, List<Pin> inputB, Pin selector, List<Pin> output) {
-    return new MuxBus(Pin.SIZE_16, inputA, inputB, selector, output);
+  public static Mux2Way create16(List<Pin> inputA, List<Pin> inputB, Pin selector, List<Pin> output) {
+    return new Mux2Way(Pin.SIZE_16, inputA, inputB, selector, output);
   }
 
-  public static MuxBus create32(List<Pin> inputA, List<Pin> inputB, Pin selector, List<Pin> output) {
-    return new MuxBus(Pin.SIZE_32, inputA, inputB, selector, output);
+  public static Mux2Way create32(List<Pin> inputA, List<Pin> inputB, Pin selector, List<Pin> output) {
+    return new Mux2Way(Pin.SIZE_32, inputA, inputB, selector, output);
   }
 
-  public static MuxBus create64(List<Pin> inputA, List<Pin> inputB, Pin selector, List<Pin> output) {
-    return new MuxBus(Pin.SIZE_64, inputA, inputB, selector, output);
+  public static Mux2Way create64(List<Pin> inputA, List<Pin> inputB, Pin selector, List<Pin> output) {
+    return new Mux2Way(Pin.SIZE_64, inputA, inputB, selector, output);
   }
 
   private final int size;
@@ -42,7 +42,7 @@ public class MuxBus implements Bus {
 
   private final List<MuxCompositeGate> gates = new ArrayList<MuxCompositeGate>();
 
-  public MuxBus(int size, List<Pin> inputA, List<Pin> inputB, Pin select, List<Pin> output) {
+  public Mux2Way(int size, List<Pin> inputA, List<Pin> inputB, Pin select, List<Pin> output) {
     super();
     this.size = size;
 
@@ -62,6 +62,10 @@ public class MuxBus implements Bus {
     this.output = output;
 
     initializeGates();
+  }
+
+  public Mux2Way(int size, List<Pin> inputA, List<Pin> inputB, Pin select) {
+    this(size, inputA, inputB, select, Pin.createList(size));
   }
 
   private void initializeGates() {

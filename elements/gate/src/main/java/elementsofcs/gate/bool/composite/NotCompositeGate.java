@@ -25,6 +25,10 @@ public class NotCompositeGate extends AbstractUnaryPredicateGate implements Comp
     nandGate = new NAndPrimitiveGate(input, input, output);
   }
 
+  public NotCompositeGate(Pin input) {
+    this(input, new Pin());
+  }
+
   @Override
   public void eval() {
     nandGate.eval();
