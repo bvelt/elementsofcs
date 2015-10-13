@@ -10,8 +10,8 @@ import elementsofcs.gate.Pin;
 
 public abstract class AbstractUnaryPredicateGateTest {
 
-  protected final Pin input = new Pin("Input");
-  protected final Pin output = new Pin("Output");
+  protected final Pin input = new Pin();
+  protected final Pin output = new Pin();
 
   protected Gate gate;
   protected boolean[][] tt;

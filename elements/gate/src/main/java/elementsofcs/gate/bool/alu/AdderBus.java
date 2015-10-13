@@ -70,11 +70,11 @@ public class AdderBus implements Bus {
   private void initializeAdders() {
     Pin outCarry = null;
     for (int i = size - 1; i >= 0; i--) {
-      Pin inCarry = outCarry == null ? new Pin("internal") : outCarry;
+      Pin inCarry = outCarry == null ? new Pin() : outCarry;
       Pin inA = inputA.get(i);
       Pin inB = inputB.get(i);
       Pin outSum = output.get(i);
-      outCarry = new Pin("internal");
+      outCarry = new Pin();
       adders.add(new FullAdderGate(inCarry, inA, inB, outCarry, outSum));
     }
   }

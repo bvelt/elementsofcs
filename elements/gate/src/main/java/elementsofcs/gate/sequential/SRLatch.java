@@ -28,7 +28,7 @@ public class SRLatch implements SequentialGate, CompositeGate {
   private final NOrCompositeGate n2;
 
   public SRLatch(Pin inputS, Pin inputR, Pin outputQ) {
-    this(inputS, inputR, outputQ, new Pin("outputNQ"));
+    this(inputS, inputR, outputQ, new Pin());
   }
 
   public SRLatch(Pin inputS, Pin inputR, Pin outputQ, Pin outputNQ) {

@@ -10,12 +10,12 @@ import elementsofcs.gate.Pin;
 
 public class DMux4WayTest {
 
-  private final Pin input = new Pin("input");
-  private final List<Pin> select = Pin.create2("select");
-  private final Pin outputA = new Pin("outputA");
-  private final Pin outputB = new Pin("outputB");
-  private final Pin outputC = new Pin("outputC");
-  private final Pin outputD = new Pin("outputD");
+  private final Pin input = new Pin();
+  private final List<Pin> select = Pin.create2();
+  private final Pin outputA = new Pin();
+  private final Pin outputB = new Pin();
+  private final Pin outputC = new Pin();
+  private final Pin outputD = new Pin();
 
   private final DMux4Way gate = new DMux4Way(input, select, outputA, outputB, outputC, outputD);
 

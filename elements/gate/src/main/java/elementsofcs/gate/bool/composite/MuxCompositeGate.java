@@ -33,11 +33,11 @@ public class MuxCompositeGate implements CompositeGate, BooleanGate {
     this.output = output;
 
     // AND(A, Sel)
-    Pin leftAndOut = new Pin("leftAndOut");
+    Pin leftAndOut = new Pin();
     leftAndGate = new AndCompositeGate(inputA, select, leftAndOut);
 
     // AND(B, NOT(Sel))
-    Pin rightAndOut = new Pin("rightAndOut");
+    Pin rightAndOut = new Pin();
     rightAndGate = new AAndNotBCompositeGate(inputB, select, rightAndOut);
 
     // OR(AND(A, Sel), AND(B, NOT(Sel)))

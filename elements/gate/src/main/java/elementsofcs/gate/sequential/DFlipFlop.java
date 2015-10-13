@@ -33,7 +33,7 @@ public class DFlipFlop implements ClockedGate, CompositeGate {
   private final List<Gate> gates = new ArrayList<Gate>(3);
 
   public DFlipFlop(Pin clockInput, Pin inputD, Pin outputQ) {
-    this(clockInput, inputD, outputQ, new Pin("outputNQ"));
+    this(clockInput, inputD, outputQ, new Pin());
   }
 
   public DFlipFlop(Pin clockInput, Pin inputD, Pin outputQ, Pin outputNQ) {
@@ -43,12 +43,12 @@ public class DFlipFlop implements ClockedGate, CompositeGate {
     this.outputQ = outputQ;
     this.outputNQ = outputNQ;
 
-    Pin notClockOut = new Pin("notClockOut");
+    Pin notClockOut = new Pin();
     NotCompositeGate notClockGate = new NotCompositeGate(clockInput, notClockOut);
     gates.add(notClockGate);
 
     // master buffers D while clockSignal equals false
-    Pin masterQOut = new Pin("masterQOut");
+    Pin masterQOut = new Pin();
     DLatch masterLatch = new DLatch(notClockOut, inputD, masterQOut);
     gates.add(masterLatch);
 

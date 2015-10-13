@@ -12,8 +12,8 @@ import elementsofcs.gate.Pin;
 
 public class IncrBusTest {
 
-  private final List<Pin> input = Pin.create16("input");
-  private final List<Pin> output = Pin.create16("output");
+  private final List<Pin> input = Pin.create16();
+  private final List<Pin> output = Pin.create16();
 
   private final IncrBus incr = IncrBus.create16(input, output);
 

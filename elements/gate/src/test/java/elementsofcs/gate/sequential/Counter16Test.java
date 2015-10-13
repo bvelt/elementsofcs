@@ -10,16 +10,16 @@ import elementsofcs.gate.Pin;
 
 public class Counter16Test {
 
-  private final Pin clockInput = new Pin("clockInput");
+  private final Pin clockInput = new Pin();
 
-  private final List<Pin> input = Pin.create16("input");
+  private final List<Pin> input = Pin.create16();
 
-  private final Pin increment = new Pin("increment");
-  private final Pin load = new Pin("load");
-  private final Pin reset = new Pin("reset");
+  private final Pin increment = new Pin();
+  private final Pin load = new Pin();
+  private final Pin reset = new Pin();
 
-  private final List<Pin> output = Pin.create16("output");
-  private final List<Pin> outputNQ = Pin.create16("outputNQ");
+  private final List<Pin> output = Pin.create16();
+  private final List<Pin> outputNQ = Pin.create16();
 
   private final Counter16 counter = new Counter16(clockInput, input, increment, load, reset, output, outputNQ);
 

@@ -10,9 +10,9 @@ import elementsofcs.gate.Pin;
 
 public abstract class AbstractBinaryPredicateGateTest {
 
-  protected final Pin inputA = new Pin("A");
-  protected final Pin inputB = new Pin("B");
-  protected final Pin output = new Pin("Output");
+  protected final Pin inputA = new Pin();
+  protected final Pin inputB = new Pin();
+  protected final Pin output = new Pin();
 
   protected Gate gate;
   protected boolean[][] tt;

@@ -52,11 +52,11 @@ public class FullAdderGate implements BooleanGate, CompositeGate {
     this.carry = carry;
     this.sum = sum;
 
-    Pin sumABOut = new Pin("sumOfA+B");
-    Pin carryABOut = new Pin("carryOfA+B");
+    Pin sumABOut = new Pin();
+    Pin carryABOut = new Pin();
     addABGate = new HalfAdderGate(inputA, inputB, carryABOut, sumABOut);
 
-    Pin carryABCOut = new Pin("carryOfA+B+C");
+    Pin carryABCOut = new Pin();
     addABCGate = new HalfAdderGate(sumABOut, inputC, carryABCOut, sum);
 
     carryGate = new XOrCompositeGate(carryABOut, carryABCOut, carry);

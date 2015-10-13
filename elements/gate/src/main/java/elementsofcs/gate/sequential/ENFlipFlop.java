@@ -29,7 +29,7 @@ public class ENFlipFlop implements ClockedGate, CompositeGate {
   private final DFlipFlop dff;
 
   public ENFlipFlop(Pin clockInput, Pin inputD, Pin load, Pin outputQ) {
-    this(clockInput, inputD, load, outputQ, new Pin("outputNQ"));
+    this(clockInput, inputD, load, outputQ, new Pin());
   }
 
   public ENFlipFlop(Pin clockInput, Pin inputD, Pin load, Pin outputQ, Pin outputNQ) {
@@ -40,7 +40,7 @@ public class ENFlipFlop implements ClockedGate, CompositeGate {
     this.outputQ = outputQ;
     this.outputNQ = outputNQ;
 
-    Pin muxInputOut = new Pin("muxInputOut");
+    Pin muxInputOut = new Pin();
     muxInputGate = new MuxCompositeGate(inputD, outputQ, load, muxInputOut);
 
     dff = new DFlipFlop(clockInput, muxInputOut, outputQ, outputNQ);

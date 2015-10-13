@@ -8,10 +8,10 @@ import elementsofcs.gate.Pin;
 
 public class SRLatchTest {
 
-  private final Pin inputS = new Pin("inputS");
-  private final Pin inputR = new Pin("inputR");
-  private final Pin outputQ = new Pin("outputQ");
-  private final Pin outputNQ = new Pin("outputNQ");
+  private final Pin inputS = new Pin();
+  private final Pin inputR = new Pin();
+  private final Pin outputQ = new Pin();
+  private final Pin outputNQ = new Pin();
 
   private final SRLatch latch = new SRLatch(inputS, inputR, outputQ, outputNQ);
 

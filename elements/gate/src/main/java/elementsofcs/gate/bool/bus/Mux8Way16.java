@@ -63,10 +63,10 @@ public class Mux8Way16 implements Bus {
 
     List<Pin> selXY = select.subList(1, 3);
 
-    List<Pin> outABCD = Pin.create16("outABCD");
+    List<Pin> outABCD = Pin.create16();
     muxX = new Mux4Way16(inputA, inputB, inputC, inputD, selXY, outABCD);
 
-    List<Pin> outEFGH = Pin.create16("outEFGH");
+    List<Pin> outEFGH = Pin.create16();
     muxY = new Mux4Way16(inputE, inputF, inputG, inputH, selXY, outEFGH);
 
     // if sel=1XX then out=outEFGH else out=outABCD

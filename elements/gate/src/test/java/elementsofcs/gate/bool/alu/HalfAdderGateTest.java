@@ -8,10 +8,10 @@ import elementsofcs.gate.Pin;
 
 public class HalfAdderGateTest {
 
-  private final Pin inputA = new Pin("inputA");
-  private final Pin inputB = new Pin("inputB");
-  private final Pin sum = new Pin("sum");
-  private final Pin carry = new Pin("carry");
+  private final Pin inputA = new Pin();
+  private final Pin inputB = new Pin();
+  private final Pin sum = new Pin();
+  private final Pin carry = new Pin();
 
   private final HalfAdderGate gate = new HalfAdderGate(inputA, inputB, carry, sum);
 

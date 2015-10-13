@@ -9,10 +9,10 @@ import elementsofcs.gate.bool.TruthTables;
 
 public class MuxCompositeGateTest {
 
-  private final Pin inputA = new Pin("A");
-  private final Pin inputB = new Pin("B");
-  private final Pin selector = new Pin("Selector");
-  private final Pin output = new Pin("Output");
+  private final Pin inputA = new Pin();
+  private final Pin inputB = new Pin();
+  private final Pin selector = new Pin();
+  private final Pin output = new Pin();
 
   private MuxCompositeGate gate = new MuxCompositeGate(inputA, inputB, selector, output);
   private boolean[][] tt = TruthTables.MUX;

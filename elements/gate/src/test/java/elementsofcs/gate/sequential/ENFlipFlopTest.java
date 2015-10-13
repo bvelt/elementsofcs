@@ -8,10 +8,10 @@ import elementsofcs.gate.Pin;
 
 public class ENFlipFlopTest {
 
-  private final Pin clockInput = new Pin("clockInput");
-  private final Pin inputD = new Pin("inputD");
-  private final Pin load = new Pin("load");
-  private final Pin outputQ = new Pin("outputQ");
+  private final Pin clockInput = new Pin();
+  private final Pin inputD = new Pin();
+  private final Pin load = new Pin();
+  private final Pin outputQ = new Pin();
 
   private final ENFlipFlop dff = new ENFlipFlop(clockInput, inputD, load, outputQ);
 

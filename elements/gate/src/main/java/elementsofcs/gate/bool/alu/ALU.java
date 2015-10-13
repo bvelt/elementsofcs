@@ -144,11 +144,11 @@ public class ALU implements Bus {
    */
   private void initZeroOrNegateGate(List<Pin> in, Pin zin, Pin nin) {
     // XOR(nx,x)
-    List<Pin> nxXOrXOut = Pin.create16("nxXOrXOut");
+    List<Pin> nxXOrXOut = Pin.create16();
     XOrBus nxXOrXGate = XOrBus.create16(Pin.fill16(nin), in, nxXOrXOut);
     gates.add(nxXOrXGate);
     // NOT(zx)
-    Pin notZxOut = new Pin("notZxOut");
+    Pin notZxOut = new Pin();
     NotCompositeGate notZxGate = new NotCompositeGate(zin, notZxOut);
     gates.add(notZxGate);
     // AND(NOT(zx), XOR(nx,x))
@@ -180,7 +180,7 @@ public class ALU implements Bus {
    */
   private void initOutputEqualsZeroGate() {
     // OR(out[0],out[1]..out[15])
-    Pin orOut = new Pin("orOut");
+    Pin orOut = new Pin();
     OrNWayBus orGate = new OrNWayBus(Pin.SIZE_16, out, orOut);
     gates.add(orGate);
 
@@ -199,12 +199,12 @@ public class ALU implements Bus {
    */
   private void initFunctionCodeGate() {
     // ADD(x,y)
-    List<Pin> addXYOut = Pin.create16("addXYOut");
+    List<Pin> addXYOut = Pin.create16();
     AdderBus addXYGate = AdderBus.create16(x, y, addXYOut);
     gates.add(addXYGate);
 
     // AND(x,y)
-    List<Pin> andXYOut = Pin.create16("andXYOut");
+    List<Pin> andXYOut = Pin.create16();
     AndBus andXYGate = AndBus.create16(x, y, andXYOut);
     gates.add(andXYGate);
 

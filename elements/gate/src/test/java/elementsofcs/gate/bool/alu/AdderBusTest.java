@@ -7,17 +7,15 @@ import java.util.List;
 import org.junit.Test;
 
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.alu.AdderBus;
-import elementsofcs.gate.bool.alu.BinaryNumber;
 
 public class AdderBusTest {
 
   @Test
   public void calculateFirst20Fibonacci() {
 
-    List<Pin> zero = Pin.create16("pin");
+    List<Pin> zero = Pin.create16();
 
-    List<Pin> one = Pin.create16("pin");
+    List<Pin> one = Pin.create16();
     one.get(15).setValue(true);
 
     List<Pin> fibA = null;
@@ -32,7 +30,7 @@ public class AdderBusTest {
 
       fibA = i == 0 ? zero : fibB;
       fibB = i == 0 ? one : fibC;
-      fibC = Pin.create16("pin");
+      fibC = Pin.create16();
 
       new AdderBus(16, fibA, fibB, fibC).eval();
 

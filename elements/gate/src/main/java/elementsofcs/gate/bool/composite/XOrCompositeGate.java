@@ -24,10 +24,10 @@ public class XOrCompositeGate extends AbstractBinaryPredicateGate implements Com
   public XOrCompositeGate(Pin inputA, Pin inputB, Pin output) {
     super(inputA, inputB, output);
 
-    Pin nandABOut = new Pin("nandABOut");
+    Pin nandABOut = new Pin();
     nandABGate = new NAndPrimitiveGate(inputA, inputB, nandABOut);
 
-    Pin orABOut = new Pin("orABOut");
+    Pin orABOut = new Pin();
     orABGate = new OrCompositeGate(inputA, inputB, orABOut);
 
     andLeftRightGate = new AndCompositeGate(nandABOut, orABOut, output);

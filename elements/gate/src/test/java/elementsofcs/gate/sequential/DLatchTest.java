@@ -8,10 +8,10 @@ import elementsofcs.gate.Pin;
 
 public class DLatchTest {
 
-  private final Pin clockInput = new Pin("clockInput");
-  private final Pin inputD = new Pin("inputD");
-  private final Pin outputQ = new Pin("outputQ");
-  private final Pin outputNQ = new Pin("outputNQ");
+  private final Pin clockInput = new Pin();
+  private final Pin inputD = new Pin();
+  private final Pin outputQ = new Pin();
+  private final Pin outputNQ = new Pin();
 
   private final DLatch latch = new DLatch(clockInput, inputD, outputQ, outputNQ);
 

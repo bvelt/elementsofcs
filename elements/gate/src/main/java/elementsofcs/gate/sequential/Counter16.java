@@ -39,7 +39,7 @@ public class Counter16 implements ClockedGate, CompositeGate {
   private final List<Gate> gates = new ArrayList<Gate>();
 
   public Counter16(List<Pin> input, Pin increment, Pin load, Pin reset, List<Pin> output) {
-    this(new Pin("clockInput"), input, increment, load, reset, output, Pin.create16("outputNQ"));
+    this(new Pin(), input, increment, load, reset, output, Pin.create16());
   }
 
   public Counter16(Pin clockInput, List<Pin> input, Pin increment, Pin load, Pin reset, List<Pin> output, List<Pin> outputNQ) {
@@ -53,30 +53,30 @@ public class Counter16 implements ClockedGate, CompositeGate {
     this.outputNQ = outputNQ;
 
     // INCR(output)=incrOut
-    List<Pin> incrOut = Pin.create16("incrOut");
+    List<Pin> incrOut = Pin.create16();
     IncrBus incrGate = IncrBus.create16(output, incrOut);
     gates.add(incrGate);
 
     // MUX(incrOut, input, increment)=muxXOut
-    List<Pin> muxXOut = Pin.create16("muxXOut");
+    List<Pin> muxXOut = Pin.create16();
     MuxBus muxXGate = MuxBus.create16(incrOut, input, increment, muxXOut);
     gates.add(muxXGate);
 
     // MUX(input, muxXOut, load)=muxYOut
     // load=1 takes precedence over increment=1
-    List<Pin> muxYOut = Pin.create16("muxYOut");
+    List<Pin> muxYOut = Pin.create16();
     MuxBus muxYGate = MuxBus.create16(input, muxXOut, load, muxYOut);
     gates.add(muxYGate);
 
     // MUX(false, muxYOut, reset)=muxResetOut
     // reset=1 takes precedence over load=1 or increment=1
-    List<Pin> muxZOut = Pin.create16("muxZOut");
-    MuxBus muxZGate = MuxBus.create16(Pin.create16("alwaysFalse"), muxYOut, reset, muxZOut);
+    List<Pin> muxZOut = Pin.create16();
+    MuxBus muxZGate = MuxBus.create16(Pin.create16(), muxYOut, reset, muxZOut);
     gates.add(muxZGate);
 
     // OR(increment, load, reset)=rload
     // load register if any increment, load, or reset is true
-    Pin rload = new Pin("rload");
+    Pin rload = new Pin();
     OrNWayBus rloadGate = new OrNWayBus(3, Pin.createList(increment, load, reset), rload);
     gates.add(rloadGate);
 

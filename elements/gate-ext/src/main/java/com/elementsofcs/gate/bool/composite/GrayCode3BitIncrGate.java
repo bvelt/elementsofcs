@@ -100,14 +100,14 @@ public class GrayCode3BitIncrGate implements BooleanGate, CompositeGate {
     MuxCompositeGate xGate = new MuxCompositeGate(inputA, inputB, inputC, outputX);
     gates.add(xGate);
 
-    Pin notAOut = new Pin("notAOut");
+    Pin notAOut = new Pin();
     NotCompositeGate notAGate = new NotCompositeGate(inputA, notAOut);
     gates.add(notAGate);
 
     MuxCompositeGate yGate = new MuxCompositeGate(notAOut, inputB, inputC, outputY);
     gates.add(yGate);
 
-    Pin xorABOut = new Pin("xorABOut");
+    Pin xorABOut = new Pin();
     XOrCompositeGate xorABGate = new XOrCompositeGate(inputA, inputB, xorABOut);
     gates.add(xorABGate);
 

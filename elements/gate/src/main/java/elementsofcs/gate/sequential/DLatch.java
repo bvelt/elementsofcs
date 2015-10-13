@@ -28,7 +28,7 @@ public class DLatch implements ClockedGate, CompositeGate {
   private final List<Gate> gates = new ArrayList<Gate>(4);
 
   public DLatch(Pin clockInput, Pin inputD, Pin outputQ) {
-    this(clockInput, inputD, outputQ, new Pin("outputNQ"));
+    this(clockInput, inputD, outputQ, new Pin());
   }
 
   public DLatch(Pin clockInput, Pin inputD, Pin outputQ, Pin outputNQ) {
@@ -38,15 +38,15 @@ public class DLatch implements ClockedGate, CompositeGate {
     this.outputQ = outputQ;
     this.outputNQ = outputNQ;
 
-    Pin notDOut = new Pin("notDOut");
+    Pin notDOut = new Pin();
     NotCompositeGate notDGate = new NotCompositeGate(inputD, notDOut);
     gates.add(notDGate);
 
-    Pin inputR = new Pin("inputR");
+    Pin inputR = new Pin();
     AndCompositeGate rGate = new AndCompositeGate(clockInput, notDOut, inputR);
     gates.add(rGate);
 
-    Pin inputS = new Pin("inputS");
+    Pin inputS = new Pin();
     AndCompositeGate sGate = new AndCompositeGate(clockInput, inputD, inputS);
     gates.add(sGate);
 

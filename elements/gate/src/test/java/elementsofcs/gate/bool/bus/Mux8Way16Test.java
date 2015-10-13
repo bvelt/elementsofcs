@@ -13,18 +13,18 @@ import elementsofcs.gate.Pin;
 
 public class Mux8Way16Test {
 
-  private final List<Pin> inputA = Pin.create16("inputA");
-  private final List<Pin> inputB = Pin.create16("inputB");
-  private final List<Pin> inputC = Pin.create16("inputC");
-  private final List<Pin> inputD = Pin.create16("inputD");
-  private final List<Pin> inputE = Pin.create16("inputE");
-  private final List<Pin> inputF = Pin.create16("inputF");
-  private final List<Pin> inputG = Pin.create16("inputG");
-  private final List<Pin> inputH = Pin.create16("inputH");
+  private final List<Pin> inputA = Pin.create16();
+  private final List<Pin> inputB = Pin.create16();
+  private final List<Pin> inputC = Pin.create16();
+  private final List<Pin> inputD = Pin.create16();
+  private final List<Pin> inputE = Pin.create16();
+  private final List<Pin> inputF = Pin.create16();
+  private final List<Pin> inputG = Pin.create16();
+  private final List<Pin> inputH = Pin.create16();
 
-  private final List<Pin> select = Pin.createList("select", 3);
+  private final List<Pin> select = Pin.createList(3);
 
-  private final List<Pin> output = Pin.create16("output");
+  private final List<Pin> output = Pin.create16();
 
   private final Mux8Way16 gate = new Mux8Way16(inputA, inputB, inputC, inputD,
       inputE, inputF, inputG, inputH, select, output);

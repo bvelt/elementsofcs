@@ -10,8 +10,8 @@ import elementsofcs.gate.Pin;
 
 public class OrNWayBusTest {
 
-  private final List<Pin> input = Pin.create8("input");
-  private final Pin output = new Pin("output");
+  private final List<Pin> input = Pin.create8();
+  private final Pin output = new Pin();
 
   private final OrNWayBus bus = OrNWayBus.create8(input, output);
 

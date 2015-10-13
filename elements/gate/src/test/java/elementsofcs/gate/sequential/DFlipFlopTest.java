@@ -8,9 +8,9 @@ import elementsofcs.gate.Pin;
 
 public class DFlipFlopTest {
 
-  private final Pin clockInput = new Pin("clockInput");
-  private final Pin inputD = new Pin("inputD");
-  private final Pin outputQ = new Pin("outputQ");
+  private final Pin clockInput = new Pin();
+  private final Pin inputD = new Pin();
+  private final Pin outputQ = new Pin();
 
   private final DFlipFlop dff = new DFlipFlop(clockInput, inputD, outputQ);
 

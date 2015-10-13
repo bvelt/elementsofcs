@@ -20,7 +20,7 @@ public class IdentityCompositeGate extends AbstractUnaryPredicateGate implements
 
   public IdentityCompositeGate(Pin input, Pin output) {
     super(input, output);
-    orGate = new OrCompositeGate(input, new Pin("alwaysFalse"), output);
+    orGate = new OrCompositeGate(input, new Pin(), output);
   }
 
   @Override

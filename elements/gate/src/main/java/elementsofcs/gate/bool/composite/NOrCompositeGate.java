@@ -23,11 +23,11 @@ public class NOrCompositeGate extends AbstractBinaryPredicateGate implements Com
   public NOrCompositeGate(Pin inputA, Pin inputB, Pin output) {
     super(inputA, inputB, output);
     // NOT(A)
-    Pin notAOut = new Pin("notAOut");
+    Pin notAOut = new Pin();
     notAGate = new NotCompositeGate(inputA, notAOut);
 
     // NOT(B)
-    Pin notBOut = new Pin("notBOut");
+    Pin notBOut = new Pin();
     notBGate = new NotCompositeGate(inputB, notBOut);
 
     // AND(NOT(A), NOT(B))

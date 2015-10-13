@@ -8,13 +8,13 @@ import elementsofcs.gate.Pin;
 
 public class GrayCode3BitIncrGateTest {
 
-  private final Pin inputA = new Pin("inputA");
-  private final Pin inputB = new Pin("inputB");
-  private final Pin inputC = new Pin("inputC");
+  private final Pin inputA = new Pin();
+  private final Pin inputB = new Pin();
+  private final Pin inputC = new Pin();
 
-  private final Pin outputX = new Pin("outputX");
-  private final Pin outputY = new Pin("outputY");
-  private final Pin outputZ = new Pin("outputZ");
+  private final Pin outputX = new Pin();
+  private final Pin outputY = new Pin();
+  private final Pin outputZ = new Pin();
 
   private final GrayCode3BitIncrGate gate = new GrayCode3BitIncrGate(inputA, inputB, inputC, outputX, outputY, outputZ);
 

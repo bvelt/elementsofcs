@@ -28,7 +28,7 @@ public class RAM8 implements RAM {
   private final Mux8Way16 muxOutput;
 
   public RAM8(List<Pin> input, List<Pin> address, Pin load, List<Pin> output) {
-    this(new Pin("clockInput"), input, address, load, output);
+    this(new Pin(), input, address, load, output);
   }
 
   public RAM8(Pin clockInput, List<Pin> input, List<Pin> address, Pin load, List<Pin> output) {
@@ -42,14 +42,14 @@ public class RAM8 implements RAM {
     this.output = output;
 
     // dmux load to register loads
-    List<Pin> rload = Pin.create8("rload");
+    List<Pin> rload = Pin.create8();
     dmuxLoad = new DMux8Way(load, address,
         rload.get(0), rload.get(1), rload.get(2), rload.get(3),
         rload.get(4), rload.get(5), rload.get(6), rload.get(7));
 
     // init registers
     for (int i = 0; i < Pin.SIZE_8; i++) {
-      List<Pin> rout = Pin.create16("rout[" + i + "]");
+      List<Pin> rout = Pin.create16();
       registers.add(Register.create16(clockInput, input, rload.get(i), rout));
     }
 

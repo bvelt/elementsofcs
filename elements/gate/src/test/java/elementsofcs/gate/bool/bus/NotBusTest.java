@@ -11,8 +11,8 @@ import elementsofcs.gate.bool.TruthTables;
 
 public class NotBusTest {
 
-  private final List<Pin> input = Pin.create16("input");
-  private final List<Pin> output = Pin.create16("output");
+  private final List<Pin> input = Pin.create16();
+  private final List<Pin> output = Pin.create16();
 
   private final NotBus bus = NotBus.create16(input, output);
   private final boolean[][] tt = TruthTables.NOT;

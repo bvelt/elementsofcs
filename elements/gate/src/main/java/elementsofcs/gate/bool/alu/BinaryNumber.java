@@ -7,7 +7,7 @@ import elementsofcs.gate.Pin;
 public class BinaryNumber {
 
   public static List<Pin> createOne(int size) {
-    List<Pin> one = Pin.createList("one", size);
+    List<Pin> one = Pin.createList(size);
     one.get(one.size() - 1).setValue(true);
     return one;
   }

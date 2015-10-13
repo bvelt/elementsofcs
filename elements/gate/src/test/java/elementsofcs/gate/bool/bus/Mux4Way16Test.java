@@ -13,14 +13,14 @@ import elementsofcs.gate.Pin;
 
 public class Mux4Way16Test {
 
-  private final List<Pin> inputA = Pin.create16("inputA");
-  private final List<Pin> inputB = Pin.create16("inputB");
-  private final List<Pin> inputC = Pin.create16("inputC");
-  private final List<Pin> inputD = Pin.create16("inputD");
+  private final List<Pin> inputA = Pin.create16();
+  private final List<Pin> inputB = Pin.create16();
+  private final List<Pin> inputC = Pin.create16();
+  private final List<Pin> inputD = Pin.create16();
 
-  private final List<Pin> select = Pin.create2("select");
+  private final List<Pin> select = Pin.create2();
 
-  private final List<Pin> output = Pin.create16("output");
+  private final List<Pin> output = Pin.create16();
 
   private final Mux4Way16 gate = new Mux4Way16(inputA, inputB, inputC, inputD, select, output);
 

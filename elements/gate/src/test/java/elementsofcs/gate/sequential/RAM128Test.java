@@ -14,13 +14,13 @@ public class RAM128Test {
   private final int size = 128;
   private final int width = 16;
 
-  private final Pin clockInput = new Pin("clockInput");
+  private final Pin clockInput = new Pin();
 
-  private final List<Pin> address = Pin.createList("address", 9);
+  private final List<Pin> address = Pin.createList(9);
 
-  private final List<Pin> input = Pin.create16("in");
-  private final Pin load = new Pin("load");
-  private final List<Pin> output = Pin.create16("out");
+  private final List<Pin> input = Pin.create16();
+  private final Pin load = new Pin();
+  private final List<Pin> output = Pin.create16();
 
   private final RAM128 ram = new RAM128(clockInput, input, address, load, output);
 

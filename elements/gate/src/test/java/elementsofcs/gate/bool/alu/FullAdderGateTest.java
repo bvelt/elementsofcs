@@ -8,11 +8,11 @@ import elementsofcs.gate.Pin;
 
 public class FullAdderGateTest {
 
-  private final Pin inputA = new Pin("inputA");
-  private final Pin inputB = new Pin("inputB");
-  private final Pin inputC = new Pin("inputC");
-  private final Pin sum = new Pin("sum");
-  private final Pin carry = new Pin("carry");
+  private final Pin inputA = new Pin();
+  private final Pin inputB = new Pin();
+  private final Pin inputC = new Pin();
+  private final Pin sum = new Pin();
+  private final Pin carry = new Pin();
 
   private final FullAdderGate gate = new FullAdderGate(inputA, inputB, inputC, carry, sum);
 

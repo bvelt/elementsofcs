@@ -10,20 +10,20 @@ import elementsofcs.gate.Pin;
 
 public class ALUTest {
 
-  private final List<Pin> x = Pin.create16("x");
-  private final List<Pin> y = Pin.create16("y");
+  private final List<Pin> x = Pin.create16();
+  private final List<Pin> y = Pin.create16();
 
-  private final Pin zx = new Pin("zx");
-  private final Pin nx = new Pin("nx");
-  private final Pin zy = new Pin("zy");
-  private final Pin ny = new Pin("ny");
-  private final Pin f = new Pin("f");
-  private final Pin no = new Pin("no");
+  private final Pin zx = new Pin();
+  private final Pin nx = new Pin();
+  private final Pin zy = new Pin();
+  private final Pin ny = new Pin();
+  private final Pin f = new Pin();
+  private final Pin no = new Pin();
 
-  private final List<Pin> out = Pin.create16("out");
+  private final List<Pin> out = Pin.create16();
 
-  private final Pin zr = new Pin("zr");
-  private final Pin ng = new Pin("ng");
+  private final Pin zr = new Pin();
+  private final Pin ng = new Pin();
 
   private final ALU alu = new ALU(x, y, zx, nx, zy, ny, f, no, out, zr, ng);
 

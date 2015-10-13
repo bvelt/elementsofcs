@@ -10,10 +10,10 @@ import elementsofcs.gate.Pin;
 
 public class MuxBusTest {
 
-  private final List<Pin> inputA = Pin.create16("inputA");
-  private final List<Pin> inputB = Pin.create16("inputB");
-  private final Pin select = new Pin("select");
-  private final List<Pin> output = Pin.create16("output");
+  private final List<Pin> inputA = Pin.create16();
+  private final List<Pin> inputB = Pin.create16();
+  private final Pin select = new Pin();
+  private final List<Pin> output = Pin.create16();
 
   private final MuxBus gate = MuxBus.create16(inputA, inputB, select, output);
 

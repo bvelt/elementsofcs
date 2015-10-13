@@ -20,7 +20,7 @@ public class FalsifyCompositeGate extends AbstractUnaryPredicateGate implements 
 
   public FalsifyCompositeGate(Pin input, Pin output) {
     super(input, output);
-    andGate = new AndCompositeGate(input, new Pin("alwaysFalse"), output);
+    andGate = new AndCompositeGate(input, new Pin(), output);
   }
 
   @Override

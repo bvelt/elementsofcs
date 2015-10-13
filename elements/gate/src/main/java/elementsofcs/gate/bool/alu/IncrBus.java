@@ -56,12 +56,12 @@ public class IncrBus implements Bus {
     this.input = input;
     this.output = output;
 
-    Pin falseIn = new Pin("false");
+    Pin falseIn = new Pin();
 
-    Pin notFalseOut = new Pin("notFalse");
+    Pin notFalseOut = new Pin();
     notFalseGate = new NotCompositeGate(falseIn, notFalseOut);
 
-    Pin alwaysTrueOut = new Pin("alwaysTrue");
+    Pin alwaysTrueOut = new Pin();
     alwaysTrueGate = new OrCompositeGate(falseIn, notFalseOut, alwaysTrueOut);
 
     List<Pin> binaryOne = Pin.fillList(falseIn, size - 1);
@@ -94,7 +94,6 @@ public class IncrBus implements Bus {
     notFalseGate.reset();
     alwaysTrueGate.reset();
     adder.reset();
-    // restorInputBToOne();
   }
 
   @Override

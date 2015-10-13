@@ -12,7 +12,7 @@ public class AAndNotBCompositeGate extends AbstractBinaryPredicateGate implement
   public AAndNotBCompositeGate(Pin inputA, Pin inputB, Pin output) {
     super(inputA, inputB, output);
 
-    Pin notBOut = new Pin("notBOut");
+    Pin notBOut = new Pin();
     notBGate = new NotCompositeGate(inputB, notBOut);
 
     andGate = new AndCompositeGate(inputA, notBOut, output);

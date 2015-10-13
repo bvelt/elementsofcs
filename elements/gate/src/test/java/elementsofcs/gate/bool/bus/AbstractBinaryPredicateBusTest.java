@@ -11,9 +11,9 @@ import elementsofcs.gate.Pin;
 
 public abstract class AbstractBinaryPredicateBusTest {
 
-  protected final List<Pin> inputA = Pin.create16("inputA");
-  protected final List<Pin> inputB = Pin.create16("inputB");
-  protected final List<Pin> output = Pin.create16("output");
+  protected final List<Pin> inputA = Pin.create16();
+  protected final List<Pin> inputB = Pin.create16();
+  protected final List<Pin> output = Pin.create16();
 
   protected Bus bus;
   protected boolean[][] tt;

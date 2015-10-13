@@ -48,7 +48,7 @@ public class OrNWayBus implements Bus {
     for (int i = 0; i < size;) {
       Pin inA = i == 0 ? input.get(i++) : out;
       Pin inB = input.get(i++);
-      out = i < size ? new Pin("internal") : output;
+      out = i < size ? new Pin() : output;
       gates.add(new OrCompositeGate(inA, inB, out));
     }
   }

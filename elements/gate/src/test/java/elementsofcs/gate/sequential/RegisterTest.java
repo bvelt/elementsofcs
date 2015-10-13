@@ -10,10 +10,10 @@ import elementsofcs.gate.Pin;
 
 public class RegisterTest {
 
-  private final Pin clockInput = new Pin("clockInput");
-  private final List<Pin> input = Pin.create16("in");
-  private final List<Pin> output = Pin.create16("out");
-  private final Pin load = new Pin("load");
+  private final Pin clockInput = new Pin();
+  private final List<Pin> input = Pin.create16();
+  private final List<Pin> output = Pin.create16();
+  private final Pin load = new Pin();
 
   private final Register register = new Register(Pin.SIZE_16, clockInput, input, load, output);
 

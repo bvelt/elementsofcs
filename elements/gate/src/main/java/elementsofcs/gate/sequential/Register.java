@@ -40,11 +40,11 @@ public class Register implements ClockedGate, CompositeGate {
   protected final List<ENFlipFlop> bits = new ArrayList<ENFlipFlop>();
 
   public Register(int size, List<Pin> input, Pin load, List<Pin> output) {
-    this(size, new Pin("clockInput"), input, load, output);
+    this(size, new Pin(), input, load, output);
   }
 
   public Register(int size, Pin clockInput, List<Pin> input, Pin load, List<Pin> output) {
-    this(size, clockInput, input, load, output, Pin.createList("outputNQ", size));
+    this(size, clockInput, input, load, output, Pin.createList(size));
   }
 
   public Register(int size, Pin clockInput, List<Pin> input, Pin load, List<Pin> output, List<Pin> outputNQ) {

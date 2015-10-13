@@ -9,10 +9,10 @@ import elementsofcs.gate.bool.TruthTables;
 
 public class DMuxCompositeGateTest {
 
-  private final Pin input = new Pin("Input");
-  private final Pin selector = new Pin("Selector");
-  private final Pin outputA = new Pin("OutputA");
-  private final Pin outputB = new Pin("OutputB");
+  private final Pin input = new Pin();
+  private final Pin selector = new Pin();
+  private final Pin outputA = new Pin();
+  private final Pin outputB = new Pin();
 
   private final DMuxCompositeGate gate = new DMuxCompositeGate(input, selector, outputA, outputB);
   private final boolean[][] tt = TruthTables.DMUX;
