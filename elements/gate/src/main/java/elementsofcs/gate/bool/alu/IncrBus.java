@@ -4,6 +4,8 @@ import java.util.List;
 
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.bus.Bus;
+import elementsofcs.gate.bool.composite.NotCompositeGate;
+import elementsofcs.gate.bool.composite.OrCompositeGate;
 
 /**
  * Multi-bit adder circuit that increments input by 1
@@ -42,6 +44,10 @@ public class IncrBus implements Bus {
   private final List<Pin> input;
   private final List<Pin> output;
 
+  // gates to create binary number one
+  private final NotCompositeGate notFalseGate;
+  private final OrCompositeGate alwaysTrueGate;
+
   private final AdderBus adder;
 
   public IncrBus(int size, List<Pin> input, List<Pin> output) {
@@ -50,7 +56,18 @@ public class IncrBus implements Bus {
     this.input = input;
     this.output = output;
 
-    adder = new AdderBus(size, input, BinaryNumber.createOne(size), output);
+    Pin falseIn = new Pin("false");
+
+    Pin notFalseOut = new Pin("notFalse");
+    notFalseGate = new NotCompositeGate(falseIn, notFalseOut);
+
+    Pin alwaysTrueOut = new Pin("alwaysTrue");
+    alwaysTrueGate = new OrCompositeGate(falseIn, notFalseOut, alwaysTrueOut);
+
+    List<Pin> binaryOne = Pin.fillList(falseIn, size - 1);
+    binaryOne.add(alwaysTrueOut);
+
+    adder = new AdderBus(size, input, binaryOne, output);
   }
 
   public List<Pin> getInput() {
@@ -67,17 +84,17 @@ public class IncrBus implements Bus {
 
   @Override
   public void eval() {
+    notFalseGate.eval();
+    alwaysTrueGate.eval();
     adder.eval();
   }
 
   @Override
   public void reset() {
+    notFalseGate.reset();
+    alwaysTrueGate.reset();
     adder.reset();
-    restorInputBToOne();
-  }
-
-  private void restorInputBToOne() {
-    adder.getInputB().get(adder.getInputB().size() - 1).setValue(true);
+    // restorInputBToOne();
   }
 
   @Override
