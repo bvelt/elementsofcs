@@ -4,11 +4,11 @@ import elementsofcs.gate.Gate;
 import elementsofcs.gate.bool.AbstractUnaryPredicateGateTest;
 import elementsofcs.gate.bool.TruthTables;
 
-public class FalsifyCompositeGateTest extends AbstractUnaryPredicateGateTest {
+public class FalsifyGateTest extends AbstractUnaryPredicateGateTest {
 
   @Override
   protected Gate createGate() {
-    return new FalsifyCompositeGate(input, output);
+    return new FalsifyGate(input, output);
   }
 
   @Override

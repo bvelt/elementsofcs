@@ -39,7 +39,7 @@ public class Mux8Way16 implements Bus {
 
   private final Mux4Way16 muxX;
   private final Mux4Way16 muxY;
-  private final Mux2Way muxZ;
+  private final Mux2WayBus muxZ;
 
   public Mux8Way16(List<Pin> inputA, List<Pin> inputB, List<Pin> inputC, List<Pin> inputD,
       List<Pin> inputE, List<Pin> inputF, List<Pin> inputG, List<Pin> inputH,
@@ -66,7 +66,7 @@ public class Mux8Way16 implements Bus {
     muxY = new Mux4Way16(inputE, inputF, inputG, inputH, selXY);
 
     // if sel=1XX then out=outEFGH else out=outABCD
-    muxZ = new Mux2Way(Pin.SIZE_16, muxY.getOutput(), muxX.getOutput(), select.get(0), output);
+    muxZ = new Mux2WayBus(Pin.SIZE_16, muxY.getOutput(), muxX.getOutput(), select.get(0), output);
   }
 
   public Mux8Way16(List<Pin> inputA, List<Pin> inputB, List<Pin> inputC, List<Pin> inputD,

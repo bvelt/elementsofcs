@@ -14,20 +14,20 @@ import elementsofcs.gate.bool.AbstractBinaryPredicateGate;
  * @author brentvelthoen
  *
  */
-public class ConditionalCompositeGate extends AbstractBinaryPredicateGate implements CompositeGate {
+public class ConditionalGate extends AbstractBinaryPredicateGate implements CompositeGate {
 
-  private final NotCompositeGate notAGate;
-  private final OrCompositeGate orGate;
+  private final NotGate notAGate;
+  private final OrGate orGate;
 
-  public ConditionalCompositeGate(Pin inputA, Pin inputB, Pin output) {
+  public ConditionalGate(Pin inputA, Pin inputB, Pin output) {
     super(inputA, inputB, output);
     // NOT(A)
-    notAGate = new NotCompositeGate(inputA);
+    notAGate = new NotGate(inputA);
     // OR(NOT(A), B)
-    orGate = new OrCompositeGate(notAGate.getOutput(), inputB, output);
+    orGate = new OrGate(notAGate.getOutput(), inputB, output);
   }
 
-  public ConditionalCompositeGate(Pin inputA, Pin inputB) {
+  public ConditionalGate(Pin inputA, Pin inputB) {
     this(inputA, inputB, new Pin());
   }
 
@@ -45,7 +45,7 @@ public class ConditionalCompositeGate extends AbstractBinaryPredicateGate implem
 
   @Override
   public String toString() {
-    return "ConditionalCompositeGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
+    return "ConditionalGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
   }
 
 }

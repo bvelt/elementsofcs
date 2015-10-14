@@ -6,7 +6,7 @@ import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.BooleanGate;
-import elementsofcs.gate.bool.composite.XOrCompositeGate;
+import elementsofcs.gate.bool.composite.XOrGate;
 
 /**
  * Gate that performs binary addition on three input pins, setting least
@@ -59,7 +59,7 @@ public class FullAdderGate implements BooleanGate, CompositeGate {
     Pin carryABCOut = new Pin();
     addABCGate = new HalfAdderGate(sumABOut, inputC, carryABCOut, sum);
 
-    carryGate = new XOrCompositeGate(carryABOut, carryABCOut, carry);
+    carryGate = new XOrGate(carryABOut, carryABCOut, carry);
   }
 
   public Pin getInputA() {

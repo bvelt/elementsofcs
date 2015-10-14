@@ -8,9 +8,9 @@ import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.BooleanGate;
-import elementsofcs.gate.bool.composite.MuxCompositeGate;
-import elementsofcs.gate.bool.composite.NotCompositeGate;
-import elementsofcs.gate.bool.composite.XOrCompositeGate;
+import elementsofcs.gate.bool.composite.MuxGate;
+import elementsofcs.gate.bool.composite.NotGate;
+import elementsofcs.gate.bool.composite.XOrGate;
 
 /**
  * 3-bit Gray Code incrementer circuit
@@ -97,21 +97,21 @@ public class GrayCode3BitIncrGate implements BooleanGate, CompositeGate {
     this.outputY = outputY;
     this.outputZ = outputZ;
 
-    MuxCompositeGate xGate = new MuxCompositeGate(inputA, inputB, inputC, outputX);
+    MuxGate xGate = new MuxGate(inputA, inputB, inputC, outputX);
     gates.add(xGate);
 
     Pin notAOut = new Pin();
-    NotCompositeGate notAGate = new NotCompositeGate(inputA, notAOut);
+    NotGate notAGate = new NotGate(inputA, notAOut);
     gates.add(notAGate);
 
-    MuxCompositeGate yGate = new MuxCompositeGate(notAOut, inputB, inputC, outputY);
+    MuxGate yGate = new MuxGate(notAOut, inputB, inputC, outputY);
     gates.add(yGate);
 
     Pin xorABOut = new Pin();
-    XOrCompositeGate xorABGate = new XOrCompositeGate(inputA, inputB, xorABOut);
+    XOrGate xorABGate = new XOrGate(inputA, inputB, xorABOut);
     gates.add(xorABGate);
 
-    NotCompositeGate zGate = new NotCompositeGate(xorABOut, outputZ);
+    NotGate zGate = new NotGate(xorABOut, outputZ);
     gates.add(zGate);
   }
 

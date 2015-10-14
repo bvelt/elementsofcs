@@ -6,8 +6,8 @@ import java.util.Objects;
 
 import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.bus.DMux8Way;
 import elementsofcs.gate.bool.bus.Mux8Way16;
+import elementsofcs.gate.bool.composite.DMux8Way;
 
 /**
  * 1,024-bit memory composed of 8 rows of RAM8 (8 x 16) chips with 6-bit address

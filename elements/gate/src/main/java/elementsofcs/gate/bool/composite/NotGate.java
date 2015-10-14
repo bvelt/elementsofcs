@@ -3,7 +3,7 @@ package elementsofcs.gate.bool.composite;
 import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.AbstractUnaryPredicateGate;
-import elementsofcs.gate.bool.primitive.NAndPrimitiveGate;
+import elementsofcs.gate.bool.primitive.NAndGate;
 
 /**
  * NOT composite gate composed of internal NAND gate
@@ -15,17 +15,17 @@ import elementsofcs.gate.bool.primitive.NAndPrimitiveGate;
  * @author brentvelthoen
  *
  */
-public class NotCompositeGate extends AbstractUnaryPredicateGate implements CompositeGate {
+public class NotGate extends AbstractUnaryPredicateGate implements CompositeGate {
 
-  private final NAndPrimitiveGate nandGate;
+  private final NAndGate nandGate;
 
-  public NotCompositeGate(Pin input, Pin output) {
+  public NotGate(Pin input, Pin output) {
     super(input, output);
     // NAND(In, In)
-    nandGate = new NAndPrimitiveGate(input, input, output);
+    nandGate = new NAndGate(input, input, output);
   }
 
-  public NotCompositeGate(Pin input) {
+  public NotGate(Pin input) {
     this(input, new Pin());
   }
 
@@ -41,7 +41,7 @@ public class NotCompositeGate extends AbstractUnaryPredicateGate implements Comp
 
   @Override
   public String toString() {
-    return "NotCompositeGate [input=" + input + ", output=" + output + "]";
+    return "NotGate [input=" + input + ", output=" + output + "]";
   }
 
 }

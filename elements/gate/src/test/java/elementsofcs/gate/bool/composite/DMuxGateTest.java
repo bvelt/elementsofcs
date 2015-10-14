@@ -7,14 +7,14 @@ import org.junit.Test;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.TruthTables;
 
-public class DMuxCompositeGateTest {
+public class DMuxGateTest {
 
   private final Pin input = new Pin();
   private final Pin selector = new Pin();
   private final Pin outputA = new Pin();
   private final Pin outputB = new Pin();
 
-  private final DMuxCompositeGate gate = new DMuxCompositeGate(input, selector, outputA, outputB);
+  private final DMuxGate gate = new DMuxGate(input, selector, outputA, outputB);
   private final boolean[][] tt = TruthTables.DMUX;
 
   @Test

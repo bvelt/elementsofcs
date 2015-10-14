@@ -6,8 +6,8 @@ import java.util.List;
 import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.composite.AndCompositeGate;
-import elementsofcs.gate.bool.composite.NotCompositeGate;
+import elementsofcs.gate.bool.composite.AndGate;
+import elementsofcs.gate.bool.composite.NotGate;
 
 /**
  * Single-bit latch that only accepts input D on the rising edge of the clock.
@@ -39,15 +39,15 @@ public class DLatch implements ClockedGate, CompositeGate {
     this.outputNQ = outputNQ;
 
     Pin notDOut = new Pin();
-    NotCompositeGate notDGate = new NotCompositeGate(inputD, notDOut);
+    NotGate notDGate = new NotGate(inputD, notDOut);
     gates.add(notDGate);
 
     Pin inputR = new Pin();
-    AndCompositeGate rGate = new AndCompositeGate(clockInput, notDOut, inputR);
+    AndGate rGate = new AndGate(clockInput, notDOut, inputR);
     gates.add(rGate);
 
     Pin inputS = new Pin();
-    AndCompositeGate sGate = new AndCompositeGate(clockInput, inputD, inputS);
+    AndGate sGate = new AndGate(clockInput, inputD, inputS);
     gates.add(sGate);
 
     SRLatch srLatch = new SRLatch(inputS, inputR, outputQ, outputNQ);

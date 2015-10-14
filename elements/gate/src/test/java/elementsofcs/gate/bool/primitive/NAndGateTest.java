@@ -2,13 +2,13 @@ package elementsofcs.gate.bool.primitive;
 
 import elementsofcs.gate.Gate;
 import elementsofcs.gate.bool.AbstractBinaryPredicateGateTest;
-import elementsofcs.gate.bool.primitive.NAndPrimitiveGate;
+import elementsofcs.gate.bool.primitive.NAndGate;
 
-public class NAndPrimitiveGateTest extends AbstractBinaryPredicateGateTest {
+public class NAndGateTest extends AbstractBinaryPredicateGateTest {
 
   @Override
   protected Gate createGate() {
-    return new NAndPrimitiveGate(inputA, inputB, output);
+    return new NAndGate(inputA, inputB, output);
   }
 
   @Override

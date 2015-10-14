@@ -4,7 +4,7 @@ import java.util.List;
 
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.UnaryPredicateGate;
-import elementsofcs.gate.bool.composite.NotCompositeGate;
+import elementsofcs.gate.bool.composite.NotGate;
 
 /**
  * Bus that computes boolean NOT function on each pin of an input array
@@ -36,7 +36,7 @@ public class NotBus extends AbstractUnaryPredicateBus {
 
   @Override
   protected UnaryPredicateGate createGate(Pin in, Pin out) {
-    return new NotCompositeGate(in, out);
+    return new NotGate(in, out);
   }
 
   @Override

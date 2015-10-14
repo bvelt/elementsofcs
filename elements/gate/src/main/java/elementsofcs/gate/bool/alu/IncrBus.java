@@ -4,8 +4,8 @@ import java.util.List;
 
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.bus.Bus;
-import elementsofcs.gate.bool.composite.NotCompositeGate;
-import elementsofcs.gate.bool.composite.OrCompositeGate;
+import elementsofcs.gate.bool.composite.NotGate;
+import elementsofcs.gate.bool.composite.OrGate;
 
 /**
  * Multi-bit adder circuit that increments input by 1
@@ -45,8 +45,8 @@ public class IncrBus implements Bus {
   private final List<Pin> output;
 
   // gates to create binary number one
-  private final NotCompositeGate notFalseGate;
-  private final OrCompositeGate alwaysTrueGate;
+  private final NotGate notFalseGate;
+  private final OrGate alwaysTrueGate;
 
   private final AdderBus adder;
 
@@ -59,10 +59,10 @@ public class IncrBus implements Bus {
     Pin falseIn = new Pin();
 
     Pin notFalseOut = new Pin();
-    notFalseGate = new NotCompositeGate(falseIn, notFalseOut);
+    notFalseGate = new NotGate(falseIn, notFalseOut);
 
     Pin alwaysTrueOut = new Pin();
-    alwaysTrueGate = new OrCompositeGate(falseIn, notFalseOut, alwaysTrueOut);
+    alwaysTrueGate = new OrGate(falseIn, notFalseOut, alwaysTrueOut);
 
     List<Pin> binaryOne = Pin.fillList(falseIn, size - 1);
     binaryOne.add(alwaysTrueOut);

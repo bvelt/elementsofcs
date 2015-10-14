@@ -4,7 +4,7 @@ import java.util.List;
 
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.BinaryPredicateGate;
-import elementsofcs.gate.bool.composite.OrCompositeGate;
+import elementsofcs.gate.bool.composite.OrGate;
 
 /**
  * Bus that computes boolean OR function on each pin pair of two input arrays
@@ -36,7 +36,7 @@ public class OrBus extends AbstractBinaryPredicateBus {
 
   @Override
   protected BinaryPredicateGate createGate(Pin inA, Pin inB, Pin out) {
-    return new OrCompositeGate(inA, inB, out);
+    return new OrGate(inA, inB, out);
   }
 
   @Override

@@ -8,11 +8,11 @@ import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.bus.AndBus;
 import elementsofcs.gate.bool.bus.Bus;
-import elementsofcs.gate.bool.bus.Mux2Way;
+import elementsofcs.gate.bool.bus.Mux2WayBus;
 import elementsofcs.gate.bool.bus.OrNWayBus;
 import elementsofcs.gate.bool.bus.XOrBus;
-import elementsofcs.gate.bool.composite.AndCompositeGate;
-import elementsofcs.gate.bool.composite.NotCompositeGate;
+import elementsofcs.gate.bool.composite.AndGate;
+import elementsofcs.gate.bool.composite.NotGate;
 
 /**
  * Arithmetic Logic Unit
@@ -149,7 +149,7 @@ public class ALU implements Bus {
     gates.add(nxXOrXGate);
     // NOT(zx)
     Pin notZxOut = new Pin();
-    NotCompositeGate notZxGate = new NotCompositeGate(zin, notZxOut);
+    NotGate notZxGate = new NotGate(zin, notZxOut);
     gates.add(notZxGate);
     // AND(NOT(zx), XOR(nx,x))
     AndBus zxAndGate = AndBus.create16(Pin.fill16(notZxOut), nxXOrXOut, in);
@@ -166,7 +166,7 @@ public class ALU implements Bus {
    */
   private void initOutputLessThanZeroGate() {
     // AND(out[0],out[0])
-    AndCompositeGate andMSBGate = new AndCompositeGate(out.get(0), out.get(0), ng);
+    AndGate andMSBGate = new AndGate(out.get(0), out.get(0), ng);
     gates.add(andMSBGate);
   }
 
@@ -185,7 +185,7 @@ public class ALU implements Bus {
     gates.add(orGate);
 
     // NOT(OR(out[0],out[1]..out[15]))
-    NotCompositeGate notGate = new NotCompositeGate(orOut, zr);
+    NotGate notGate = new NotGate(orOut, zr);
     gates.add(notGate);
   }
 
@@ -208,7 +208,7 @@ public class ALU implements Bus {
     AndBus andXYGate = AndBus.create16(x, y, andXYOut);
     gates.add(andXYGate);
 
-    Mux2Way muxF = new Mux2Way(Pin.SIZE_16, addXYOut, andXYOut, f, out);
+    Mux2WayBus muxF = new Mux2WayBus(Pin.SIZE_16, addXYOut, andXYOut, f, out);
     gates.add(muxF);
   }
 

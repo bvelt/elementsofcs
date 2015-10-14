@@ -14,37 +14,37 @@ import elementsofcs.gate.bool.BooleanGate;
  * @author brentvelthoen
  *
  */
-public class MuxCompositeGate implements CompositeGate, BooleanGate {
+public class MuxGate implements CompositeGate, BooleanGate {
 
   private final Pin inputA;
   private final Pin inputB;
   private final Pin select;
   private final Pin output;
 
-  private final AndCompositeGate leftAndGate;
+  private final AndGate leftAndGate;
 
-  private final NotCompositeGate notSelGate;
-  private final AndCompositeGate rightAndGate;
+  private final NotGate notSelGate;
+  private final AndGate rightAndGate;
 
-  private final OrCompositeGate leftOrRightGate;
+  private final OrGate leftOrRightGate;
 
-  public MuxCompositeGate(Pin inputA, Pin inputB, Pin select, Pin output) {
+  public MuxGate(Pin inputA, Pin inputB, Pin select, Pin output) {
     super();
     this.inputA = inputA;
     this.inputB = inputB;
     this.select = select;
     this.output = output;
     // AND(A, Sel)
-    leftAndGate = new AndCompositeGate(inputA, select);
+    leftAndGate = new AndGate(inputA, select);
     // NOT(Sel)
-    notSelGate = new NotCompositeGate(select);
+    notSelGate = new NotGate(select);
     // AND(B, NOT(Sel))
-    rightAndGate = new AndCompositeGate(inputB, notSelGate.getOutput());
+    rightAndGate = new AndGate(inputB, notSelGate.getOutput());
     // OR(AND(A, Sel), AND(B, NOT(Sel)))
-    leftOrRightGate = new OrCompositeGate(leftAndGate.getOutput(), rightAndGate.getOutput(), output);
+    leftOrRightGate = new OrGate(leftAndGate.getOutput(), rightAndGate.getOutput(), output);
   }
 
-  public MuxCompositeGate(Pin inputA, Pin inputB, Pin select) {
+  public MuxGate(Pin inputA, Pin inputB, Pin select) {
     this(inputA, inputB, select, new Pin());
   }
 
@@ -82,7 +82,7 @@ public class MuxCompositeGate implements CompositeGate, BooleanGate {
 
   @Override
   public String toString() {
-    return "MuxCompositeGate [inputA=" + inputA + ", inputB=" + inputB + ", select=" + select + ", output=" + output + "]";
+    return "MuxGate [inputA=" + inputA + ", inputB=" + inputB + ", select=" + select + ", output=" + output + "]";
   }
 
 }

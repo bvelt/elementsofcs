@@ -32,5 +32,4 @@ public abstract class AbstractUnaryPredicateGate implements UnaryPredicateGate {
     input.setValue(false);
     output.setValue(false);
   }
-
 }

@@ -1,10 +1,11 @@
-package elementsofcs.gate.bool.bus;
+package elementsofcs.gate.bool.composite;
 
 import java.util.List;
 import java.util.Objects;
 
+import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.composite.DMuxCompositeGate;
+import elementsofcs.gate.bool.BooleanGate;
 
 /**
  * 8-way demultiplexor
@@ -23,7 +24,7 @@ import elementsofcs.gate.bool.composite.DMuxCompositeGate;
  * @author brentvelthoen
  *
  */
-public class DMux8Way implements Bus {
+public class DMux8Way implements BooleanGate, CompositeGate {
 
   private final Pin input;
 
@@ -38,7 +39,7 @@ public class DMux8Way implements Bus {
   private final Pin outputG;
   private final Pin outputH;
 
-  private final DMuxCompositeGate dmuxX;
+  private final DMuxGate dmuxX;
   private final DMux4Way dmuxY;
   private final DMux4Way dmuxZ;
 
@@ -60,7 +61,7 @@ public class DMux8Way implements Bus {
     this.outputH = outputH;
 
     // if sel=1XX then outA=in, outB=0 else outA=0, outB=in
-    dmuxX = new DMuxCompositeGate(input, select.get(0));
+    dmuxX = new DMuxGate(input, select.get(0));
 
     List<Pin> selXY = select.subList(1, 3);
     dmuxY = new DMux4Way(dmuxX.getOutputB(), selXY, outputA, outputB, outputC, outputD);

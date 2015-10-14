@@ -4,7 +4,7 @@ import java.util.List;
 
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.BinaryPredicateGate;
-import elementsofcs.gate.bool.composite.XOrCompositeGate;
+import elementsofcs.gate.bool.composite.XOrGate;
 
 /**
  * Bus that computes boolean XOR function on each pin pair of two input arrays
@@ -36,7 +36,7 @@ public class XOrBus extends AbstractBinaryPredicateBus {
 
   @Override
   protected BinaryPredicateGate createGate(Pin inA, Pin inB, Pin out) {
-    return new XOrCompositeGate(inA, inB, out);
+    return new XOrGate(inA, inB, out);
   }
 
   @Override

@@ -3,7 +3,7 @@ package elementsofcs.gate.bool.composite;
 import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.AbstractBinaryPredicateGate;
-import elementsofcs.gate.bool.primitive.NAndPrimitiveGate;
+import elementsofcs.gate.bool.primitive.NAndGate;
 
 /**
  * OR composite gate composed of internal gates
@@ -15,23 +15,23 @@ import elementsofcs.gate.bool.primitive.NAndPrimitiveGate;
  * @author brentvelthoen
  *
  */
-public class OrCompositeGate extends AbstractBinaryPredicateGate implements CompositeGate {
+public class OrGate extends AbstractBinaryPredicateGate implements CompositeGate {
 
-  private final NotCompositeGate notAGate;
-  private final NotCompositeGate notBGate;
-  private final NAndPrimitiveGate nandGate;
+  private final NotGate notAGate;
+  private final NotGate notBGate;
+  private final NAndGate nandGate;
 
-  public OrCompositeGate(Pin inputA, Pin inputB, Pin output) {
+  public OrGate(Pin inputA, Pin inputB, Pin output) {
     super(inputA, inputB, output);
     // NOT(A)
-    notAGate = new NotCompositeGate(inputA);
+    notAGate = new NotGate(inputA);
     // NOT(B)
-    notBGate = new NotCompositeGate(inputB);
+    notBGate = new NotGate(inputB);
     // NAND(NOT(A), NOT(B))
-    nandGate = new NAndPrimitiveGate(notAGate.getOutput(), notBGate.getOutput(), output);
+    nandGate = new NAndGate(notAGate.getOutput(), notBGate.getOutput(), output);
   }
 
-  public OrCompositeGate(Pin inputA, Pin inputB) {
+  public OrGate(Pin inputA, Pin inputB) {
     this(inputA, inputB, new Pin());
   }
 
@@ -51,7 +51,7 @@ public class OrCompositeGate extends AbstractBinaryPredicateGate implements Comp
 
   @Override
   public String toString() {
-    return "OrCompositeGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
+    return "OrGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
   }
 
 }

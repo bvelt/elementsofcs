@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.composite.MuxCompositeGate;
+import elementsofcs.gate.bool.composite.MuxGate;
 
 /**
  * Multi-bit multiplexor that sets output array to either of two input arrays
@@ -15,22 +15,22 @@ import elementsofcs.gate.bool.composite.MuxCompositeGate;
  * @author brentvelthoen
  *
  */
-public class Mux2Way implements Bus {
+public class Mux2WayBus implements Bus {
 
-  public static Mux2Way create8(List<Pin> inputA, List<Pin> inputB, Pin selector, List<Pin> output) {
-    return new Mux2Way(Pin.SIZE_8, inputA, inputB, selector, output);
+  public static Mux2WayBus create8(List<Pin> inputA, List<Pin> inputB, Pin selector, List<Pin> output) {
+    return new Mux2WayBus(Pin.SIZE_8, inputA, inputB, selector, output);
   }
 
-  public static Mux2Way create16(List<Pin> inputA, List<Pin> inputB, Pin selector, List<Pin> output) {
-    return new Mux2Way(Pin.SIZE_16, inputA, inputB, selector, output);
+  public static Mux2WayBus create16(List<Pin> inputA, List<Pin> inputB, Pin selector, List<Pin> output) {
+    return new Mux2WayBus(Pin.SIZE_16, inputA, inputB, selector, output);
   }
 
-  public static Mux2Way create32(List<Pin> inputA, List<Pin> inputB, Pin selector, List<Pin> output) {
-    return new Mux2Way(Pin.SIZE_32, inputA, inputB, selector, output);
+  public static Mux2WayBus create32(List<Pin> inputA, List<Pin> inputB, Pin selector, List<Pin> output) {
+    return new Mux2WayBus(Pin.SIZE_32, inputA, inputB, selector, output);
   }
 
-  public static Mux2Way create64(List<Pin> inputA, List<Pin> inputB, Pin selector, List<Pin> output) {
-    return new Mux2Way(Pin.SIZE_64, inputA, inputB, selector, output);
+  public static Mux2WayBus create64(List<Pin> inputA, List<Pin> inputB, Pin selector, List<Pin> output) {
+    return new Mux2WayBus(Pin.SIZE_64, inputA, inputB, selector, output);
   }
 
   private final int size;
@@ -40,9 +40,9 @@ public class Mux2Way implements Bus {
   private final Pin select;
   private final List<Pin> output;
 
-  private final List<MuxCompositeGate> gates = new ArrayList<MuxCompositeGate>();
+  private final List<MuxGate> gates = new ArrayList<MuxGate>();
 
-  public Mux2Way(int size, List<Pin> inputA, List<Pin> inputB, Pin select, List<Pin> output) {
+  public Mux2WayBus(int size, List<Pin> inputA, List<Pin> inputB, Pin select, List<Pin> output) {
     super();
     this.size = size;
 
@@ -64,13 +64,13 @@ public class Mux2Way implements Bus {
     initializeGates();
   }
 
-  public Mux2Way(int size, List<Pin> inputA, List<Pin> inputB, Pin select) {
+  public Mux2WayBus(int size, List<Pin> inputA, List<Pin> inputB, Pin select) {
     this(size, inputA, inputB, select, Pin.createList(size));
   }
 
   private void initializeGates() {
     for (int i = 0; i < size; i++) {
-      gates.add(new MuxCompositeGate(inputA.get(i), inputB.get(i), select, output.get(i)));
+      gates.add(new MuxGate(inputA.get(i), inputB.get(i), select, output.get(i)));
     }
   }
 
@@ -106,7 +106,7 @@ public class Mux2Way implements Bus {
 
   @Override
   public String toString() {
-    return "MuxBus [size=" + size + ", inputA=" + inputA + ", inputB=" + inputB + ", select=" + select + ", output=" + output + "]";
+    return "Mux2WayBus [size=" + size + ", inputA=" + inputA + ", inputB=" + inputB + ", select=" + select + ", output=" + output + "]";
   }
 
 }

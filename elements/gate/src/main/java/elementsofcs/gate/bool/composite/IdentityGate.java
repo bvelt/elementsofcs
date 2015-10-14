@@ -14,16 +14,16 @@ import elementsofcs.gate.bool.AbstractUnaryPredicateGate;
  * @author brentvelthoen
  *
  */
-public class IdentityCompositeGate extends AbstractUnaryPredicateGate implements CompositeGate {
+public class IdentityGate extends AbstractUnaryPredicateGate implements CompositeGate {
 
-  private final OrCompositeGate orGate;
+  private final OrGate orGate;
 
-  public IdentityCompositeGate(Pin input, Pin output) {
+  public IdentityGate(Pin input, Pin output) {
     super(input, output);
-    orGate = new OrCompositeGate(input, new Pin(), output);
+    orGate = new OrGate(input, new Pin(), output);
   }
 
-  public IdentityCompositeGate(Pin input) {
+  public IdentityGate(Pin input) {
     this(input, new Pin());
   }
 
@@ -39,7 +39,7 @@ public class IdentityCompositeGate extends AbstractUnaryPredicateGate implements
 
   @Override
   public String toString() {
-    return "IdentityCompositeGate [input=" + input + ", output=" + output + "]";
+    return "IdentityGate [input=" + input + ", output=" + output + "]";
   }
 
 }

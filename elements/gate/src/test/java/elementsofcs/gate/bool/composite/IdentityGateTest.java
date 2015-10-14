@@ -1,19 +1,19 @@
 package elementsofcs.gate.bool.composite;
 
 import elementsofcs.gate.Gate;
-import elementsofcs.gate.bool.AbstractBinaryPredicateGateTest;
+import elementsofcs.gate.bool.AbstractUnaryPredicateGateTest;
 import elementsofcs.gate.bool.TruthTables;
 
-public class XOrCompositeGateTest extends AbstractBinaryPredicateGateTest {
+public class IdentityGateTest extends AbstractUnaryPredicateGateTest {
 
   @Override
   protected Gate createGate() {
-    return new XOrCompositeGate(inputA, inputB, output);
+    return new IdentityGate(input, output);
   }
 
   @Override
   protected boolean[][] createTruthTable() {
-    return TruthTables.XOR;
+    return TruthTables.IDENTITY;
   }
 
 }

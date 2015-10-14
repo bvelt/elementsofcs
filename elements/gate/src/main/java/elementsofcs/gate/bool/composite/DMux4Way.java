@@ -1,10 +1,11 @@
-package elementsofcs.gate.bool.bus;
+package elementsofcs.gate.bool.composite;
 
 import java.util.List;
 import java.util.Objects;
 
+import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.composite.DMuxCompositeGate;
+import elementsofcs.gate.bool.BooleanGate;
 
 /**
  * 4-way demultiplexor
@@ -19,7 +20,7 @@ import elementsofcs.gate.bool.composite.DMuxCompositeGate;
  * @author brentvelthoen
  *
  */
-public class DMux4Way implements Bus {
+public class DMux4Way implements BooleanGate, CompositeGate {
 
   private final Pin input;
 
@@ -30,9 +31,9 @@ public class DMux4Way implements Bus {
   private final Pin outputC;
   private final Pin outputD;
 
-  private final DMuxCompositeGate dmuxX;
-  private final DMuxCompositeGate dmuxY;
-  private final DMuxCompositeGate dmuxZ;
+  private final DMuxGate dmuxX;
+  private final DMuxGate dmuxY;
+  private final DMuxGate dmuxZ;
 
   public DMux4Way(Pin input, List<Pin> select, Pin outputA, Pin outputB, Pin outputC, Pin outputD) {
     super();
@@ -48,13 +49,13 @@ public class DMux4Way implements Bus {
     this.outputD = outputD;
 
     // if sel=1X then outA=in, outB=0 else outA=0, outB=in
-    dmuxX = new DMuxCompositeGate(input, select.get(0));
+    dmuxX = new DMuxGate(input, select.get(0));
 
     // if sel=X1 then outB=dmuxX.outB, outA=0 else outB=0, outA=dmuxX.outB
-    dmuxY = new DMuxCompositeGate(dmuxX.getOutputB(), select.get(1), outputB, outputA);
+    dmuxY = new DMuxGate(dmuxX.getOutputB(), select.get(1), outputB, outputA);
 
     // if sel=X1 then outD=dmuxX.outA, outC=0 else outD=0, outC=dmuxX.outA
-    dmuxZ = new DMuxCompositeGate(dmuxX.getOutputA(), select.get(1), outputD, outputC);
+    dmuxZ = new DMuxGate(dmuxX.getOutputA(), select.get(1), outputD, outputC);
   }
 
   public Pin getInput() {

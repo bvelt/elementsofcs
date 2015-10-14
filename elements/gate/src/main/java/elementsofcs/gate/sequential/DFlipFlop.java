@@ -6,7 +6,7 @@ import java.util.List;
 import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.composite.NotCompositeGate;
+import elementsofcs.gate.bool.composite.NotGate;
 
 /**
  * Data flip-flop composed of two latches, master and slave, controlled by
@@ -44,7 +44,7 @@ public class DFlipFlop implements ClockedGate, CompositeGate {
     this.outputNQ = outputNQ;
 
     Pin notClockOut = new Pin();
-    NotCompositeGate notClockGate = new NotCompositeGate(clockInput, notClockOut);
+    NotGate notClockGate = new NotGate(clockInput, notClockOut);
     gates.add(notClockGate);
 
     // master buffers D while clockSignal equals false

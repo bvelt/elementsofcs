@@ -2,7 +2,7 @@ package elementsofcs.gate.sequential;
 
 import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.composite.NOrCompositeGate;
+import elementsofcs.gate.bool.composite.NOrGate;
 
 /**
  * Single-bit Set/Reset latch composed of two cross-coupled NOR gates. The S and
@@ -24,8 +24,8 @@ public class SRLatch implements SequentialGate, CompositeGate {
   private final Pin outputQ;
   private final Pin outputNQ;
 
-  private final NOrCompositeGate n1;
-  private final NOrCompositeGate n2;
+  private final NOrGate n1;
+  private final NOrGate n2;
 
   public SRLatch(Pin inputS, Pin inputR, Pin outputQ) {
     this(inputS, inputR, outputQ, new Pin());
@@ -38,8 +38,8 @@ public class SRLatch implements SequentialGate, CompositeGate {
     this.outputQ = outputQ;
     this.outputNQ = outputNQ;
 
-    n1 = new NOrCompositeGate(inputR, outputNQ, outputQ);
-    n2 = new NOrCompositeGate(inputS, outputQ, outputNQ);
+    n1 = new NOrGate(inputR, outputNQ, outputQ);
+    n2 = new NOrGate(inputS, outputQ, outputNQ);
   }
 
   private void checkInputsNotBothTrue() {

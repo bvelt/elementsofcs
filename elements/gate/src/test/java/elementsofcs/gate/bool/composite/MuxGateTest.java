@@ -7,14 +7,14 @@ import org.junit.Test;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.TruthTables;
 
-public class MuxCompositeGateTest {
+public class MuxGateTest {
 
   private final Pin inputA = new Pin();
   private final Pin inputB = new Pin();
   private final Pin selector = new Pin();
   private final Pin output = new Pin();
 
-  private MuxCompositeGate gate = new MuxCompositeGate(inputA, inputB, selector, output);
+  private MuxGate gate = new MuxGate(inputA, inputB, selector, output);
   private boolean[][] tt = TruthTables.MUX;
 
   @Test

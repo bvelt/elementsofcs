@@ -7,7 +7,7 @@ import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.alu.IncrBus;
-import elementsofcs.gate.bool.bus.Mux2Way;
+import elementsofcs.gate.bool.bus.Mux2WayBus;
 import elementsofcs.gate.bool.bus.OrNWayBus;
 
 /**
@@ -59,19 +59,19 @@ public class Counter16 implements ClockedGate, CompositeGate {
 
     // MUX(incrOut, input, increment)=muxXOut
     List<Pin> muxXOut = Pin.create16();
-    Mux2Way muxXGate = Mux2Way.create16(incrOut, input, increment, muxXOut);
+    Mux2WayBus muxXGate = Mux2WayBus.create16(incrOut, input, increment, muxXOut);
     gates.add(muxXGate);
 
     // MUX(input, muxXOut, load)=muxYOut
     // load=1 takes precedence over increment=1
     List<Pin> muxYOut = Pin.create16();
-    Mux2Way muxYGate = Mux2Way.create16(input, muxXOut, load, muxYOut);
+    Mux2WayBus muxYGate = Mux2WayBus.create16(input, muxXOut, load, muxYOut);
     gates.add(muxYGate);
 
     // MUX(false, muxYOut, reset)=muxResetOut
     // reset=1 takes precedence over load=1 or increment=1
     List<Pin> muxZOut = Pin.create16();
-    Mux2Way muxZGate = Mux2Way.create16(Pin.create16(), muxYOut, reset, muxZOut);
+    Mux2WayBus muxZGate = Mux2WayBus.create16(Pin.create16(), muxYOut, reset, muxZOut);
     gates.add(muxZGate);
 
     // OR(increment, load, reset)=rload

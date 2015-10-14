@@ -4,7 +4,7 @@ import java.util.List;
 
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.BinaryPredicateGate;
-import elementsofcs.gate.bool.composite.AndCompositeGate;
+import elementsofcs.gate.bool.composite.AndGate;
 
 /**
  * Bus that computes boolean AND function on each pin pair of two input arrays
@@ -40,7 +40,7 @@ public class AndBus extends AbstractBinaryPredicateBus {
 
   @Override
   protected BinaryPredicateGate createGate(Pin inA, Pin inB, Pin out) {
-    return new AndCompositeGate(inA, inB, out);
+    return new AndGate(inA, inB, out);
   }
 
   @Override

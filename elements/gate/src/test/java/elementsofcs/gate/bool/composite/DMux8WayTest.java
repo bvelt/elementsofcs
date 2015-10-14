@@ -1,4 +1,4 @@
-package elementsofcs.gate.bool.bus;
+package elementsofcs.gate.bool.composite;
 
 import static org.junit.Assert.assertTrue;
 
@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.Test;
 
 import elementsofcs.gate.Pin;
+import elementsofcs.gate.bool.composite.DMux8Way;
 
 public class DMux8WayTest {
 

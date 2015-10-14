@@ -5,8 +5,8 @@ import java.util.Objects;
 import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.BooleanGate;
-import elementsofcs.gate.bool.composite.AndCompositeGate;
-import elementsofcs.gate.bool.composite.XOrCompositeGate;
+import elementsofcs.gate.bool.composite.AndGate;
+import elementsofcs.gate.bool.composite.XOrGate;
 
 /**
  * Gate that performs binary addition on two input pins, setting least
@@ -33,8 +33,8 @@ public class HalfAdderGate implements BooleanGate, CompositeGate {
   private final Pin carry;
   private final Pin sum;
 
-  private final AndCompositeGate carryGate;
-  private final XOrCompositeGate sumGate;
+  private final AndGate carryGate;
+  private final XOrGate sumGate;
 
   public HalfAdderGate(Pin inputA, Pin inputB, Pin carry, Pin sum) {
     super();
@@ -47,8 +47,8 @@ public class HalfAdderGate implements BooleanGate, CompositeGate {
     this.carry = carry;
     this.sum = sum;
 
-    carryGate = new AndCompositeGate(inputA, inputB, carry);
-    sumGate = new XOrCompositeGate(inputA, inputB, sum);
+    carryGate = new AndGate(inputA, inputB, carry);
+    sumGate = new XOrGate(inputA, inputB, sum);
   }
 
   public Pin getInputA() {

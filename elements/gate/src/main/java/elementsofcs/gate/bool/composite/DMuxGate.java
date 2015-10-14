@@ -14,32 +14,32 @@ import elementsofcs.gate.bool.BooleanGate;
  * @author brentvelthoen
  *
  */
-public class DMuxCompositeGate implements BooleanGate, CompositeGate {
+public class DMuxGate implements BooleanGate, CompositeGate {
 
   private final Pin input;
   private final Pin select;
   private final Pin outputA;
   private final Pin outputB;
 
-  private final NotCompositeGate notSelGate;
-  private final AndCompositeGate outputAGate;
-  private final AndCompositeGate outputBGate;
+  private final NotGate notSelGate;
+  private final AndGate outputAGate;
+  private final AndGate outputBGate;
 
-  public DMuxCompositeGate(Pin input, Pin select, Pin outputA, Pin outputB) {
+  public DMuxGate(Pin input, Pin select, Pin outputA, Pin outputB) {
     super();
     this.input = input;
     this.select = select;
     this.outputA = outputA;
     this.outputB = outputB;
     // NOT(Sel)
-    notSelGate = new NotCompositeGate(select);
+    notSelGate = new NotGate(select);
     // AND(In, Sel)=OutputA
-    outputAGate = new AndCompositeGate(input, select, outputA);
+    outputAGate = new AndGate(input, select, outputA);
     // AND(In, NOT(Sel))=OutputB
-    outputBGate = new AndCompositeGate(input, notSelGate.getOutput(), outputB);
+    outputBGate = new AndGate(input, notSelGate.getOutput(), outputB);
   }
 
-  public DMuxCompositeGate(Pin input, Pin select) {
+  public DMuxGate(Pin input, Pin select) {
     this(input, select, new Pin(), new Pin());
   }
 
@@ -75,7 +75,7 @@ public class DMuxCompositeGate implements BooleanGate, CompositeGate {
 
   @Override
   public String toString() {
-    return "DMuxCompositeGate [input=" + input + ", select=" + select + ", outputA=" + outputA + ", outputB=" + outputB + "]";
+    return "DMuxGate [input=" + input + ", select=" + select + ", outputA=" + outputA + ", outputB=" + outputB + "]";
   }
 
 }

@@ -11,13 +11,13 @@ import elementsofcs.gate.bool.AbstractBinaryPredicateGate;
  * @author brentvelthoen
  *
  */
-public class NAndPrimitiveGate extends AbstractBinaryPredicateGate implements PrimitiveGate {
+public class NAndGate extends AbstractBinaryPredicateGate implements PrimitiveGate {
 
-  public NAndPrimitiveGate(Pin inputA, Pin inputB, Pin output) {
+  public NAndGate(Pin inputA, Pin inputB, Pin output) {
     super(inputA, inputB, output);
   }
 
-  public NAndPrimitiveGate(Pin inputA, Pin inputB) {
+  public NAndGate(Pin inputA, Pin inputB) {
     this(inputA, inputB, new Pin());
   }
 
@@ -28,7 +28,7 @@ public class NAndPrimitiveGate extends AbstractBinaryPredicateGate implements Pr
 
   @Override
   public String toString() {
-    return "NAndPrimitiveGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
+    return "NAndGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
   }
 
 }

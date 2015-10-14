@@ -3,7 +3,7 @@ package elementsofcs.gate.bool.composite;
 import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.AbstractBinaryPredicateGate;
-import elementsofcs.gate.bool.primitive.NAndPrimitiveGate;
+import elementsofcs.gate.bool.primitive.NAndGate;
 
 /**
  * XOR composite gate composed on internal gates
@@ -15,23 +15,23 @@ import elementsofcs.gate.bool.primitive.NAndPrimitiveGate;
  * @author brentvelthoen
  *
  */
-public class XOrCompositeGate extends AbstractBinaryPredicateGate implements CompositeGate {
+public class XOrGate extends AbstractBinaryPredicateGate implements CompositeGate {
 
-  private final NAndPrimitiveGate nandABGate;
-  private final OrCompositeGate orABGate;
-  private final AndCompositeGate andLeftRightGate;
+  private final NAndGate nandABGate;
+  private final OrGate orABGate;
+  private final AndGate andLeftRightGate;
 
-  public XOrCompositeGate(Pin inputA, Pin inputB, Pin output) {
+  public XOrGate(Pin inputA, Pin inputB, Pin output) {
     super(inputA, inputB, output);
     // NAND(A, B)
-    nandABGate = new NAndPrimitiveGate(inputA, inputB);
+    nandABGate = new NAndGate(inputA, inputB);
     // OR(A, B)
-    orABGate = new OrCompositeGate(inputA, inputB);
+    orABGate = new OrGate(inputA, inputB);
     // AND(NAND(A, B), OR(A, B))
-    andLeftRightGate = new AndCompositeGate(nandABGate.getOutput(), orABGate.getOutput(), output);
+    andLeftRightGate = new AndGate(nandABGate.getOutput(), orABGate.getOutput(), output);
   }
 
-  public XOrCompositeGate(Pin inputA, Pin inputB) {
+  public XOrGate(Pin inputA, Pin inputB) {
     this(inputA, inputB, new Pin());
   }
 
@@ -51,7 +51,7 @@ public class XOrCompositeGate extends AbstractBinaryPredicateGate implements Com
 
   @Override
   public String toString() {
-    return "XOrCompositeGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
+    return "XOrGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
   }
 
 }

@@ -4,16 +4,16 @@ import elementsofcs.gate.Gate;
 import elementsofcs.gate.bool.AbstractBinaryPredicateGateTest;
 import elementsofcs.gate.bool.TruthTables;
 
-public class OrCompositeGateTest extends AbstractBinaryPredicateGateTest {
+public class AndGateTest extends AbstractBinaryPredicateGateTest {
 
   @Override
   protected Gate createGate() {
-    return new OrCompositeGate(inputA, inputB, output);
+    return new AndGate(inputA, inputB, output);
   }
 
   @Override
   protected boolean[][] createTruthTable() {
-    return TruthTables.OR;
+    return TruthTables.AND;
   }
 
 }

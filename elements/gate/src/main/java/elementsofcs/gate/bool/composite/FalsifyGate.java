@@ -14,16 +14,16 @@ import elementsofcs.gate.bool.AbstractUnaryPredicateGate;
  * @author brentvelthoen
  *
  */
-public class FalsifyCompositeGate extends AbstractUnaryPredicateGate implements CompositeGate {
+public class FalsifyGate extends AbstractUnaryPredicateGate implements CompositeGate {
 
-  private final AndCompositeGate andGate;
+  private final AndGate andGate;
 
-  public FalsifyCompositeGate(Pin input, Pin output) {
+  public FalsifyGate(Pin input, Pin output) {
     super(input, output);
-    andGate = new AndCompositeGate(input, new Pin(), output);
+    andGate = new AndGate(input, new Pin(), output);
   }
 
-  public FalsifyCompositeGate(Pin input) {
+  public FalsifyGate(Pin input) {
     this(input, new Pin());
   }
 
@@ -39,7 +39,7 @@ public class FalsifyCompositeGate extends AbstractUnaryPredicateGate implements 
 
   @Override
   public String toString() {
-    return "FalsifyCompositeGate [input=" + input + ", output=" + output + "]";
+    return "FalsifyGate [input=" + input + ", output=" + output + "]";
   }
 
 }

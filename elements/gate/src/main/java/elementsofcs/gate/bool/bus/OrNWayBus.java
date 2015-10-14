@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import elementsofcs.gate.Gate;
 import elementsofcs.gate.Pin;
-import elementsofcs.gate.bool.composite.OrCompositeGate;
+import elementsofcs.gate.bool.composite.OrGate;
 
 /**
  * N-Way OR bus that outputs true if at least one input pin is true, otherwise
@@ -26,7 +26,7 @@ public class OrNWayBus implements Bus {
   private final List<Pin> input;
   private final Pin output;
 
-  private final List<OrCompositeGate> gates;
+  private final List<OrGate> gates;
 
   public OrNWayBus(int size, List<Pin> input, Pin output) {
     super();
@@ -39,7 +39,7 @@ public class OrNWayBus implements Bus {
     Objects.requireNonNull(output, "output");
     this.output = output;
 
-    gates = new ArrayList<OrCompositeGate>(size - 1);
+    gates = new ArrayList<OrGate>(size - 1);
     initializeOrChain();
   }
 
@@ -49,7 +49,7 @@ public class OrNWayBus implements Bus {
       Pin inA = i == 0 ? input.get(i++) : out;
       Pin inB = input.get(i++);
       out = i < size ? new Pin() : output;
-      gates.add(new OrCompositeGate(inA, inB, out));
+      gates.add(new OrGate(inA, inB, out));
     }
   }
 

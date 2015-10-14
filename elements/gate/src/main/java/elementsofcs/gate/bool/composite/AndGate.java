@@ -3,7 +3,7 @@ package elementsofcs.gate.bool.composite;
 import elementsofcs.gate.CompositeGate;
 import elementsofcs.gate.Pin;
 import elementsofcs.gate.bool.AbstractBinaryPredicateGate;
-import elementsofcs.gate.bool.primitive.NAndPrimitiveGate;
+import elementsofcs.gate.bool.primitive.NAndGate;
 
 /**
  * AND composite gate composed of internal NOT and NAND gates
@@ -15,20 +15,20 @@ import elementsofcs.gate.bool.primitive.NAndPrimitiveGate;
  * @author brentvelthoen
  *
  */
-public class AndCompositeGate extends AbstractBinaryPredicateGate implements CompositeGate {
+public class AndGate extends AbstractBinaryPredicateGate implements CompositeGate {
 
-  private final NAndPrimitiveGate nandGate;
-  private final NotCompositeGate notGate;
+  private final NAndGate nandGate;
+  private final NotGate notGate;
 
-  public AndCompositeGate(Pin inputA, Pin inputB, Pin output) {
+  public AndGate(Pin inputA, Pin inputB, Pin output) {
     super(inputA, inputB, output);
     // NAND(A, B)
-    nandGate = new NAndPrimitiveGate(inputA, inputB);
+    nandGate = new NAndGate(inputA, inputB);
     // NOT(NAND(A, B))
-    notGate = new NotCompositeGate(nandGate.getOutput(), output);
+    notGate = new NotGate(nandGate.getOutput(), output);
   }
 
-  public AndCompositeGate(Pin inputA, Pin inputB) {
+  public AndGate(Pin inputA, Pin inputB) {
     this(inputA, inputB, new Pin());
   }
 
@@ -46,7 +46,7 @@ public class AndCompositeGate extends AbstractBinaryPredicateGate implements Com
 
   @Override
   public String toString() {
-    return "AndCompositeGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
+    return "AndGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
   }
 
 }

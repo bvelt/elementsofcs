@@ -14,23 +14,23 @@ import elementsofcs.gate.bool.AbstractBinaryPredicateGate;
  * @author brentvelthoen
  *
  */
-public class NOrCompositeGate extends AbstractBinaryPredicateGate implements CompositeGate {
+public class NOrGate extends AbstractBinaryPredicateGate implements CompositeGate {
 
-  private final NotCompositeGate notAGate;
-  private final NotCompositeGate notBGate;
-  private final AndCompositeGate andGate;
+  private final NotGate notAGate;
+  private final NotGate notBGate;
+  private final AndGate andGate;
 
-  public NOrCompositeGate(Pin inputA, Pin inputB, Pin output) {
+  public NOrGate(Pin inputA, Pin inputB, Pin output) {
     super(inputA, inputB, output);
     // NOT(A)
-    notAGate = new NotCompositeGate(inputA);
+    notAGate = new NotGate(inputA);
     // NOT(B)
-    notBGate = new NotCompositeGate(inputB);
+    notBGate = new NotGate(inputB);
     // AND(NOT(A), NOT(B))
-    andGate = new AndCompositeGate(notAGate.getOutput(), notBGate.getOutput(), output);
+    andGate = new AndGate(notAGate.getOutput(), notBGate.getOutput(), output);
   }
 
-  public NOrCompositeGate(Pin inputA, Pin inputB) {
+  public NOrGate(Pin inputA, Pin inputB) {
     this(inputA, inputB, new Pin());
   }
 
@@ -50,7 +50,7 @@ public class NOrCompositeGate extends AbstractBinaryPredicateGate implements Com
 
   @Override
   public String toString() {
-    return "OrCompositeGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
+    return "NOrGate [inputA=" + inputA + ", inputB=" + inputB + ", output=" + output + "]";
   }
 
 }
